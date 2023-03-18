@@ -35,23 +35,21 @@
     -webkit-box-orient: vertical;
 }
 .cartFooter{
-    height: 40px;
-    
+    height: 40px;   
 }
 .cartIcon{
     font-size: 20px;
-    z-index: 1;
-    
+    z-index: 1;   
 }
 .cartIcon:hover{
     font-size: 23px;   
 }
 .cartIconOne{
-    left: 3%;
+    left: 4%;
 }
 .cartIconTwo{
     left: 47%;
 }
 .cartIconThree{
-    left: 91%;
+    right: 4%;
 }

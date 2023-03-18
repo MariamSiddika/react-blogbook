@@ -28,12 +28,32 @@
 .writeText{
     font-size: 20px;
 }
+.publish-btn{
+    margin-left: 54%;
+}
 .writeSubmit{
-    top: 90%;
-    right: 19%;
     background-color: teal;
     font-size: 16px;
 }
 .writeSubmit:hover{
     background-color: green;
+}
+@media screen and (max-width: 800px) {
+    .write img{
+        width: 90%;
+        margin-right: 5%;
+        margin-left: 5%;
+    }
+    .writeInput{
+        width: 100%;
+    }
+    .writeFormGroup{
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+    .publish-btn{
+        position: absolute;
+        right: 5%;
+        margin-top: 10px;
+    }
 }

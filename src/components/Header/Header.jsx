@@ -7,11 +7,11 @@ import bg from '../../images/blog-bg.jpg';
 const Header = () => {
     return (
         <div className='header'>
-            <div className="headerTitle">
+            <div className="headerTitle d-flex align-items-center flex-column">
                 <span className="headerTitleSm">Write Your Blog</span>
                 <span className="headerTitleLg">BlogBook</span>
             </div>
-            <img className='headerImg' src={bg} alt="" />
+            <img className='headerImg img-fluid' src={bg} alt="" />
 
             {/* <Carousel>           
                 <Carousel.Item interval={1000}>

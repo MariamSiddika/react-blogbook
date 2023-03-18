@@ -5,7 +5,7 @@ import pp from '../../images/man-profile-cartoon_18591-58482.webp';
 
 const Settings = () => {
     return (
-        <div className='settings d-flex'>
+        <div className='settings d-md-block d-lg-flex'>
             <div className="settingsWrapper p-4">
                 <div className="settingsTitle d-flex align-items-center justify-content-between">
                     <span className="settingsUpdateTitle mb-4">Update Your Account</span>
@@ -26,7 +26,7 @@ const Settings = () => {
                     <input type="email" placeholder='john@snow.com' />
                     <label>Password</label>
                     <input type="password" />
-                    <button type="button" class="settingsSubmit text-white mt-4 btn btn-lg">Update</button>
+                    <button type="button" className="settingsSubmit text-white mt-4 btn btn-lg">Update</button>
                 </form>
             </div>
             <Sidebar></Sidebar>

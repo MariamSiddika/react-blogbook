@@ -4,7 +4,7 @@ import './Sidebar.css';
 
 const Sidebar = () => {
     return (
-        <div className='sidebar m-4 pb-5 d-flex flex-column align-items-center rounded'>
+        <div className='sidebar m-4 pb-5 d-md-none d-lg-flex flex-column align-items-center rounded'>
             <div className="sidebarItem d-flex flex-column align-items-center">
                 <h4 className="sidebarTitle m-3 p-1 fs-5 text-center fw-bold">ABOUT US</h4>
                 <img className='mt-3' src={userImg} alt="" />

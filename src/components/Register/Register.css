@@ -5,6 +5,9 @@
     background-size: cover;
     background-repeat: no-repeat;
 }
+.registerForm{
+    width: 25%;
+}
 .registerTitle{
     font-size: 50px;
 }
@@ -13,4 +16,10 @@
 }
 .registerBtn{
     background-color: teal;
+}
+@media screen and (max-width: 800px) {
+    .registerForm{
+        width: 70%;
+        height: 70%;
+    }
 }

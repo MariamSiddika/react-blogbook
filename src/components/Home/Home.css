@@ -1,0 +1,7 @@
+.recentBlog{
+    font-family: 'Lora', serif;
+    position: sticky;
+    top: 8%;
+    z-index: 9999;
+    background-color: white;
+}

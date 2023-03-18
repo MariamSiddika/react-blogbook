@@ -12,7 +12,7 @@ const Post = () => {
         navigate(path);
     }
     return (
-        <Card className='post mt-4 mb-5 mx-3'>
+        <Card className='post mt-4 mb-5 mx-3 shadow'>
             <img className='postImg w-100 rounded' src={postImg} alt="" />
             <div className="postInfo d-flex flex-column align-items-center">
                 <div className="postCats">
@@ -31,9 +31,9 @@ const Post = () => {
                     )
                 } */}
                 <Card.Footer className='cartFooter d-flex align-items-center justify-content-between w-100 position-relative'>
-                    <i class="cartIcon cartIconOne fa-regular fa-heart position-absolute"></i>
-                    <i class="cartIcon cartIconTwo fa-regular fa-thumbs-down position-absolute"></i>
-                    <i class="cartIcon cartIconThree fa-regular fa-comment position-absolute "></i>
+                    <i className="cartIcon cartIconOne fa-regular fa-heart position-absolute"></i>
+                    <i className="cartIcon cartIconTwo fa-regular fa-thumbs-down position-absolute"></i>
+                    <i className="cartIcon cartIconThree fa-regular fa-comment position-absolute "></i>
                 </Card.Footer>
             </div>
         </Card>

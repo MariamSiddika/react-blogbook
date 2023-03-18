@@ -6,7 +6,7 @@ const Register = () => {
     return (
         <div className='register d-flex flex-column align-items-center justify-content-center'>
             <span className="registerTitle pt-0">Register</span>
-            <Form className="registerForm d-flex flex-column w-25">
+            <Form className="registerForm d-flex flex-column">
                 <Form.Group controlId="formGroupName">
                     <Form.Label className='my-2 mx-0'>Username</Form.Label>
                     <Form.Control className='p-2 bg-white border-0' type="email" placeholder="Enter Your Name" />

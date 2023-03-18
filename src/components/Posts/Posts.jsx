@@ -6,12 +6,6 @@ import './Posts.css';
 const Posts = () => {
     return (
         <div className='posts'>
-            {/* <Post></Post>
-            <Post></Post>
-            <Post></Post>
-            <Post></Post>
-            <Post></Post>
-            <Post></Post> */}
             <Row className='container'>
                 <Col xs={12} md={6}><Post></Post></Col>
                 <Col xs={12} md={6}><Post></Post></Col>

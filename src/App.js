@@ -1,5 +1,10 @@
+import { useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import About from "./components/About/About";
+import Contact from "./components/Contact/Contact";
+import Error from "./components/Error/Error";
 import Home from "./components/Home/Home";
+import Loader from "./components/Loader/Loader";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Settings from "./components/Settings/Settings";
@@ -8,6 +13,12 @@ import Write from "./components/Write/Write";
 import Main from "./layout/Main";
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+  });
   const router = createBrowserRouter([
     {
       path: '/',
@@ -20,6 +31,14 @@ function App() {
         {
           path: '/home',
           element: <Home></Home>
+        },
+        {
+          path: '/about',
+          element: <About></About>
+        },
+        {
+          path: '/contact',
+          element: <Contact></Contact>
         },
         {
           path: '/write',
@@ -45,12 +64,16 @@ function App() {
     },
     {
       path: '*',
-      element: <h1 className="text-center text-danger">No Result Found: 404</h1>
+      element: <Error></Error>
     }
   ]);
   return (
-    <div className="App">
-      <RouterProvider router={router}></RouterProvider>
+    <div>
+      {
+        isLoading ? (<Loader></Loader>) : (
+          <RouterProvider router={router}></RouterProvider>
+        )
+      }
     </div>
   );
 }

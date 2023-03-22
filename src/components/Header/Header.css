@@ -8,7 +8,7 @@
 .headerTitleSm{
     position: absolute;
     top: 18%;
-    font-size: 20px;   
+    /* font-size: 20px;    */
 }
 .headerTitleLg{
     position: absolute;
@@ -21,4 +21,15 @@
     max-height: 450px;
     margin-top: 80px;
     object-fit: cover;
+}
+
+@media screen and (max-width: 800px) {
+    .headerTitleLg{
+        font-size: 60px;
+        top: 23%;
+    }
+    .headerTitleSm{
+        top: 19%;
+        font-size: 18px;   
+    }
 }

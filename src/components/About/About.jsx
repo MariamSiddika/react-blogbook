@@ -14,7 +14,7 @@ const About = () => {
                             <h2 data-aos="fade-up" data-aos-delay="400">We are the team of talented designers making websites for writing blogs and for more connectivity.</h2>
                             <div data-aos="fade-up" data-aos-delay="600">
                                 <div className="text-center text-lg-start">
-                                    <Link to="/home">
+                                    <Link className='text-decoration-none' to="/home">
                                         <button className="btn-lg btn-get-started d-inline-flex align-items-center justify-content-center align-self-center border-0 px-4 py-3"><span>Get Started</span>
                                         <i className="fa-solid fa-arrow-right"></i></button>
                                     </Link>

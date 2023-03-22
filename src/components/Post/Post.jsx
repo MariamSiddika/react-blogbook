@@ -12,7 +12,7 @@ const Post = () => {
         navigate(path);
     }
     return (
-        <Card className='post mt-4 mb-5 mx-3 shadow'>
+        <Card onClick={routeChange} className='post mt-4 mb-5 mx-3 shadow'>
             <img className='postImg w-100 rounded' src={postImg} alt="" />
             <div className="postInfo d-flex flex-column align-items-center">
                 <div className="postCats">
@@ -24,7 +24,7 @@ const Post = () => {
                 </span>
                 <hr className='mb-0' />
                 <span className="postDate">1 hour ago</span>
-                <p onClick={routeChange} className='postDesc mt-3 w-100 px-2'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos debitis reiciendis consequuntur, doloremque, nostrum quod itaque odit, tempora fuga ratione mollitia libero autem maxime? Velit alias corrupti quod sed nihil!Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos debitis reiciendis consequuntur, doloremque, nostrum quod itaque odit, tempora fuga ratione mollitia libero autem maxime? Velit alias corrupti quod sed nihil!Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos debitis reiciendis consequuntur, doloremque, nostrum quod itaque odit, tempora fuga ratione mollitia liberoautem maxime? Velit alias corrupti quod sed.</p>
+                <p className='postDesc mt-3 w-100 px-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos debitis reiciendis consequuntur, doloremque, nostrum quod itaque odit, tempora fuga ratione mollitia libero autem maxime? Velit alias corrupti quod sed nihil!Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos debitis reiciendis consequuntur, doloremque, nostrum quod itaque odit, tempora fuga ratione mollitia libero autem maxime? Velit alias corrupti quod sed nihil!Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos debitis reiciendis consequuntur, doloremque, nostrum quod itaque odit, tempora fuga ratione mollitia liberoautem maxime? Velit alias corrupti quod sed.</p>
                 {/* {
                     detail && (
                         <Single></Single>

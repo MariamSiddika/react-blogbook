@@ -3,7 +3,8 @@
 }
 .headerTitle{
     font-family: 'Lora', serif;
-    color: #444;
+    /* color: #444; */
+    color: #021843;
 }
 .headerTitleSm{
     position: absolute;

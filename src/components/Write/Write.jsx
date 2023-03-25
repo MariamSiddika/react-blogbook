@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import './Write.css';
-import postImg from '../../images/primary-blog-bg.jpg'
+import postImg from '../../images/primary-blog-bg.jpg';
+import JoditEditor from 'jodit-react';
 
-const Write = () => {
+
+const Write = () => {   
+    const editor = useRef(null);
+    const [content, setContent] = useState('');
+    const config = {
+        placeholder: "Tell your story...",
+    }
     return (
         <div className='write pt-5'>
             <img className='writeImg' src={postImg} alt="" />
@@ -15,10 +22,16 @@ const Write = () => {
                     <input type="text" className='writeInput p-4' placeholder='Title' autoFocus={true} />
                 </div>
                 <div className="writeFormGroup">
-                    <textarea placeholder='Tell your story...' type="text" className='writeInput writeText p-4'></textarea>
+                    {/* <textarea placeholder='Tell your story...' type="text" className='writeInput writeText p-4'></textarea> */}
+                    <JoditEditor
+                    ref={editor}
+                    value={content}
+                    config ={config}
+                    onChange={newContent => setContent(newContent)}
+                    />
                 </div>
                 <div className='text-center publish-btn'>
-                <button className='writeSubmit btn text-white py-2 px-4 mt-2 mb-5 border-0 rounded'>Publish</button>
+                <button className='writeSubmit btn text-white py-2 px-4 mt-3 mb-5 border-0 rounded'>Publish</button>
                 </div>
             </form>
         </div>

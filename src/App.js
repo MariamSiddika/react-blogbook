@@ -8,9 +8,9 @@ import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Settings from "./components/Settings/Settings";
 import Single from "./pages/Single/Single";
-import Write from "./components/Write/Write";
 import Main from "./layout/Main";
 import AboutPage from "./pages/AboutPage/AboutPage";
+import Write from "./components/Write/Write";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);

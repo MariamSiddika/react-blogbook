@@ -1,0 +1,22 @@
+.footer {
+    overflow: hidden;
+    background-color: rgb(234, 229, 229);
+    font-size: 16px;
+  }
+  .footer a {
+    text-decoration: none;
+  }
+  .footer .footer-heading {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    font-size: 18px;
+  }
+  
+  .footer-links li {
+    margin-bottom: 10px;
+  }
+  
+  .footer .footer-links li a {
+    color: rgba(var(--color-white-rgb), 0.7);
+  }
+  

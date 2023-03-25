@@ -1,13 +1,11 @@
 import React from 'react';
-import Sidebar from '../Sidebar/Sidebar';
-import SinglePost from '../SinglePost/SinglePost';
+import SinglePost from '../../components/SinglePost/SinglePost';
 import './Single.css'
 
 const Single = () => {
     return (
-        <div className='single d-flex'>
+        <div className='single mx-auto w-75'>
             <SinglePost></SinglePost>
-            <Sidebar></Sidebar>
         </div>
     );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../Header/Header';
-import Posts from '../Posts/Posts';
+import Header from '../../components/Header/Header';
+import Posts from '../../components/Posts/Posts';
 import './Home.css';
 
 const Home = () => {

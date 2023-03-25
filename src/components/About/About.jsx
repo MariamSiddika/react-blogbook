@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import aboutImg from '../../images/hero-img.png';
+import aboutImg from '../../images/about/about-img.png';
 import './About.css';
 
 const About = () => {
     return (
         <div>
-            <section class="hero d-flex align-items-center w-100">
+            <section class="about d-flex align-items-center w-100">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-6 d-flex flex-column justify-content-center">
@@ -21,7 +21,7 @@ const About = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
+                        <div className="col-lg-6 about-img" data-aos="zoom-out" data-aos-delay="200">
                             <img src={aboutImg} className="img-fluid" alt="" />
                         </div>
                     </div>

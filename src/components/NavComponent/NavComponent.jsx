@@ -4,17 +4,21 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 import './NavComponent.css';
 import img from '../../images/man-profile-cartoon_18591-58482.webp';
-// import logo from '../../images/download.jpg'
+// import logo from '../../images/logo.png';
 
 function NavComponent() {
     return (
         <Navbar className='top sticky-top d-flex align-items-center' expand="lg">
             <Container>
-                <Navbar.Brand className="topLeft d-flex align-items-center justify-content-center" href="#home">
-                    <i className="topIcon fa-brands fa-square-facebook"></i>
+                <Navbar.Brand className="topLeft d-flex align-items-center justify-content-center">
+                    {/* <i className="topIcon fa-brands fa-square-facebook"></i>
                     <i className="topIcon fa-brands fa-square-twitter"></i>
                     <i className="topIcon fa-brands fa-square-instagram"></i>
-                    <i className="topIcon fa-brands fa-square-pinterest"></i>
+                    <i className="topIcon fa-brands fa-square-pinterest"></i> */}
+                    <Nav.Link as={Link} to="/home" class="logo d-flex align-items-center">
+                        {/* <img src={logo} alt="" /> */}
+                        <span className=''>BlogBook</span>
+                    </Nav.Link>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">

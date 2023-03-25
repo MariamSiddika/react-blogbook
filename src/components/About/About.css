@@ -1,87 +1,88 @@
-.hero {
-    font-family: 'Josefin Sans', sans-serif;
-    height: 100vh;
-    background: url(../../images/hero-bg.png) top center no-repeat;
-    background-size: cover;
-  } 
-  .hero h1 {
-    font-size: 48px;
-    font-weight: 700;
-    color: #021843;
+.about {
+  font-family: 'Josefin Sans', sans-serif;
+  height: 100vh;
+  background: url(../../images/about/about-main.png) top center no-repeat;
+  background-size: cover;
+}
+
+.about h1 {
+  font-size: 48px;
+  font-weight: 700;
+  color: #021843;
+}
+
+.about h2 {
+  color: #504f4f;
+  margin: 15px 0 0 0;
+  font-size: 25px;
+}
+
+.btn-get-started {
+  margin-top: 30px;
+  line-height: 0;
+  border-radius: 4px;
+  transition: 0.5s;
+  color: #fff;
+  background: teal;
+  box-shadow: 0px 5px 30px rgba(65, 84, 241, 0.4);
+}
+
+.btn-get-started span {
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.btn-get-started i {
+  margin-left: 5px;
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+.btn-get-started:hover i {
+  transform: translateX(5px);
+}
+
+.about-img {
+  text-align: right;
+}
+
+@media (min-width: 1024px) {
+  .about {
+    background-attachment: fixed;
   }
-  
-  .hero h2 {
-    color: #504f4f;
-    margin: 15px 0 0 0;
-    font-size: 25px;
+}
+
+@media (max-width: 991px) {
+  .about {
+    height: auto;
+    padding: 120px 0 60px 0;
   }
-  
-  .hero .btn-get-started {
-    margin-top: 30px;
-    line-height: 0;
-    border-radius: 4px;
-    transition: 0.5s;
-    color: #fff;
-    background: teal;
-    box-shadow: 0px 5px 30px rgba(65, 84, 241, 0.4);
+
+ .about-img {
+    text-align: center;
+    margin-top: 80px;
   }
-  .hero .btn-get-started span {
-    font-weight: 500;
-    font-size: 16px;
-    letter-spacing: 1px;
+
+  .about-img img {
+    width: 80%;
   }
-  
-  .hero .btn-get-started i {
-    margin-left: 5px;
-    font-size: 18px;
-    transition: 0.3s;
+}
+
+@media (max-width: 768px) {
+  .about {
+    text-align: center;
   }
-  
-  .hero .btn-get-started:hover i {
-    transform: translateX(5px);
+
+  .about h1 {
+    font-size: 32px;
   }
-  
-  .hero .hero-img {
-    text-align: right;
+
+  .about h2 {
+    font-size: 24px;
   }
-  
-  @media (min-width: 1024px) {
-    .hero {
-      background-attachment: fixed;
-    }
+
+  .about-img img {
+    width: 100%;
   }
-  
-  @media (max-width: 991px) {
-    .hero {
-      height: auto;
-      padding: 120px 0 60px 0;
-    }
-  
-    .hero .hero-img {
-      text-align: center;
-      margin-top: 80px;
-    }
-  
-    .hero .hero-img img {
-      width: 80%;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .hero {
-      text-align: center;
-    }
-  
-    .hero h1 {
-      font-size: 32px;
-    }
-  
-    .hero h2 {
-      font-size: 24px;
-    }
-  
-    .hero .hero-img img {
-      width: 100%;
-    }
-  }
-  
+}

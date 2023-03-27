@@ -11,6 +11,9 @@ import Single from "./pages/Single/Single";
 import Main from "./layout/Main";
 import AboutPage from "./pages/AboutPage/AboutPage";
 import Write from "./components/Write/Write";
+import AdminDashboard from "./adminComponent/AdminDashboard/AdminDashboard";
+import AdminPosts from "./adminComponent/AdminPosts/AdminPosts";
+import AdminUsers from "./adminComponent/AdminUsers/AdminUsers";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -59,6 +62,18 @@ function App() {
         {
           path: '/register',
           element: <Register></Register>
+        },
+        {
+          path: '/admin',
+          element: <AdminDashboard></AdminDashboard>
+        },
+        {
+          path: '/admin/blogs',
+          element: <AdminPosts></AdminPosts>
+        },
+        {
+          path: '/admin/users',
+          element: <AdminUsers></AdminUsers>
         },
       ]
     },

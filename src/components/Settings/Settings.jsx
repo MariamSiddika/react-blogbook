@@ -1,11 +1,10 @@
 import React from 'react';
-import Sidebar from '../Sidebar/Sidebar';
 import './Settings.css';
 import pp from '../../images/man-profile-cartoon_18591-58482.webp';
 
 const Settings = () => {
     return (
-        <div className='settings d-md-block d-lg-flex'>
+        <div className='settings container w-lg-75'>
             <div className="settingsWrapper p-4">
                 <div className="settingsTitle d-flex align-items-center justify-content-between">
                     <span className="settingsUpdateTitle mb-4">Update Your Account</span>
@@ -29,7 +28,7 @@ const Settings = () => {
                     <button type="button" className="settingsSubmit text-white mt-4 btn btn-lg">Update</button>
                 </form>
             </div>
-            <Sidebar></Sidebar>
+            {/* <Sidebar></Sidebar> */}
         </div>
     );
 };

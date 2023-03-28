@@ -17,6 +17,16 @@
     list-style: none;
 }
 
+.appLogo {
+    font-size: 35px;
+    color: #021843;
+}
+
+.logoDot {
+    font-size: 45px;
+    color: teal;
+}
+
 .topList a {
     text-decoration: none;
     color: #313131;
@@ -44,7 +54,7 @@
 }
 
 .topSearchIcon {
-    font-size: 18px;
+    font-size: 20px;
     color: #666;
     cursor: pointer;
     margin-left: 15px;
@@ -53,6 +63,10 @@
 .topListItem:hover {
     font-weight: 600;
     color: teal;
+}
+.dropDownBtn{
+    font-size: 20px;
+    border: 0;
 }
 
 @media (max-width: 950px) {

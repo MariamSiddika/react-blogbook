@@ -2,9 +2,9 @@
     font-family: 'Lora', serif;
     color: #021843;
     font-weight: 550;
-    position: sticky;
+    /* position: sticky;
     top: 8%;
-    z-index: 9999;
+    z-index: 9999; */
     background-color: white;
 }
 .btn-get-started {

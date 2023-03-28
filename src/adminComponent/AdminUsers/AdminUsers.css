@@ -1,0 +1,15 @@
+.actionIcon {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.userTable th,
+td {
+    text-align: center;
+}
+.actionDelete{
+    color: tomato;
+}
+.actionView{
+    color: teal;
+}

@@ -8,7 +8,7 @@ const Home = () => {
     return (
         <div>
             <Header></Header>
-            <h1 className='recentBlog mt-5 ps-5 shadow sticky-top'>Recent Blogs</h1>
+            <h1 className='recentBlog mt-5 ps-5 shadow'>Recent Blogs</h1>
             <div className='home'>
                 <Posts></Posts>
             </div>

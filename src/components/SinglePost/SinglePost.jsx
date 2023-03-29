@@ -9,10 +9,10 @@ const SinglePost = () => {
                 <img src={postImg} alt="" className="singlePostImg w-100 rounded" />
             </div>
             <h1 className='singlePostTitle text-center m-2 fs-2 fw-bolder'>Lorem ipsum dolor sit amet.
-                <div className="singlePostEdit float-end">
+                {/* <div className="singlePostEdit float-end">
                     <i className="singlePostIcon fa-regular fa-pen-to-square me-3"></i>
                     <i className="singlePostIcon fa-regular fa-trash-can me-2"></i>
-                </div>
+                </div> */}
             </h1>
             <div className='singlePostInfo mb-4 d-flex justify-content-between'>
                 <span className="singlePostAuthor">

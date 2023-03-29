@@ -16,6 +16,7 @@
     font-family: 'Josefin Sans', sans-serif;
     font-size: 24px;
     font-weight: 700;
+    text-align: center;
 }
 .postDate{
     font-family: 'Lora', serif;
@@ -53,4 +54,7 @@
 }
 .cartIconThree{
     right: 4%;
+}
+@media (max-width: 768px) {
+    
 }

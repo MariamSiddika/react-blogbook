@@ -3,7 +3,6 @@ import './Write.css';
 import postImg from '../../images/primary-blog-bg.jpg';
 import JoditEditor from 'jodit-react';
 
-
 const Write = () => {   
     const editor = useRef(null);
     const [content, setContent] = useState('');

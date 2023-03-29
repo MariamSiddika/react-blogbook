@@ -14,6 +14,7 @@ import Write from "./components/Write/Write";
 import AdminDashboard from "./adminComponent/AdminDashboard/AdminDashboard";
 import AdminPosts from "./adminComponent/AdminPosts/AdminPosts";
 import AdminUsers from "./adminComponent/AdminUsers/AdminUsers";
+import UserProfile from "./components/UserProfile/UserProfile";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -74,6 +75,10 @@ function App() {
         {
           path: '/admin/users',
           element: <AdminUsers></AdminUsers>
+        },
+        {
+          path: '/profile',
+          element: <UserProfile></UserProfile>
         },
       ]
     },

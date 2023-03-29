@@ -13,7 +13,7 @@
 }
 .headerTitleLg{
     position: absolute;
-    top: 20%;
+    top: 22%;
     font-size: 100px;
 }
 .headerImg{
@@ -26,11 +26,11 @@
 
 @media screen and (max-width: 800px) {
     .headerTitleLg{
-        font-size: 60px;
-        top: 23%;
+        font-size: 70px;
+        top: 26%;
     }
     .headerTitleSm{
-        top: 19%;
-        font-size: 18px;   
+        top: 22%;
+        font-size: 15px;   
     }
 }

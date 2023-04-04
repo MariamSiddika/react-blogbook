@@ -29,10 +29,28 @@
     color: #666;
     font-size: 18px;
     line-height: 25px;
+    text-align: justify;
 }
 .singlePostDesc::first-letter{
     font-size: 30px;
     margin-left: 20px;
     font-weight: 600;
     font-family: 'Lora', serif;
+}
+.comment-text{
+    text-align: justify;
+}
+.btn-comment{
+    color: white;
+    background-color: teal;
+}
+.btn-comment-cancel{
+    border: 1px solid teal;
+}
+.btn-comment:hover{
+    border: 1px solid teal;
+}
+.btn-comment-cancel:hover{
+    color: white;
+    background-color: teal;
 }

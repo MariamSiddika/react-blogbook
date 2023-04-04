@@ -33,7 +33,7 @@ const AdminDashboard = () => {
           <Link className='p-0 m-0' style={{ textDecoration: "none" }} to='/admin/users'>
             <div className="card admin-card adminUserCard shadow p-4">
               <div className="card-body">
-                <h5 className="card-title text-center">All Users</h5>
+                <h5 className="card-title text-center">All Bloggers</h5>
                 <div className="d-flex align-items-center justify-content-center">
                   <div className="">
                     <h1 className='userNum text-center'>86</h1>

@@ -68,6 +68,18 @@
     font-size: 20px;
     border: 0;
 }
+.modal-90w{
+    width: 90%;
+}
+.searchButton{
+    color: white;
+    background-color: teal;
+}
+.searchButton:hover{
+    color: teal;
+    background-color: white;
+    border: 1px solid teal;
+}
 
 @media (max-width: 950px) {
     .topListItem {

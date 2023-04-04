@@ -4,7 +4,7 @@ import './AdminUsers.css';
 const AdminUsers = () => {
     return (
         <div className='container mt-5'>
-            <h1 className='mb-4'>All Users</h1>
+            <h1 className='mb-4'>Manage Bloggers</h1>
             <div className='table-responsive'>
                 <table className="userTable table table-light table-striped table-hover">
                     <thead>

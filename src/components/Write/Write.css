@@ -1,15 +1,15 @@
-.writeImg{
-    margin-left: 150px;
+.writeImg {
     width: 70vw;
     height: 250px;
     border-radius: 10px;
     object-fit: cover;
 }
-.writeFormGroup{
-    margin-left: 150px;
+
+.writeFormGroup {
     width: 70vw;
 }
-.writeIcon{
+
+.writeIcon {
     width: 25px;
     height: 25px;
     border-radius: 50%;
@@ -18,40 +18,40 @@
     color: rgb(121, 118, 118);
     cursor: pointer;
 }
-.writeInput{
+
+.writeInput {
     font-size: 30px;
     border: none;
     width: 70vw;
 }
-.writeInput:focus{
+
+.writeInput:focus {
     outline: none;
 }
-.publish-btn{
-    margin-left: 54%;
+
+.btn-publish {
+    font-family: 'Josefin Sans', sans-serif;
+    margin-top: 30px;
+    line-height: 0;
+    border-radius: 4px;
+    transition: 0.5s;
+    color: #fff;
+    background: teal;
+    box-shadow: 0px 5px 30px rgba(65, 84, 241, 0.4);
 }
-.writeSubmit{
-    background-color: teal;
+
+.btn-publish span {
+    font-weight: 500;
     font-size: 16px;
+    letter-spacing: 1px;
 }
-.writeSubmit:hover{
-    background-color: green;
+
+.btn-publish i {
+    margin-left: 5px;
+    font-size: 18px;
+    transition: 0.3s;
 }
-@media screen and (max-width: 800px) {
-    .write img{
-        width: 90%;
-        margin-right: 5%;
-        margin-left: 5%;
-    }
-    .writeInput{
-        width: 100%;
-    }
-    .writeFormGroup{
-        margin-left: 5%;
-        margin-right: 5%;
-    }
-    .publish-btn{
-        position: absolute;
-        right: 5%;
-        margin-top: 10px;
-    }
+
+.btn-publish:hover i {
+    transform: translateX(5px);
 }

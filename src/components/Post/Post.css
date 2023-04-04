@@ -1,30 +1,35 @@
-.post{
+.post {
     width: 90%;
 }
-.postImg{
+
+.postImg {
     height: 280px;
     object-fit: cover;
 }
-.postCat{
+
+.postCat {
     font-family: 'Varela Round', sans-serif;
     font-size: 14px;
     line-height: 20px;
     color: #be9656;
     cursor: pointer;
 }
-.postTitle{
+
+.postTitle {
     font-family: 'Josefin Sans', sans-serif;
     font-size: 24px;
     font-weight: 700;
     text-align: center;
 }
-.postDate{
+
+.postDate {
     font-family: 'Lora', serif;
     font-style: italic;
     font-size: 13px;
     color: #999;
 }
-.postDesc{
+
+.postDesc {
     font-size: 'Varela Round', sans-serif;
     text-align: justify;
     font-size: 15px;
@@ -36,25 +41,47 @@
     -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
 }
-.cartFooter{
-    height: 40px;   
+
+.postImg,
+.postInfo {
+    cursor: pointer;
 }
-.cartIcon{
+
+.cartFooter {
+    height: 40px;
+}
+
+.cartIcon {
     font-size: 20px;
-    z-index: 1;   
+    z-index: 1;
 }
-.cartIcon:hover{
-    font-size: 23px;   
+
+.cartIcon:hover {
+    font-size: 23px;
 }
-.cartIconOne{
+
+.cartIconOne {
     left: 4%;
 }
-.cartIconTwo{
+
+.cartIconTwo {
     left: 47%;
 }
-.cartIconThree{
+
+.cartIconThree {
     right: 4%;
 }
-@media (max-width: 768px) {
-    
+.reactedIcon{
+    color: tomato;
 }
+.homeCommentBtn{
+    color: white;
+    background-color: teal;
+}
+.homeCommentBtn:hover{
+    color: teal;
+    background-color: white;
+    border: 1px solid teal;
+}
+
+@media (max-width: 768px) {}

@@ -6,13 +6,14 @@ const AdminUsers = () => {
         <div className='container mt-5'>
             <h1 className='mb-4'>Manage Bloggers</h1>
             <div className='table-responsive'>
-                <table className="userTable table table-light table-striped table-hover">
+                <table style={{tableLayout: 'fixed'}} className="userTable table table-light table-striped table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">User Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">ID</th>
+                            <th scope="col">USER NAME</th>
+                            <th scope="col">EMAIL</th>
+                            <th scope="col">JOINED AT</th>
+                            <th scope="col">ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -20,6 +21,8 @@ const AdminUsers = () => {
                             <th scope="row">1</th>
                             <td>Mark</td>
                             <td>mark@mail.com</td>
+                            <td>2023-01-07 <br />
+                                3:54:17</td>
                             <td>
                                 <i className="actionIcon actionDelete fa-regular fa-trash-can me-4"></i>
                                 <i className="actionIcon actionView fa-regular fa-eye"></i>
@@ -29,6 +32,8 @@ const AdminUsers = () => {
                             <th scope="row">2</th>
                             <td>Mark</td>
                             <td>mark@mail.com</td>
+                            <td>2023-01-07 <br />
+                                3:54:17</td>
                             <td>
                                 <i className="actionIcon actionDelete fa-regular fa-trash-can me-4"></i>
                                 <i className="actionIcon actionView fa-regular fa-eye"></i>
@@ -38,6 +43,8 @@ const AdminUsers = () => {
                             <th scope="row">3</th>
                             <td>Mark</td>
                             <td>mark@mail.com</td>
+                            <td>2023-01-07 <br />
+                                3:54:17</td>
                             <td>
                                 <i className="actionIcon actionDelete fa-regular fa-trash-can me-4"></i>
                                 <i className="actionIcon actionView fa-regular fa-eye"></i>
@@ -47,6 +54,8 @@ const AdminUsers = () => {
                             <th scope="row">4</th>
                             <td>Mark</td>
                             <td>mark@mail.com</td>
+                            <td>2023-01-07 <br />
+                                3:54:17</td>
                             <td>
                                 <i className="actionIcon actionDelete fa-regular fa-trash-can me-4"></i>
                                 <i className="actionIcon actionView fa-regular fa-eye"></i>
@@ -56,6 +65,8 @@ const AdminUsers = () => {
                             <th scope="row">5</th>
                             <td>Mark</td>
                             <td>mark@mail.com</td>
+                            <td>2023-01-07 <br />
+                                3:54:17</td>
                             <td>
                                 <i className="actionIcon actionDelete fa-regular fa-trash-can me-4"></i>
                                 <i className="actionIcon actionView fa-regular fa-eye"></i>

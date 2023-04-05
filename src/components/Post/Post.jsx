@@ -3,12 +3,24 @@ import "./Post.css";
 import postImg from "../../images/food.jpg";
 import { Button, Card, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-// import { useEffect } from 'react';
 
 const Post = () => {
     const [showCommentBox, setshowCommentBox] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [isdisLiked, setIsdisLiked] = useState(false);
+
+    useEffect(() => {
+        if (isLiked === true) {
+            setIsdisLiked(false);
+            console.log(isLiked, isdisLiked);
+        }
+    }, [isLiked]);
+    useEffect(() => {
+        if (isdisLiked === true) {
+            setIsLiked(false);
+            console.log(isLiked, isdisLiked);
+        }
+    }, [isdisLiked]);
 
     const likeHandler = () => {
         setIsLiked((isLiked) => !isLiked);
@@ -24,19 +36,6 @@ const Post = () => {
             setIsLiked(false);
         }
     };
-
-    useEffect(() => {
-        if (isLiked === true) {
-            setIsdisLiked(false);
-            console.log(isLiked, isdisLiked);
-        }
-    }, [isLiked, isdisLiked, likeHandler, disLikeHandler]);
-    useEffect(() => {
-        if (isdisLiked === true) {
-            setIsLiked(false);
-            console.log(isLiked, isdisLiked);
-        }
-    }, [isLiked, isdisLiked, likeHandler, disLikeHandler]);
 
     let navigate = useNavigate();
     const routeChange = () => {
@@ -68,30 +67,25 @@ const Post = () => {
             </div>
 
             <Card.Footer className="cartFooter d-flex align-items-center justify-content-between w-100 position-relative border-bottom">
-                {isLiked && !isdisLiked ? (
-                    <i
-                        onClick={likeHandler}
-                        className="cartIcon reactedIcon cartIconOne fa-solid fa-heart position-absolute"
-                    ></i>
-                ) : (
-                    <i
-                        onClick={likeHandler}
-                        className="cartIcon cartIconOne fa-regular fa-heart position-absolute"
-                    ></i>
-                )}
-                {isdisLiked && !isLiked ? (
-                    <i
-                        onClick={disLikeHandler}
-                        className="cartIcon reactedIcon cartIconTwo fa-solid fa-thumbs-down position-absolute"
-                    ></i>
-                ) : (
-                    <i
-                        onClick={disLikeHandler}
-                        className="cartIcon cartIconTwo fa-regular fa-thumbs-down position-absolute"
-                    ></i>
-                )}
+                <i
+                    onClick={likeHandler}
+                    className={
+                        isLiked && !isdisLiked
+                            ? "cartIcon reactedIcon cartIconOne fa-solid fa-heart position-absolute"
+                            : "cartIcon cartIconOne fa-regular fa-heart position-absolute"
+                    }
+                ></i>
 
-                {/* <i onClick={disLikeHandler} className={isdisLiked && !isLiked ? "cartIcon reactedIcon cartIconTwo fa-solid fa-thumbs-down position-absolute" : "cartIcon cartIconTwo fa-regular fa-thumbs-down position-absolute"} ></i> */}
+                {
+                    <i
+                        onClick={disLikeHandler}
+                        className={
+                            isdisLiked && !isLiked
+                                ? "cartIcon reactedIcon cartIconTwo fa-solid fa-thumbs-down position-absolute"
+                                : "cartIcon cartIconTwo fa-regular fa-thumbs-down position-absolute"
+                        }
+                    ></i>
+                }
 
                 <i
                     onClick={() => {

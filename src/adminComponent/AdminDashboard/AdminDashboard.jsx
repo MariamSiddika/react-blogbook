@@ -5,7 +5,7 @@ import './AdminDashboard.css';
 const AdminDashboard = () => {
   return (
     <div className="adminDash container">
-      <h3 className='dashTitle ms-5 mt-3 fw-bold'>Dashboard</h3>
+      <h1 className='dashTitle mt-5 shadow ps-4 py-2'>Dashboard</h1>
       <div className='row g-5 py-5 mx-auto mt-2 mb-5 px-5'>
 
         {/* Blog Card */}

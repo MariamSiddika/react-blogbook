@@ -44,11 +44,11 @@ const Write = () => {
                     <input type="text" className='writeInput p-4' placeholder='Title' autoFocus={true} />
                     </div>
 
-                    <Select className='w-25 ms-auto mb-3'
+                    <Select className='selectField w-25 ms-auto mb-3'
                         label="Category"
-                        closeMenuOnSelect={false}
+                        closeMenuOnSelect={true}
                         components={animatedComponents}
-                        isMulti
+                        
                         options={options}
                         placeholder="Category"
                     />

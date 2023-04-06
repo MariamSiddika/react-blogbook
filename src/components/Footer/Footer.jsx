@@ -29,7 +29,7 @@ const Footer = () => {
                         <div className="col-6 col-lg-3">
                             <div className='footerItem d-flex flex-column align-items-center'>
                                 <h5 className="footerTitle my-3 py-1 fs-5 text-center fw-bold">CATEGORIES</h5>
-                                <ul className="sidebarList mb-5">
+                                <ul className="footerList mb-5">
                                     <li className="footerListItem d-inline-block w-50 mt-2">Lifestyle</li>
                                     <li className="footerListItem d-inline-block w-50 mt-2">Photography</li>
                                     <li className="footerListItem d-inline-block w-50 mt-2">Sports</li>

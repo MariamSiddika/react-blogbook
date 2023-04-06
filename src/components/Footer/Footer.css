@@ -16,6 +16,9 @@
 .footer a {
   text-decoration: none;
 }
+.footerList{
+  list-style: none;
+}
 
 .footerListItem {
   cursor: pointer;

@@ -1,19 +1,13 @@
 import React, { useState } from 'react';
 import './Settings.css';
 import pp from '../../images/man-profile-cartoon_18591-58482.webp';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Form, Modal } from 'react-bootstrap';
 
 const Settings = () => {
     const [show, setShow] = useState(false);
-    // const [confirm, setConfirm] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    // const handleConfirmClose = () => setConfirm(false);
-    // const handleConfirmShow = () => setConfirm(true);
-
-
 
     return (
         <div className='settings container w-lg-75'>
@@ -37,7 +31,7 @@ const Settings = () => {
                     <input type="email" placeholder='john@snow.com' />
                     <label>Password</label>
                     <input type="password" />
-                    <button type="button" className="settingsSubmit text-white mt-4 btn btn-lg">Update</button>
+                    <button type="submit" className="settingsSubmit text-white mt-4 btn btn-lg">Update</button>
                 </form>
 
                 {/* handle delete modal */}
@@ -51,37 +45,19 @@ const Settings = () => {
                         <Modal.Title></Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <p className='fs-5'>Are you sure you want to proceed? This action cannot be undone <i className="fa-solid fa-exclamation text-danger fs-4 fw-bold"></i></p>
+                        <p style={{ fontSize: "18px" }}>Are you sure you want to proceed? Remember this action cannot be undone <i className="fa-solid fa-exclamation text-danger fw-bold"></i></p>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label className="text-danger">Enter Your Password to Proceed</Form.Label>
+                            <Form.Control type="password" placeholder="Password" />
+                        </Form.Group>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button style={{ color: 'white', backgroundColor: 'teal' }} variant="secondary" onClick={handleClose}>
                             Cancel
                         </Button>
-                        <Button variant="danger">Proceed</Button>
+                        <Button type="submit" variant="danger" >Proceed</Button>
                     </Modal.Footer>
                 </Modal>
-
-                {/* handle delete confirm with password */}
-                {/* <Modal
-                    
-                    onHide={handleConfirmClose}
-                    backdrop="static"
-                    keyboard={false}
-                >
-                    <Modal.Header closeButton>
-                        <Modal.Title>Modal title</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        I will not close if you click outside me. Don't even try to press
-                        escape key.
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Close
-                        </Button>
-                        <Button variant="primary">Understood</Button>
-                    </Modal.Footer>
-                </Modal> */}
 
             </div>
         </div >

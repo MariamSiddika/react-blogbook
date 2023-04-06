@@ -9,6 +9,10 @@
     width: 70vw;
 }
 
+.selectField:focus{
+    outline: none;
+}
+
 .writeIcon {
     width: 25px;
     height: 25px;

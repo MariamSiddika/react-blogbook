@@ -37,6 +37,32 @@
     font-weight: 600;
     font-family: 'Lora', serif;
 }
+
+.cartIcon {
+    font-size: 20px;
+    z-index: 1;
+}
+
+.cartIcon:hover {
+    font-size: 23px;
+}
+
+.cartIconOne {
+    left: 4%;
+}
+
+.cartIconTwo {
+    left: 47%;
+}
+
+.cartIconThree {
+    right: 4%;
+}
+
+.reactedIcon {
+    color: tomato;
+}
+
 .comment-text{
     text-align: justify;
 }

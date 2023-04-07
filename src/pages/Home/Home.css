@@ -2,14 +2,12 @@
     font-family: 'Lora', serif;
     color: #021843;
     font-weight: 550;
-    /* position: sticky;
-    top: 8%;
-    z-index: 9999; */
     background-color: white;
 }
 .btn-see-more {
     font-family: 'Josefin Sans', sans-serif;
     margin-top: 30px;
+    border: 0;
     line-height: 0;
     border-radius: 4px;
     transition: 0.5s;
@@ -19,14 +17,12 @@
   }
   .btn-see-more span {
     font-weight: 500;
-    font-size: 16px;
+    font-size: 18px;
     letter-spacing: 1px;
   }
-  .btn-see-more i {
-    margin-left: 5px;
-    font-size: 18px;
-    transition: 0.3s;
+  .btn-see-more:hover{
+    color: teal;
+    background-color: white;
+    border: 2px solid teal;
   }
-  .btn-see-more:hover i {
-    transform: translateX(5px);
-  }
+  

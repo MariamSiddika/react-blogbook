@@ -14,8 +14,9 @@ const Home = () => {
             </div>
             <div className="text-center mb-3">
                 <Link className='text-decoration-none' to="/home">
-                    <button className="btn-lg btn-see-more d-inline-flex align-items-center justify-content-center align-self-center border-0 px-4 py-3 mt-0"><span>See More</span>
-                        <i className="fa-solid fa-arrow-right"></i></button>
+                    <button className="btn-lg btn-see-more d-inline-flex align-items-center justify-content-center px-4 py-4 mt-0 mb-3"><span>See More</span>
+                        {/* <i className="fa-solid fa-arrow-right"></i> */}
+                        </button>
                 </Link>
             </div>
         </div>

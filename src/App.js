@@ -49,7 +49,7 @@ function App() {
           element: <Write></Write>
         },
         {
-          path: '/single',
+          path: '/single/:postId',
           element: <Single></Single>
         },
         {

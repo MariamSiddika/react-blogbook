@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Post from '../Post/Post';
 import './Posts.css';
+import useFetch from '../../hooks/useFetch';
 
 const Posts = () => {
+    const { data, getData, error, loading } = useFetch();
+
+    useEffect(() => { getData("https://blogs-server-ms.onrender.com/api/v1/blogs") }, [])
+    // console.log(data);
+
     return (
         <div className='posts'>
+
             <Row className='mx-4'>
-                <Col xs={12} md={6} lg={4}><Post></Post></Col>
-                <Col xs={12} md={6} lg={4}><Post></Post></Col>
-                <Col xs={12} md={6} lg={4}><Post></Post></Col>
-                <Col xs={12} md={6} lg={4}><Post></Post></Col>
-                <Col xs={12} md={6} lg={4}><Post></Post></Col>
-                <Col xs={12} md={6} lg={4}><Post></Post></Col>
+                {
+                    data.map((post) => <Post key={post._id} post={post}></Post>)
+                }
+
+
             </Row>
             {/* <button className='btn btn-lg d-flex mx-auto text-white showMoreBtn px-5 mb-3'>Show More</button> */}
         </div>

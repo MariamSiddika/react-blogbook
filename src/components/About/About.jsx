@@ -6,7 +6,7 @@ import './About.css';
 const About = () => {
     return (
         <div>
-            <section class="about d-flex align-items-center w-100">
+            <section className="about d-flex align-items-center w-100">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-6 d-flex flex-column justify-content-center">
@@ -16,7 +16,7 @@ const About = () => {
                                 <div className="text-center text-lg-start">
                                     <Link className='text-decoration-none' to="/home">
                                         <button className="btn-lg btn-get-started d-inline-flex align-items-center justify-content-center align-self-center border-0 px-4 py-3"><span>Get Started</span>
-                                        <i className="fa-solid fa-arrow-right"></i></button>
+                                            <i className="fa-solid fa-arrow-right"></i></button>
                                     </Link>
                                 </div>
                             </div>

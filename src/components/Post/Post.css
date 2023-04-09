@@ -24,9 +24,9 @@
 
 .postDate {
     font-family: 'Lora', serif;
-    font-style: italic;
+    /* font-style: italic; */
     font-size: 13px;
-    color: #999;
+    color: #8c8c8c;
 }
 
 .postDesc {

@@ -4,10 +4,13 @@ import postImg from '../../images/primary-blog-bg.jpg';
 import JoditEditor from 'jodit-react';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+import useFetch from '../../hooks/useFetch';
 
 const Write = () => {
     // const editor = useRef(null);
     const [content, setContent] = useState('');
+    const { data,  setData, postData, error, loading } = useFetch();
+
     const config = {
         readonly: false,
 
@@ -16,18 +19,16 @@ const Write = () => {
     }
     const animatedComponents = makeAnimated();
     const options = [
-        { label: 'Life', value: 'life' },
-        { label: 'Tech', value: 'tech' },
-        { label: 'Food', value: 'food' },
-        { label: 'Photography', value: 'photography' },
-        { label: 'Sports', value: 'sports' },
-        { label: 'Movie', value: 'movie' },
+        { label: 'Life', value: 'Life' },
+        { label: 'Tech', value: 'Tech' },
+        { label: 'Food', value: 'Food' },
+        { label: 'Photography', value: 'Photography' },
+        { label: 'Sports', value: 'Sports' },
+        { label: 'Movie', value: 'Movie' },
     ];
     const handleSubmit = (e) => {
         e.preventDefault();
-        // const content = {
-        //     description: editor.current.value,
-        // };
+        
         console.log(content);
     };
 

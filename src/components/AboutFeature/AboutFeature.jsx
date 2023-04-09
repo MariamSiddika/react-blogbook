@@ -26,10 +26,10 @@ const AboutFeature = () => {
             <div className="col-md-4" data-aos="fade-up" data-aos-delay="200">
               <div className="about-col">
                 <div className="img">
-                  <img src={featureTwo} alt="" class="img-fluid" />
+                  <img src={featureTwo} alt="" className="img-fluid" />
                   <div className="icon"><i className="fa-solid fa-lightbulb"></i></div>
                 </div>
-                <h2 className="title"><a className='text-decoration-none'  href="/">Our Plan</a></h2>
+                <h2 className="title"><a className='text-decoration-none' href="/">Our Plan</a></h2>
                 <p className='titleDesc'>
                   Sed ut perspiciatis unde omnis iste natus error sit voluptatem doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
                 </p>

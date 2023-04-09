@@ -17,7 +17,7 @@ function NavComponent() {
         <Navbar className='top sticky-top d-flex align-items-center justify-content-center' expand="lg">
             <Container className='m-0'>
                 <Navbar.Brand className="topLeft d-flex align-items-center justify-content-start">
-                    <Nav.Link as={Link} to="/home" class="logo d-flex align-items-center">
+                    <Nav.Link as={Link} to="/home" className="logo d-flex align-items-center">
                         <h3 className='appLogo'>BlogBook<span className='logoDot'>.</span></h3>
                     </Nav.Link>
                 </Navbar.Brand>
@@ -53,7 +53,7 @@ function NavComponent() {
                         <i onClick={handleShow} className="topSearchIcon fa-solid fa-magnifying-glass"></i>
 
                         <Modal className='d-flex align-items-start' show={show} onHide={handleClose} dialogClassName='modal-90w'>
-                            
+
                             <InputGroup className="p-3">
                                 <Form.Control
                                     placeholder="Search by Name or Category"

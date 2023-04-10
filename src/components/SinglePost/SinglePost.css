@@ -50,18 +50,28 @@
 .cartIconOne {
     left: 4%;
 }
+.cartIconOneCount{
+    left: 7%;
+}
 
 .cartIconTwo {
-    left: 47%;
+    left: 45%;
+}
+.cartIconTwoCount{
+    left: 48%;
 }
 
 .cartIconThree {
+    right: 13%;
+}
+.commentCount{
     right: 4%;
 }
 
 .reactedIcon {
     color: tomato;
 }
+
 
 .comment-text{
     text-align: justify;

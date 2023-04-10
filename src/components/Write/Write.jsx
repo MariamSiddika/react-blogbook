@@ -5,18 +5,37 @@ import JoditEditor from 'jodit-react';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import useFetch from '../../hooks/useFetch';
+import { useRef } from 'react';
 
 const Write = () => {
     // const editor = useRef(null);
     const [content, setContent] = useState('');
-    const { data,  setData, postData, error, loading } = useFetch();
+    const { data, setData, setDataLoading, postData, error, loading } = useFetch();
+    const titleRef = useRef();
+    const categoryRef = useRef();
+    const [imageUpload, setImageUpload] = useState("") || {};
+
+    const handleImage = async (e) => {
+        setDataLoading(true);
+        const image = e.target.files[0];
+        const formData = new FormData();
+        formData.set("key", "5ef8b75ebd5911a1ca073db6b222856d");
+        formData.append("image", image);
+
+        const imgUpload = await postData("https://api.imgbb.com/1/upload", formData);
+        if (imgUpload.status === 200) {
+            setDataLoading(false);
+            setImageUpload(imgUpload.data.data.url);
+            console.log(imageUpload);
+        }
+    };
 
     const config = {
         readonly: false,
-
         height: 350,
         placeholder: "Tell your story...",
     }
+    
     const animatedComponents = makeAnimated();
     const options = [
         { label: 'Life', value: 'Life' },
@@ -26,34 +45,50 @@ const Write = () => {
         { label: 'Sports', value: 'Sports' },
         { label: 'Movie', value: 'Movie' },
     ];
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        console.log(content);
+        const name = titleRef.current.value;
+        const category = categoryRef?.current?.props?.value?.value;
+        // console.log(category)
+        // const htmlRemoveRegex = /(<([^>]+)>)/gi;
+        const post = content;
+        // const post = <div dangerouslySetInnerHTML={{_html:content}} />
+        // console.log(post);
+        const img = imageUpload;
+        const blogData = { name, post, img, email: "abc@gmail.com", category };
+        const blogUpload = await postData(
+            "https://blogs-server-ms.onrender.com/api/v1/blogs",
+            blogData
+        );
+        // console.log(blogUpload);
     };
 
     return (
         <div className='write pt-5 d-flex flex-column justify-content-center align-items-center'>
             <img className='writeImg' src={postImg} alt="" />
             <form className='writeForm'>
-               
-                    <div className="writeFormGroup d-flex align-items-center">
-                        <label htmlFor="fileInput">
+
+                <div className="writeFormGroup d-flex align-items-center">
+                    <label htmlFor="fileInput">
                         <i className="writeIcon d-flex align-items-center justify-content-center fa-solid fa-plus"></i>
                     </label>
-                    <input type="file" name="file" id="fileInput" style={{ display: "none" }} />
-                    <input type="text" className='writeInput p-4' placeholder='Title' autoFocus={true} />
-                    </div>
+                    <input
+                        onChange={handleImage}
+                        accept="image/*"
+                        type="file" name="file" id="fileInput" style={{ display: "none" }} />
+                    <input type="text" ref={titleRef} className='writeInput p-4' placeholder='Title' autoFocus={true} />
+                </div>
 
-                    <Select className='selectField w-25 ms-auto mb-3'
-                        label="Category"
-                        closeMenuOnSelect={true}
-                        components={animatedComponents}
-                        
-                        options={options}
-                        placeholder="Category"
-                    />
-               
+                <Select className='selectField w-25 ms-auto mb-3'
+                    ref={categoryRef}
+                    label="Category"
+                    closeMenuOnSelect={true}
+                    components={animatedComponents}
+
+                    options={options}
+                    placeholder="Category"
+                />
+
 
                 <div className="writeFormGroup">
                     {/* <textarea placeholder='Tell your story...' type="text" className='writeInput writeText p-4'></textarea> */}

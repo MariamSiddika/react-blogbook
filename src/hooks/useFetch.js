@@ -84,6 +84,7 @@ const useFetch = () => {
         deleteData,
         success,
         error,
+        setDataLoading,
         loading: dataLoading,
     };
 };

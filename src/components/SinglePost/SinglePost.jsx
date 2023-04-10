@@ -47,7 +47,7 @@ const SinglePost = () => {
 
     useEffect(() => { getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`) }, [])
 
-    console.log(data);
+    // console.log(data);
     return (
         <Card className='singlePost p-4 mb-4 mt-3'>
             <div className="singlePostWrapper pe-0">
@@ -64,7 +64,7 @@ const SinglePost = () => {
                     Author: <b>John Snow</b>
                 </span>
                 <span className="singlePostDate">
-                    <span className='me-4'>{data[0]?.category}</span>   1 hour ago
+                    <span className='me-4'>{data[0]?.category}</span> {new Date(data[0]?.createdAt).toDateString()}
                 </span>
             </div>
             <p className='singlePostDesc'>
@@ -79,6 +79,7 @@ const SinglePost = () => {
                             : "cartIcon cartIconOne fa-regular fa-heart position-absolute"
                     }
                 ></i>
+                <p className='mb-0 cartIconOneCount position-absolute'>{data[0]?.like_count} Likes</p>
 
                 {
                     <i
@@ -89,7 +90,9 @@ const SinglePost = () => {
                                 : "cartIcon cartIconTwo fa-regular fa-thumbs-down position-absolute"
                         }
                     ></i>
+                    
                 }
+                <p className='mb-0 cartIconTwoCount position-absolute'>{data[0]?.dislike_count} Dislikes</p>
 
                 <i
                     onClick={() => {
@@ -98,19 +101,25 @@ const SinglePost = () => {
                     }}
                     className="cartIcon cartIconThree fa-regular fa-comment position-absolute "
                 ></i>
+                <p className='mb-0 commentCount position-absolute'>{data[0]?.comments?.length} Comments</p>
             </Card.Footer>
             {
                 showCommentBox && (
                     <div className="commentBox">
                         <h3 className='mt-2'><span>{data[0]?.comments?.length}</span> Comment</h3>
                         <div className="">
-                            <div className="d-flex justify-content-center">
-                                <div className="">
+                            <div className="w-100 d-flex justify-content-center">
+                                <div className="w-100">
                                     <div className="d-flex flex-column comment-section">
                                         {
                                             data[0]?.comments?.map((comment) => (
                                                 <div className="bg-white p-2">
-                                                    <div className="d-flex flex-row"><img className="rounded-circle  me-3" alt='' src="https://i.imgur.com/RpzrMR2.jpg" width="40" />
+                                                    
+                                                    <div className="d-flex flex-row">
+                                                    {
+                                                        comment.img?<img className="rounded-circle  me-3" alt='' src={comment.img?.comment.img} width="40" />:<i className=" me-3 fa-regular fa-user mt-1" style={{fontSize: '25px'}}></i>
+                                                    }
+                                                        {/* <img className="rounded-circle  me-3" alt='' src={comment.img?comment.img: <i className="fa-regular fa-user"></i>} width="40" /> */}
                                                         <div className="d-flex flex-column justify-content-start ml-2"><span className="d-block font-weight-bold name">{comment.name?comment.name: 'Anonymous'}</span><span className="date text-black-50">{new Date(data[0]?.createdAt).toDateString()}</span></div>
                                                     </div>
                                                     <div className="mt-2">

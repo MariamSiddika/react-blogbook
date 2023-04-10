@@ -1,23 +1,75 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
 import './Register.css';
+import useFetch from '../../hooks/useFetch';
+import { useRef } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import useFirebase from '../../hooks/useFirebase';
+import Swal from 'sweetalert2';
 
 const Register = () => {
+    const { data, postData, error, loading } = useFetch();
+    const { dataLoading, signUpWithEmailAndPassword , setUser, user, updateName } = useFirebase();
+
+    const location = useLocation();
+    const nameRef = useRef();
+    const emailRef = useRef();
+    const passwordRef = useRef();
+
+    const registrationHandler = (e) => {
+        e.preventDefault();
+        const name = nameRef.current.value;
+        const email = emailRef.current.value;
+        const password = passwordRef.current.value;
+        if (password.length < 6) {
+            new Swal({
+                title: "Oops!",
+                text: "Password Must Be At Least 6 Characters",
+                icon: "error",
+            });
+        } else {
+            // console.log({ name, email, password });
+            nameRef.current.value = "";
+            emailRef.current.value = "";
+            passwordRef.current.value = "";
+            signUpWithEmailAndPassword( email, password, location)
+                .then((userCredential) => {
+                    updateName(name);
+                    setUser(userCredential.user);
+                    console.log(user);
+                    new Swal({
+                        title: "Hurray!",
+                        text: "Your're successfully registered :)",
+                        icon: "success",
+                    });
+                })
+                .catch((err) => {
+                    // setError(err.message);
+                    console.log(err.message);
+                    new Swal({
+                        title: "Oops!",
+                        text: err.message,
+                        icon: "error",
+                    });
+                });
+        }
+    };
+
     return (
         <div className='register d-flex flex-column align-items-center justify-content-center'>
             <span className="registerTitle pt-0">Register</span>
-            <Form className="registerForm d-flex flex-column">
+            <Form onSubmit={registrationHandler} className="registerForm d-flex flex-column">
                 <Form.Group controlId="formGroupName">
                     <Form.Label className='my-2 mx-0'>Username</Form.Label>
-                    <Form.Control className='p-2 bg-white border-0' type="email" placeholder="Enter Your Name" />
+                    <Form.Control ref={nameRef} className='p-2 bg-white border-0' type="text" placeholder="Enter Your Name" />
                 </Form.Group>
                 <Form.Group controlId="formGroupEmail">
                     <Form.Label className='my-2 mx-0'>Email</Form.Label>
-                    <Form.Control className='p-2 bg-white border-0' type="email" placeholder="Enter Your Email" />
+                    <Form.Control ref={emailRef} className='p-2 bg-white border-0' type="email" placeholder="Enter Your Email" />
                 </Form.Group>
                 <Form.Group controlId="formGroupPassword">
                     <Form.Label className='my-2 mx-0'>Password</Form.Label>
-                    <Form.Control className='p-2 bg-white border-0' type="password" placeholder="Enter Your password" />
+                    <Form.Control ref={passwordRef} className='p-2 bg-white border-0' type="password" placeholder="Enter Your password" />
                 </Form.Group>
 
                 <Form.Group className="mt-3">
@@ -35,7 +87,7 @@ const Register = () => {
 
                 <button type="submit" className="mt-3 btn text-white registerBtn">Register</button>
                 <p style={{ fontSize: '20px' }} className='text-center mt-3'>Already have an account?</p>
-                <button className="btn text-white registerLoginBtn">Login</button>
+                <Link to="/login"><button className="btn text-white registerLoginBtn w-100">Login</button></Link>
             </Form>
         </div>
     );

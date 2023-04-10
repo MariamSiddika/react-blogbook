@@ -10,7 +10,7 @@ import { useRef } from 'react';
 const Write = () => {
     // const editor = useRef(null);
     const [content, setContent] = useState('');
-    const { data, setData, setDataLoading, postData, error, loading } = useFetch();
+    const { data, setDataLoading, postData, error, loading } = useFetch();
     const titleRef = useRef();
     const categoryRef = useRef();
     const [imageUpload, setImageUpload] = useState("") || {};

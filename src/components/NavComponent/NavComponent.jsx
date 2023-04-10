@@ -16,17 +16,20 @@ function NavComponent() {
     const handleShow = () => setShow(true);
 
     return (
+
         <Navbar className='top sticky-top d-flex align-items-center justify-content-center' expand="lg">
             <Container className='m-0'>
+                <div className='col-3'>
                 <Navbar.Brand className="topLeft d-flex align-items-center justify-content-start me-0">
                     <Nav.Link as={Link} to="/home" className="logo d-flex align-items-center">
                         <h3 className='appLogo'>BlogBook<span className='logoDot'>.</span></h3>
                     </Nav.Link>
                 </Navbar.Brand>
+                </div>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <div className="topCenter d-flex justify-content-center mx-auto">
-                        <Nav className="topList  m-0 p-0">
+                    <div className="topCenter  ">
+                        <Nav className="topList d-flex justify-content-center align-items-center">
                             <Nav.Link as={Link} to="/home" className="topListItem"><li>HOME</li></Nav.Link>
                             <Nav.Link as={Link} to="/about" className="topListItem"><li>ABOUT</li></Nav.Link>
                             <Nav.Link as={Link} to="/contact" className="topListItem"><li>CONTACT</li></Nav.Link>
@@ -42,7 +45,7 @@ function NavComponent() {
                         {
                             user.auth ?
                                 <>
-                                    <button className="topListItem me-2">LOGOUT</button>
+                                    <button  onClick={() => logOut()} className="topListItem me-2">LOGOUT</button>
                                     <img className='topImg me-2'
                                         src={img}
                                         alt=""
@@ -84,7 +87,6 @@ function NavComponent() {
                 </Navbar.Collapse>
             </Container>
         </Navbar>
-
 
 
     );

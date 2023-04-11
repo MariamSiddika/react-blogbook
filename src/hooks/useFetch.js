@@ -23,7 +23,7 @@ const useFetch = () => {
             }
         }
     };
-    
+
     const postData = async (url, data) => {
         try {
             const res = await axios.post(url, data);
@@ -37,10 +37,10 @@ const useFetch = () => {
         }
     };
     const patchData = async (url, data) => {
-        axios
+        await axios
             .patch(url, data)
             .then((res) => {
-                //console.log(res.data);
+                console.log(res);
                 if (res.data.status === "Successful") {
                     setSuccess(true);
 
@@ -50,7 +50,7 @@ const useFetch = () => {
                 }
             })
             .catch((err) => {
-                //console.log(err);
+                console.log(err);
                 setError(err);
                 if (error) {
                     toast.error(error);

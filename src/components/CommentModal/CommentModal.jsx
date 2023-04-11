@@ -1,43 +1,47 @@
-import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
-import './CommentModal.css';
-import useFetch from '../../hooks/useFetch';
-import useFirebase from '../../hooks/useFirebase';
-import { useRef } from 'react';
-import { useParams } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import React, { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
+import "./CommentModal.css";
+import useFetch from "../../hooks/useFetch";
+import useFirebase from "../../hooks/useFirebase";
+import { useRef } from "react";
+import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
-function CommentModal() {
+function CommentModal({ data }) {
+    console.log(data);
     const [show, setShow] = useState(false);
-    const { data, setDataLoading, postData, patchData, error, loading } = useFetch();
+    const { setDataLoading, postData, patchData, error, loading } = useFetch();
     const { user, updateName } = useFirebase();
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
     const { postId } = useParams();
 
     const modalEmailRef = useRef();
     const modalCommentRef = useRef();
 
+    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
+
     const handleModalComment = (e) => {
         e.preventDefault();
         const modalEmail = modalEmailRef.current.value;
         const modalComment = modalCommentRef.current.value;
-        const comments = [...{name: modalComment, email: modalEmail}]
-        console.log(comments);
-        const commnetUpload = patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, comments);
-        console.log(commnetUpload);
+        const commentData = {
+            comments: [...data?.comments, { email: modalEmail, comment: modalComment }],
+        };
+        console.log(commentData);
+        patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, commentData);
+
         // new Swal.fire(
         //     'Good job!',
         //     'Your comment is added!',
         //     'success'
         //   )
-    }
+    };
 
     return (
         <>
-            <Button className='anonymousCommentBtn' onClick={handleShow}>
+            <Button className="anonymousCommentBtn" onClick={handleShow}>
                 Comment on this Blog
             </Button>
 
@@ -46,7 +50,7 @@ function CommentModal() {
                     <Modal.Title>Modal heading</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={handleModalComment}>
+                    <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Label>Enter your Email address</Form.Label>
                             <Form.Control
@@ -56,20 +60,21 @@ function CommentModal() {
                                 autoFocus
                             />
                         </Form.Group>
-                        <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlTextarea1"
-                        >
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                             <Form.Label>Enter your Comment</Form.Label>
                             <Form.Control ref={modalCommentRef} as="textarea" rows={3} />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button className="anonymousCommentClose" variant="secondary" onClick={handleClose}>
+                    <Button
+                        className="anonymousCommentClose"
+                        variant="secondary"
+                        onClick={handleClose}
+                    >
                         Close
                     </Button>
-                    <Button type="submit" className='anonymousCommentSubmit'>
+                    <Button onClick={handleModalComment} className="anonymousCommentSubmit">
                         Comment
                     </Button>
                 </Modal.Footer>

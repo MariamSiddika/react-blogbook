@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import './Login.css';
 import useFirebase from '../../hooks/useFirebase';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Link, Navigate, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { ClockLoader } from 'react-spinners';
 import { css } from '@emotion/react';
@@ -90,7 +90,7 @@ const Login = () => {
 
                 <button type="submit" className="mt-4 btn text-white loginBtn">Login</button>
                 <p style={{ fontSize: '20px' }} className='text-center mt-3'>New in here?</p>
-                <button className="btn text-white loginRegisterBtn">Register</button>
+                <Link to="/register"><button className="btn text-white loginRegisterBtn w-100">Register</button></Link>               
             </Form>
         </div>
     );

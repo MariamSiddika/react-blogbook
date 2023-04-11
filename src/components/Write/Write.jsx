@@ -6,6 +6,7 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import useFetch from '../../hooks/useFetch';
 import { useRef } from 'react';
+import useFirebase from '../../hooks/useFirebase';
 
 const Write = () => {
     // const editor = useRef(null);
@@ -14,6 +15,7 @@ const Write = () => {
     const titleRef = useRef();
     const categoryRef = useRef();
     const [imageUpload, setImageUpload] = useState("") || {};
+    const { user, updateName } = useFirebase();
 
     const handleImage = async (e) => {
         setDataLoading(true);
@@ -55,17 +57,19 @@ const Write = () => {
         // const post = <div dangerouslySetInnerHTML={{_html:content}} />
         // console.log(post);
         const img = imageUpload;
-        const blogData = { name, post, img, email: "abc@gmail.com", category };
+        const blogData = { name, post, author: user?.displayName,
+            email: user?.email, img, category };
         const blogUpload = await postData(
             "https://blogs-server-ms.onrender.com/api/v1/blogs",
             blogData
         );
-        // console.log(blogUpload);
+        console.log(blogUpload);
     };
 
     return (
         <div className='write pt-5 d-flex flex-column justify-content-center align-items-center'>
-            <img className='writeImg' src={postImg} alt="" />
+           
+            <img className='writeImg' src={imageUpload? imageUpload : postImg} alt="" />
             <form className='writeForm'>
 
                 <div className="writeFormGroup d-flex align-items-center">

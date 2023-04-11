@@ -3,8 +3,11 @@ import postImg from '../../images/food.jpg'
 import { Card } from 'react-bootstrap';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import CommentModal from '../CommentModal/CommentModal';
 import useFetch from '../../hooks/useFetch';
 import { useParams } from 'react-router-dom';
+import useFirebase from '../../hooks/useFirebase';
+import swal from 'sweetalert';
 
 
 const SinglePost = () => {
@@ -12,8 +15,11 @@ const SinglePost = () => {
     const [isLiked, setIsLiked] = useState(false);
     const [isdisLiked, setIsdisLiked] = useState(false);
     const [showCommentBox, setshowCommentBox] = useState(true);
-    const { data, getData, error, loading } = useFetch();
+    const { data, getData, error, loading, patchData,
+        deleteData,
+        success, } = useFetch();
     const { postId } = useParams();
+    const { user, updateName } = useFirebase();
     // const path = location.pathname.split("/")[2];
     // console.log(param);
 
@@ -46,22 +52,48 @@ const SinglePost = () => {
     };
 
     useEffect(() => { getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`) }, [])
-
     // console.log(data);
+
+    const handleBlogEdit = () => {
+
+    }
+    const handleBlogDelete = () => {
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this blog!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    deleteData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`)
+                    swal("Poof! Your blog has been deleted!", {
+                        icon: "success",
+                    });
+                } else {
+                    swal("Your blog is safe!");
+                }
+            });
+    }
     return (
         <Card className='singlePost p-4 mb-4 mt-3'>
             <div className="singlePostWrapper pe-0">
                 <img src={data[0]?.img} alt="" className="singlePostImg w-100 rounded" />
             </div>
             <h1 className='singlePostTitle text-center m-2 fs-2 fw-bolder'>{data[0]?.name}
-                {/* <div className="singlePostEdit float-end">
-                    <i className="singlePostIcon fa-regular fa-pen-to-square me-3"></i>
-                    <i className="singlePostIcon fa-regular fa-trash-can me-2"></i>
-                </div> */}
+                {
+                    user?.email === data[0]?.email &&
+                    <div className="singlePostEdit float-end">
+                        <i onClick={handleBlogEdit} className="singlePostIcon fa-regular fa-pen-to-square me-3"></i>
+                        <i onClick={handleBlogDelete} className="singlePostIcon fa-regular fa-trash-can me-2"></i>
+                    </div>
+                }
+
             </h1>
             <div className='singlePostInfo mb-4 d-flex justify-content-between'>
                 <span className="singlePostAuthor">
-                    Author: <b>John Snow</b>
+                    Author: <b>{data[0]?.author}</b>
                 </span>
                 <span className="singlePostDate">
                     <span className='me-4'>{data[0]?.category}</span> {new Date(data[0]?.createdAt).toDateString()}
@@ -90,7 +122,7 @@ const SinglePost = () => {
                                 : "cartIcon cartIconTwo fa-regular fa-thumbs-down position-absolute"
                         }
                     ></i>
-                    
+
                 }
                 <p className='mb-0 cartIconTwoCount position-absolute'>{data[0]?.dislike_count} Dislikes</p>
 
@@ -114,13 +146,13 @@ const SinglePost = () => {
                                         {
                                             data[0]?.comments?.map((comment) => (
                                                 <div className="bg-white p-2">
-                                                    
+
                                                     <div className="d-flex flex-row">
-                                                    {
-                                                        comment.img?<img className="rounded-circle  me-3" alt='' src={comment.img?.comment.img} width="40" />:<i className=" me-3 fa-regular fa-user mt-1" style={{fontSize: '25px'}}></i>
-                                                    }
-                                                        {/* <img className="rounded-circle  me-3" alt='' src={comment.img?comment.img: <i className="fa-regular fa-user"></i>} width="40" /> */}
-                                                        <div className="d-flex flex-column justify-content-start ml-2"><span className="d-block font-weight-bold name">{comment.name?comment.name: 'Anonymous'}</span><span className="date text-black-50">{new Date(data[0]?.createdAt).toDateString()}</span></div>
+                                                        {
+                                                            comment.img ? <img className="rounded-circle  me-3" alt='' src={comment.img?.comment.img} width="40" /> : <i className=" me-3 fa-regular fa-user mt-1" style={{ fontSize: '25px' }}></i>
+                                                        }
+
+                                                        <div className="d-flex flex-column justify-content-start ml-2"><span className="d-block font-weight-bold name">{comment.name ? comment.name : 'Anonymous'}</span><span className="date text-black-50">{new Date(data[0]?.createdAt).toDateString()}</span></div>
                                                     </div>
                                                     <div className="mt-2">
                                                         <p className="comment-text">{comment.comment}</p>
@@ -128,18 +160,26 @@ const SinglePost = () => {
                                                 </div>
                                             ))
                                         }
-{/* 
-                                        <div className="bg-white">
-                                            <div className="d-flex flex-row fs-12">
-                                                <div className="like p-2 cursor"><i className="fa fa-thumbs-o-up"></i><span className="ml-1">Like</span></div>
-                                                <div className="like p-2 cursor"><i className="fa fa-commenting-o"></i><span className="ml-1">Comment</span></div>
 
-                                            </div>
-                                        </div> */}
                                         <div className="bg-light p-2">
                                             <div className="d-flex flex-row align-items-start">
-                                                <img className="rounded-circle me-3" alt='' src="https://i.imgur.com/RpzrMR2.jpg" width="40" /><textarea className="form-control ml-1 shadow-none textarea"></textarea></div>
-                                            <div className="mt-2 d-flex justify-content-end"><button className="btn btn-comment me-3 btn-sm shadow-none" type="button">Post comment</button><button className="btn btn-comment-cancel btn-sm ml-1 shadow-none" type="button">Cancel</button></div>
+                                                {
+                                                    user?.auth && <>
+                                                        user?.img ?
+                                                        <img className="rounded-circle me-3" alt='' src={user?.img} width="40" /> :
+                                                        <i className=" me-3 fa-regular fa-user mt-1" style={{ fontSize: '25px' }}></i>
+                                                    </>
+                                                }
+                                                {
+                                                    user?.auth &&
+                                                    <textarea className="form-control ml-1 shadow-none textarea"></textarea>
+                                                }
+                                            </div>
+                                            <div className="mt-2 d-flex justify-content-end">
+                                                {
+                                                    user?.auth ? <> <button className="btn btn-comment me-3 btn-sm shadow-none" type="button">Post comment</button><button className="btn btn-comment-cancel btn-sm ml-1 shadow-none" type="button">Cancel</button> </> : <CommentModal></CommentModal>
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

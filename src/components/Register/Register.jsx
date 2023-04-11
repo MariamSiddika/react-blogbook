@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 
 const Register = () => {
     const { data, postData, error, loading } = useFetch();
-    const { dataLoading, signUpWithEmailAndPassword , setUser, user, updateName } = useFirebase();
+    const { dataLoading, signUpWithEmailAndPassword, setUser, user, updateName } = useFirebase();
 
     const location = useLocation();
     const nameRef = useRef();
@@ -32,17 +32,25 @@ const Register = () => {
             nameRef.current.value = "";
             emailRef.current.value = "";
             passwordRef.current.value = "";
-            signUpWithEmailAndPassword( email, password, location)
+            signUpWithEmailAndPassword(email, password, location)
                 .then((userCredential) => {
                     updateName(name);
                     setUser(userCredential.user);
                     console.log(user);
+
+                    const userData = { name, email };
+                    const userUpload = postData(
+                        "https://blogs-server-ms.onrender.com/api/v1/users",
+                        userData
+                    );
+
                     new Swal({
                         title: "Hurray!",
                         text: "Your're successfully registered :)",
                         icon: "success",
                     });
                 })
+
                 .catch((err) => {
                     // setError(err.message);
                     console.log(err.message);

@@ -1,7 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import './NavComponent.css';
 import img from '../../images/man-profile-cartoon_18591-58482.webp';
 import { Button, Dropdown, Form, InputGroup, Modal } from 'react-bootstrap';
@@ -30,12 +30,22 @@ function NavComponent() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <div className="topCenter  ">
                         <Nav className="topList d-flex justify-content-center align-items-center">
-                            <Nav.Link as={Link} to="/home" className="topListItem"><li>HOME</li></Nav.Link>
-                            <Nav.Link as={Link} to="/about" className="topListItem"><li>ABOUT</li></Nav.Link>
-                            <Nav.Link as={Link} to="/contact" className="topListItem"><li>CONTACT</li></Nav.Link>
-                            <Nav.Link as={Link} to="/write" className="topListItem"><li>WRITE</li></Nav.Link>
+                            <Nav.Link as={Link} style={{marginRight: '30px'}} to="/home" className="topListItem"><li>HOME</li></Nav.Link>
+                            <Nav.Link as={Link} style={{marginRight: '30px'}} to="/about" className="topListItem"><li>ABOUT</li></Nav.Link>
+                            <Nav.Link as={Link}  style={{marginRight: '30px'}} to="/contact" className="topListItem"><li>CONTACT</li></Nav.Link>
+                            {
+                                user.auth &&
+                                <Nav.Link as={Link} to="/write" className="topListItem"><li>WRITE</li></Nav.Link>
+                                // : 
+                                // <Navigate to={'/home'} />
+                            
+                            }
+                            {
+                                !user.auth && 
+                                <Nav.Link as={Link} to="/register" className="topListItem me-0"><li>REGISTER</li></Nav.Link>
+                            }
                            
-                            <Nav.Link as={Link} to="/register" className="topListItem me-0"><li>REGISTER</li></Nav.Link>
+                            
                             {/* <Nav.Link as={Link} to="/logout" onClick={() => logOut()} className="topListItem"><li>LOGOUT</li></Nav.Link> */}
 
                         </Nav>
@@ -45,7 +55,7 @@ function NavComponent() {
                         {
                             user.auth ?
                                 <>
-                                    <button  onClick={() => logOut()} className="topListItem me-2">LOGOUT</button>
+                                    <button  onClick={() => logOut()} className=" navLogoutBtn me-3 border-0 ">Logout</button>
                                     <img className='topImg me-2'
                                         src={img}
                                         alt=""
@@ -62,7 +72,7 @@ function NavComponent() {
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 </>
-                                :  <Nav.Link as={Link} to="/login" className="topListItem">LOGIN</Nav.Link>
+                                :  <Nav.Link as={Link} style={{marginRight: '30px'}} to="/login" className="topListItem"><button className='navLoginBtn  border-0'>Login</button></Nav.Link>
 
                         }
 

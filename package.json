@@ -22,6 +22,7 @@
     "react-spinners": "^0.13.8",
     "react-toastify": "^9.1.2",
     "react-type-animation": "^2.1.2",
+    "sweetalert": "^2.1.2",
     "sweetalert2": "^11.7.3",
     "web-vitals": "^2.1.4"
   },

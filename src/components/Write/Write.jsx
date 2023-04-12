@@ -59,6 +59,7 @@ const Write = () => {
         const img = imageUpload;
         const blogData = { name, post, author: user?.displayName,
             email: user?.email, img, category };
+            console.log(blogData);
         const blogUpload = await postData(
             "https://blogs-server-ms.onrender.com/api/v1/blogs",
             blogData

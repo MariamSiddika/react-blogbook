@@ -8,6 +8,7 @@ import useFetch from "../../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import useFirebase from "../../hooks/useFirebase";
 import swal from "sweetalert";
+import { useRef } from "react";
 
 const SinglePost = () => {
     const [isLiked, setIsLiked] = useState(false);
@@ -16,9 +17,12 @@ const SinglePost = () => {
     const { data, getData, error, loading, patchData, deleteData, success } = useFetch();
     const { postId } = useParams();
     const { user, updateName } = useFirebase();
-    // const path = location.pathname.split("/")[2];
-    // console.log(param);
 
+    // const commentEmailRef = useRef();
+    const commentRef = useRef();
+
+    const [likeCounter, setLikeCounter] = useState(2);
+    const [disLikeCounter, setDisLikeCounter] = useState(5);
     useEffect(() => {
         if (isLiked === true) {
             setIsdisLiked(false);
@@ -36,6 +40,10 @@ const SinglePost = () => {
         setIsLiked((isLiked) => !isLiked);
         if (isLiked === true) {
             setIsdisLiked(false);
+            setLikeCounter(prev => prev - 1);
+        }
+        else if (isLiked === false) {
+            setLikeCounter(prev => prev + 1);
         }
     };
     // console.log(isLiked, isdisLiked);
@@ -44,6 +52,10 @@ const SinglePost = () => {
         setIsdisLiked((isdisLiked) => !isdisLiked);
         if (isdisLiked === true) {
             setIsLiked(false);
+            setDisLikeCounter(prev => prev - 1);
+        }
+        else if (isdisLiked === false) {
+            setDisLikeCounter(prev => prev + 1);
         }
     };
 
@@ -52,7 +64,7 @@ const SinglePost = () => {
     }, []);
     // console.log(data);
 
-    const handleBlogEdit = () => {};
+    const handleBlogEdit = () => { };
     const handleBlogDelete = () => {
         swal({
             title: "Are you sure?",
@@ -70,6 +82,23 @@ const SinglePost = () => {
                 swal("Your blog is safe!");
             }
         });
+    };
+
+    const handleComment = (e) => {
+        e.preventDefault();
+        const commentValue = commentRef.current.value;
+        const userCommentData = {
+            comments: [{ email: user.email, comment: commentValue }],
+        };
+        console.log(userCommentData);
+        patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, userCommentData);
+
+        commentRef.current.value = "";
+        // new Swal.fire(
+        //     'Good job!',
+        //     'Your comment is added!',
+        //     'success'
+        //   )
     };
     return (
         <Card className="singlePost p-4 mb-4 mt-3">
@@ -111,7 +140,7 @@ const SinglePost = () => {
                     }
                 ></i>
                 <p className="mb-0 cartIconOneCount position-absolute">
-                    {data[0]?.like_count} Likes
+                    {likeCounter} Likes
                 </p>
 
                 {
@@ -125,7 +154,7 @@ const SinglePost = () => {
                     ></i>
                 }
                 <p className="mb-0 cartIconTwoCount position-absolute">
-                    {data[0]?.dislike_count} Dislikes
+                    {disLikeCounter} Dislikes
                 </p>
 
                 <i
@@ -167,7 +196,8 @@ const SinglePost = () => {
 
                                                 <div className="d-flex flex-column justify-content-start ml-2">
                                                     <span className="d-block font-weight-bold name">
-                                                        {comment.name ? comment.name : "Anonymous"}
+                                                        {user?.displayName
+                                                            ? user?.displayName : "Anonymous"}
                                                     </span>
                                                     <span className="date text-black-50">
                                                         {new Date(
@@ -184,24 +214,23 @@ const SinglePost = () => {
 
                                     <div className="bg-light p-2">
                                         <div className="d-flex flex-row align-items-start">
+                                            {user?.auth ?
+
+                                                <img
+                                                    className="rounded-circle me-3"
+                                                    alt=""
+                                                    src={user?.img}
+                                                    width="40"
+                                                />
+                                                :
+                                                <i
+                                                    className=" me-3 fa-regular fa-user mt-1"
+                                                    style={{ fontSize: "25px" }}
+                                                ></i>
+
+                                            }
                                             {user?.auth && (
-                                                <>
-                                                    user?.img ?
-                                                    <img
-                                                        className="rounded-circle me-3"
-                                                        alt=""
-                                                        src={user?.img}
-                                                        width="40"
-                                                    />{" "}
-                                                    :
-                                                    <i
-                                                        className=" me-3 fa-regular fa-user mt-1"
-                                                        style={{ fontSize: "25px" }}
-                                                    ></i>
-                                                </>
-                                            )}
-                                            {user?.auth && (
-                                                <textarea className="form-control ml-1 shadow-none textarea"></textarea>
+                                                <textarea ref={commentRef} className="form-control ml-1 shadow-none textarea"></textarea>
                                             )}
                                         </div>
                                         <div className="mt-2 d-flex justify-content-end">
@@ -211,6 +240,7 @@ const SinglePost = () => {
                                                     <button
                                                         className="btn btn-comment me-3 btn-sm shadow-none"
                                                         type="button"
+                                                        onClick={handleComment}
                                                     >
                                                         Post comment
                                                     </button>

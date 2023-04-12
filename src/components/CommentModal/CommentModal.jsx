@@ -31,7 +31,8 @@ function CommentModal({ data }) {
         };
         console.log(commentData);
         patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, commentData);
-
+        modalEmailRef.current.value = "";
+        modalCommentRef.current.value = "";
         // new Swal.fire(
         //     'Good job!',
         //     'Your comment is added!',

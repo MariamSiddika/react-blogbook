@@ -1,5 +1,4 @@
 import "./SinglePost.css";
-import postImg from "../../images/food.jpg";
 import { Card } from "react-bootstrap";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -16,7 +15,7 @@ const SinglePost = () => {
     const [showCommentBox, setshowCommentBox] = useState(true);
     const { data, getData, error, loading, patchData, deleteData, success } = useFetch();
     const { postId } = useParams();
-    const { user, updateName } = useFirebase();
+    const { user } = useFirebase();
 
     // const commentEmailRef = useRef();
     const commentRef = useRef();
@@ -100,6 +99,7 @@ const SinglePost = () => {
         //     'success'
         //   )
     };
+    const content = data[0]?.post;
     return (
         <Card className="singlePost p-4 mb-4 mt-3">
             <div className="singlePostWrapper pe-0">
@@ -129,7 +129,9 @@ const SinglePost = () => {
                     {new Date(data[0]?.createdAt).toDateString()}
                 </span>
             </div>
-            <p className="singlePostDesc">{data[0]?.post}</p>
+            <p dangerouslySetInnerHTML={{__html: content,}} className="singlePostDesc">
+            {/* {data[0]?.post} */}
+            </p>
             <Card.Footer className="cartFooter d-flex align-items-center justify-content-between w-100 position-relative border-bottom">
                 <i
                     onClick={likeHandler}
@@ -168,6 +170,8 @@ const SinglePost = () => {
                     {data[0]?.comments?.length} Comments
                 </p>
             </Card.Footer>
+
+            {/* Comment section */}
             {showCommentBox && (
                 <div className="commentBox">
                     <h3 className="mt-2">
@@ -180,11 +184,11 @@ const SinglePost = () => {
                                     {data[0]?.comments?.map((comment) => (
                                         <div className="bg-white p-2">
                                             <div className="d-flex flex-row">
-                                                {comment.img ? (
+                                                {user.img ? (
                                                     <img
                                                         className="rounded-circle  me-3"
                                                         alt=""
-                                                        src={comment.img?.comment.img}
+                                                        src={user.img}
                                                         width="40"
                                                     />
                                                 ) : (
@@ -196,8 +200,11 @@ const SinglePost = () => {
 
                                                 <div className="d-flex flex-column justify-content-start ml-2">
                                                     <span className="d-block font-weight-bold name">
-                                                        {user?.displayName
-                                                            ? user?.displayName : "Anonymous"}
+                                                        {/* {user?.displayName
+                                                            ? user?.displayName : "Anonymous"} */}
+                                                            {
+                                                                 data[0]?.comment?.name ? data[0]?.comment?.name : "Anonymous"
+                                                            }
                                                     </span>
                                                     <span className="date text-black-50">
                                                         {new Date(
@@ -236,7 +243,7 @@ const SinglePost = () => {
                                         <div className="mt-2 d-flex justify-content-end">
                                             {user?.auth ? (
                                                 <>
-                                                    {" "}
+                                                    
                                                     <button
                                                         className="btn btn-comment me-3 btn-sm shadow-none"
                                                         type="button"

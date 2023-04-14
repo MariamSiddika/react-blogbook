@@ -2,12 +2,33 @@ import React, { useState } from 'react';
 import './Settings.css';
 import pp from '../../images/man-profile-cartoon_18591-58482.webp';
 import { Button, Form, Modal } from 'react-bootstrap';
+import useFirebase from '../../hooks/useFirebase';
+import useFetch from '../../hooks/useFetch';
 
 const Settings = () => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const { user, updateName } = useFirebase();
+    const { data, setDataLoading, postData, error, loading } = useFetch();
+    const [imageUpload, setImageUpload] = useState("") || {};
+
+    const handleProfileImage = async (e) => {
+        setDataLoading(true);
+        const image = e.target.files[0];
+        const formData = new FormData();
+        formData.set("key", "5ef8b75ebd5911a1ca073db6b222856d");
+        formData.append("image", image);
+
+        const imgUpload = await postData("https://api.imgbb.com/1/upload", formData);
+        if (imgUpload.status === 200) {
+            setDataLoading(false);
+            setImageUpload(imgUpload.data.data.url);
+            console.log(imageUpload);
+        }
+    };
 
     return (
         <div className='settings container w-lg-75'>
@@ -19,18 +40,29 @@ const Settings = () => {
                 <form className='settingsForm d-flex flex-column'>
                     <label className='mb-2' htmlFor="">Profile Picture</label>
                     <div className='settingsPP d-flex align-items-center my-10 mx-0'>
-                        <img src={pp} alt="" />
+                        {
+                            imageUpload
+                                ?
+                                <img src={imageUpload? imageUpload : user?.img} alt="" />
+                                :
+                                <i
+                                    className=" fa-regular fa-user"
+                                    style={{ fontSize: "35px" }}
+                                ></i>
+                        }
+
                         <label htmlFor="fileInput">
                             <i className="settingsPpIcon d-flex align-items-center justify-content-center ms-2 fa-regular fa-circle-user"></i>
                         </label>
-                        <input type="file" name="" id="fileInput" style={{ display: 'none' }} />
+                        <input  onChange={handleProfileImage}
+                        accept="image/*" type="file" name="" id="fileInput" style={{ display: 'none' }} />
                     </div>
                     <label>Username</label>
-                    <input type="text" placeholder='John Snow' />
+                    <input type="text" placeholder={user.displayName} />
                     <label>E-mail</label>
-                    <input type="email" placeholder='john@snow.com' />
+                    <input type="email" placeholder={user.email} />
                     <label>Password</label>
-                    <input type="password" />
+                    <input type="password" placeholder='Enter new password'/>
                     <button type="submit" className="settingsSubmit text-white mt-4 btn btn-lg">Update</button>
                 </form>
 

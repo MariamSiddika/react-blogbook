@@ -4,13 +4,15 @@ import { Card, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const Post = ({ post }) => {
-    // console.log(post)
+    console.log(post)
 
     // let navigate = useNavigate();
     // const routeChange = () => {
     //     let path = `/single`;
     //     navigate(path);
     // };
+    
+    const content = post?.post;
     return (
         <Col xs={12} md={6} lg={4}>
             <Card className="post mt-4 mb-5 mx-3 shadow">
@@ -29,8 +31,9 @@ const Post = ({ post }) => {
                     <span className="postTitle mt-2">{post.name}</span>
                     <span className="postDate mt-1">{new Date(post.createdAt).toDateString()}</span>
                     {/* <span className="postDate mt-1">1 hour ago</span> */}
-                    <p className="postDesc mt-3 w-100 px-3">
-                        {post.post}
+                    <p dangerouslySetInnerHTML={{__html: content,}} className="postDesc mt-3 w-100 px-3" >
+                        {/* {post.post} */}
+                        {/* // <div dangerouslySetInnerHTML={{_html:post}} /> */}
                     </p>
 
                 </div>

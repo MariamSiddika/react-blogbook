@@ -54,7 +54,7 @@ const Write = () => {
         // console.log(category)
         // const htmlRemoveRegex = /(<([^>]+)>)/gi;
         const post = content;
-        // const post = <div dangerouslySetInnerHTML={{_html:content}} />
+        
         // console.log(post);
         const img = imageUpload;
         const blogData = { name, post, author: user?.displayName,

@@ -20,32 +20,32 @@ function NavComponent() {
         <Navbar className='top sticky-top d-flex align-items-center justify-content-center' expand="lg">
             <Container className='m-0'>
                 <div className='col-3'>
-                <Navbar.Brand className="topLeft d-flex align-items-center justify-content-start me-0">
-                    <Nav.Link as={Link} to="/home" className="logo d-flex align-items-center">
-                        <h3 className='appLogo'>BlogBook<span className='logoDot'>.</span></h3>
-                    </Nav.Link>
-                </Navbar.Brand>
+                    <Navbar.Brand className="topLeft d-flex align-items-center justify-content-start me-0">
+                        <Nav.Link as={Link} to="/home" className="logo d-flex align-items-center">
+                            <h3 className='appLogo'>BlogBook<span className='logoDot'>.</span></h3>
+                        </Nav.Link>
+                    </Navbar.Brand>
                 </div>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <div className="topCenter  ">
                         <Nav className="topList d-flex justify-content-center align-items-center">
-                            <Nav.Link as={Link} style={{marginRight: '30px'}} to="/home" className="topListItem"><li>HOME</li></Nav.Link>
-                            <Nav.Link as={Link} style={{marginRight: '30px'}} to="/about" className="topListItem"><li>ABOUT</li></Nav.Link>
-                            <Nav.Link as={Link}  style={{marginRight: '30px'}} to="/contact" className="topListItem"><li>CONTACT</li></Nav.Link>
+                            <Nav.Link as={Link} style={{ marginRight: '30px' }} to="/home" className="topListItem"><li>HOME</li></Nav.Link>
+                            <Nav.Link as={Link} style={{ marginRight: '30px' }} to="/about" className="topListItem"><li>ABOUT</li></Nav.Link>
+                            <Nav.Link as={Link} style={{ marginRight: '30px' }} to="/contact" className="topListItem"><li>CONTACT</li></Nav.Link>
                             {
                                 user.auth &&
                                 <Nav.Link as={Link} to="/write" className="topListItem"><li>WRITE</li></Nav.Link>
                                 // : 
                                 // <Navigate to={'/home'} />
-                            
+
                             }
                             {
-                                !user.auth && 
+                                !user.auth &&
                                 <Nav.Link as={Link} to="/register" className="topListItem me-0"><li>REGISTER</li></Nav.Link>
                             }
-                           
-                            
+
+
                             {/* <Nav.Link as={Link} to="/logout" onClick={() => logOut()} className="topListItem"><li>LOGOUT</li></Nav.Link> */}
 
                         </Nav>
@@ -55,11 +55,24 @@ function NavComponent() {
                         {
                             user.auth ?
                                 <>
-                                    <button  onClick={() => logOut()} className=" navLogoutBtn me-3 border-0 ">Logout</button>
-                                    <img className='topImg me-2'
+                                    <button onClick={() => logOut()} className=" navLogoutBtn me-3 border-0 ">Logout</button>
+                                    {
+                                        user?.img
+                                            ?
+                                            <img className='topImg me-2'
+                                                src={user?.img}
+                                                alt=""
+                                            />
+                                            :
+                                            <i
+                                                className=" fa-regular fa-user me-2"
+                                                style={{ fontSize: "30px" }}
+                                            ></i>
+                                    }
+                                    {/* <img className='topImg me-2'
                                         src={img}
                                         alt=""
-                                    />
+                                    /> */}
 
                                     <p className='mb-0'>{user.displayName}</p>
                                     <Dropdown className="dropDown">
@@ -72,7 +85,7 @@ function NavComponent() {
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 </>
-                                :  <Nav.Link as={Link} style={{marginRight: '30px'}} to="/login" className="topListItem"><button className='navLoginBtn  border-0'>Login</button></Nav.Link>
+                                : <Nav.Link as={Link} style={{ marginRight: '30px' }} to="/login" className="topListItem"><button className='navLoginBtn  border-0'>Login</button></Nav.Link>
 
                         }
 

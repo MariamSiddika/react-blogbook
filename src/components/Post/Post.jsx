@@ -18,7 +18,7 @@ const Post = ({ post }) => {
             <Card className="post mt-4 mb-5 mx-3 shadow">
                 {
                     post.img && <img
-                    className="postImg w-100 rounded" src={post.img} alt="" />
+                    className="postImg w-100 rounded mb-2" src={post.img} alt="" />
                 }
                 
                 <div
@@ -39,7 +39,7 @@ const Post = ({ post }) => {
                 </div>
                 <Link className='text-decoration-none' to={`/single/${post._id}`}>
                     <div className="d-flex align-items-center justify-content-end ">
-                        <button className="btn-read-blog mb-4 me-3 mt-0"><span>Read Blog</span>
+                        <button className="btn-read-blog mb-3 me-3 mt-0"><span>Read Blog</span>
                             <i className="fa-solid fa-arrow-right"></i></button>
                     </div>
                 </Link>

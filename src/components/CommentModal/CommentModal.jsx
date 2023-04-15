@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 function CommentModal({ data }) {
-    console.log(data);
+    // console.log(data);
     const [show, setShow] = useState(false);
     const { setDataLoading, postData, patchData, error, loading } = useFetch();
     const { user, updateName } = useFirebase();
@@ -29,7 +29,7 @@ function CommentModal({ data }) {
         const commentData = {
             comments: [...data?.comments, { email: modalEmail, comment: modalComment }],
         };
-        console.log(commentData);
+        // console.log(commentData);
         patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, commentData);
         modalEmailRef.current.value = "";
         modalCommentRef.current.value = "";

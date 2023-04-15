@@ -20,8 +20,17 @@ const SinglePost = () => {
     // const commentEmailRef = useRef();
     const commentRef = useRef();
 
+    
+    useEffect(() => {
+        getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`);
+    }, []);
+    // console.log(data);
+    const likeCount = data[0]?.like_count;
+    const disLikeCount = data[0]?.dislike_count;
     const [likeCounter, setLikeCounter] = useState(2);
     const [disLikeCounter, setDisLikeCounter] = useState(5);
+    console.log(typeof(data[0]?.like_count))
+    
     useEffect(() => {
         if (isLiked === true) {
             setIsdisLiked(false);
@@ -40,9 +49,11 @@ const SinglePost = () => {
         if (isLiked === true) {
             setIsdisLiked(false);
             setLikeCounter(prev => prev - 1);
+            setDisLikeCounter(prev => prev + 1);
         }
         else if (isLiked === false) {
             setLikeCounter(prev => prev + 1);
+            setDisLikeCounter(prev => prev - 1);
         }
     };
     // console.log(isLiked, isdisLiked);
@@ -52,16 +63,15 @@ const SinglePost = () => {
         if (isdisLiked === true) {
             setIsLiked(false);
             setDisLikeCounter(prev => prev - 1);
+            setLikeCounter(prev => prev + 1);
         }
         else if (isdisLiked === false) {
             setDisLikeCounter(prev => prev + 1);
+            setLikeCounter(prev => prev - 1);
         }
     };
 
-    useEffect(() => {
-        getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`);
-    }, []);
-    // console.log(data);
+    
 
     const handleBlogEdit = () => { };
     const handleBlogDelete = () => {

@@ -27,8 +27,15 @@
 }
 .userPostDesc{
     color: #666;
+    text-align: justify;
     font-size: 18px;
     line-height: 25px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    cursor: pointer;
 }
 .userPostDesc::first-letter{
     font-size: 30px;

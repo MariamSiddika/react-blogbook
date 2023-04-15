@@ -1,12 +1,12 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './NavComponent.css';
-import img from '../../images/man-profile-cartoon_18591-58482.webp';
 import { Button, Dropdown, Form, InputGroup, Modal } from 'react-bootstrap';
 import { useState } from 'react';
 import useFirebase from '../../hooks/useFirebase';
+import useFetch from '../../hooks/useFetch';
 
 function NavComponent() {
     const [show, setShow] = useState(false);
@@ -14,6 +14,13 @@ function NavComponent() {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const { data, getData, setDataLoading, patchData, postData, error, loading } = useFetch();
+
+    if (user?.email) {
+        getData(`https://blogs-server-ms.onrender.com/api/v1/users?email=${user?.email}`);
+
+    }
+    // console.log(data[0]);
 
     return (
 
@@ -57,10 +64,10 @@ function NavComponent() {
                                 <>
                                     <button onClick={() => logOut()} className=" navLogoutBtn me-3 border-0 ">Logout</button>
                                     {
-                                        user?.img
+                                        data[0]?.img
                                             ?
                                             <img className='topImg me-2'
-                                                src={user?.img}
+                                                src={data[0]?.img}
                                                 alt=""
                                             />
                                             :
@@ -74,7 +81,7 @@ function NavComponent() {
                                         alt=""
                                     /> */}
 
-                                    <p className='mb-0'>{user.displayName}</p>
+                                    <p className='mb-0'>{data[0]?.name}</p>
                                     <Dropdown className="dropDown">
                                         <Dropdown.Toggle className="dropDownBtn" variant="" id="dropdown-basic">
 

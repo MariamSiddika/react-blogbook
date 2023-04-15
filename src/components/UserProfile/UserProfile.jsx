@@ -8,6 +8,12 @@ import { useEffect } from 'react';
 const UserProfile = () => {
     const { user, updateName } = useFirebase();
     const { data, getData, error, loading } = useFetch();
+    
+    if (user?.email) {
+        getData(`https://blogs-server-ms.onrender.com/api/v1/users?email=${user?.email}`);
+
+    }
+    console.log(data[0]);
 
     // useEffect(() =>{
     //     if(user?.email){
@@ -15,7 +21,7 @@ const UserProfile = () => {
     //     }
     // }, []);
     if(user?.email){
-        getData("https://blogs-server-ms.onrender.com/api/v1/blogs?email=siddika@gmail.com")
+        getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?email=${user?.email}`)
     }
     console.log(user?.email);
     console.log(data);

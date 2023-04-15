@@ -1,19 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Settings.css';
-import pp from '../../images/man-profile-cartoon_18591-58482.webp';
 import { Button, Form, Modal } from 'react-bootstrap';
 import useFirebase from '../../hooks/useFirebase';
 import useFetch from '../../hooks/useFetch';
 
 const Settings = () => {
+
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const { user, updateName } = useFirebase();
-    const { data, setDataLoading, postData, error, loading } = useFetch();
+    const { user } = useFirebase();
+    const { data, getData, setDataLoading, patchData, postData, error, loading } = useFetch();
     const [imageUpload, setImageUpload] = useState("") || {};
+
+    if (user?.email) {
+        getData(`https://blogs-server-ms.onrender.com/api/v1/users?email=${user?.email}`);
+
+    }
+    // console.log(data[0]);
 
     const handleProfileImage = async (e) => {
         setDataLoading(true);
@@ -30,6 +36,36 @@ const Settings = () => {
         }
     };
 
+    const updateNameRef = useRef();
+
+    const updatePassRef = useRef();
+    console.log(user?.email);
+
+    const handleUpdateUserData = (e) => {
+
+        e.preventDefault();
+        const updateNameValue = updateNameRef.current.value;
+        // const updateEmailValue = updateEmailRef.current.value;
+        //const updatePassValue = updatePassRef.current.value;
+        const img = imageUpload;
+        const updatedUsertData = {
+            name: updateNameValue, img,
+        };
+        console.log(updatedUsertData);
+        if (user?.email) {
+            patchData(`https://blogs-server-ms.onrender.com/api/v1/users?email=${user?.email}`, updatedUsertData);
+        }
+
+
+        updateNameRef.current.value = "";
+        // updateEmailRef.current.value = "";
+        updatePassRef.current.value = "";
+        // new Swal.fire(
+        //     'Good job!',
+        //     'Your comment is added!',
+        //     'success'
+        //   )
+    };
     return (
         <div className='settings container w-lg-75'>
             <div className="settingsWrapper p-4">
@@ -43,7 +79,7 @@ const Settings = () => {
                         {
                             imageUpload
                                 ?
-                                <img src={imageUpload? imageUpload : user?.img} alt="" />
+                                <img src={imageUpload ? imageUpload : data[0]?.img} alt="" />
                                 :
                                 <i
                                     className=" fa-regular fa-user"
@@ -54,16 +90,16 @@ const Settings = () => {
                         <label htmlFor="fileInput">
                             <i className="settingsPpIcon d-flex align-items-center justify-content-center ms-2 fa-regular fa-circle-user"></i>
                         </label>
-                        <input  onChange={handleProfileImage}
-                        accept="image/*" type="file" name="" id="fileInput" style={{ display: 'none' }} />
+                        <input onChange={handleProfileImage}
+                            accept="image/*" type="file" name="" id="fileInput" style={{ display: 'none' }} />
                     </div>
                     <label>Username</label>
-                    <input type="text" placeholder={user.displayName} />
+                    <input ref={updateNameRef} type="text" placeholder={data[0]?.name} />
                     <label>E-mail</label>
-                    <input type="email" placeholder={user.email} />
+                    <input disabled type="email" placeholder={data[0]?.email} />
                     <label>Password</label>
-                    <input type="password" placeholder='Enter new password'/>
-                    <button type="submit" className="settingsSubmit text-white mt-4 btn btn-lg">Update</button>
+                    <input ref={updatePassRef} type="password" placeholder='Enter new password' />
+                    <button type="submit" onClick={handleUpdateUserData} className="settingsSubmit text-white mt-4 btn btn-lg">Update</button>
                 </form>
 
                 {/* handle delete modal */}

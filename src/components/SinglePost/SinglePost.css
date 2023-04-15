@@ -1,37 +1,51 @@
-.singlePost{
+.singlePost {
     flex: 9;
 }
-.singlePostImg{
+
+.singlePostImg {
     height: 340px;
     object-fit: cover;
 }
-.singlePostTitle{
+
+.singlePostTitle {
     font-family: 'Lora', serif;
 }
-.singlePostEdit{
-    font-size: 18px;
+
+.singlePostEdit {
+    font-size: 25px;
 }
-.singlePostIcon{
+
+.singlePostIcon {
     cursor: pointer;
 }
-.singlePostIcon:first-child{
+
+.singlePostIcon:first-child {
     color: teal;
 }
-.singlePostIcon:last-child{
+
+.singlePostIcon:last-child {
     color: tomato;
 }
-.singlePostInfo{
+
+.singlePostInfo {
     font-size: 16px;
     color: #b39656;
     font-family: 'Varela Round', sans-serif;
 }
-.singlePostDesc{
-    color: #666;
+
+.singlePostAuthor,
+.singlePostDate {
     font-size: 18px;
+}
+
+.singlePostDesc {
+    color: #666;
+    font-size: 19px;
     line-height: 25px;
     text-align: justify;
 }
-.singlePostDesc::first-letter{
+
+.singlePostDesc::first-letter {
     font-size: 30px;
     margin-left: 20px;
     font-weight: 600;
@@ -50,21 +64,24 @@
 .cartIconOne {
     left: 4%;
 }
-.cartIconOneCount{
+
+.cartIconOneCount {
     left: 7%;
 }
 
 .cartIconTwo {
     left: 45%;
 }
-.cartIconTwoCount{
+
+.cartIconTwoCount {
     left: 48%;
 }
 
 .cartIconThree {
     right: 13%;
 }
-.commentCount{
+
+.commentCount {
     right: 4%;
 }
 
@@ -73,20 +90,24 @@
 }
 
 
-.comment-text{
+.comment-text {
     text-align: justify;
 }
-.btn-comment{
+
+.btn-comment {
     color: white;
     background-color: teal;
 }
-.btn-comment-cancel{
+
+.btn-comment-cancel {
     border: 1px solid teal;
 }
-.btn-comment:hover{
+
+.btn-comment:hover {
     border: 1px solid teal;
 }
-.btn-comment-cancel:hover{
+
+.btn-comment-cancel:hover {
     color: white;
     background-color: teal;
 }

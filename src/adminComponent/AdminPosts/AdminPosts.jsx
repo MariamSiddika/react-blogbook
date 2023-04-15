@@ -3,9 +3,16 @@ import './AdminPosts.css';
 import postImg from '../../images/food.jpg';
 import { useState } from 'react';
 import { Accordion, Button, Form } from 'react-bootstrap';
+import useFetch from '../../hooks/useFetch';
+import useFirebase from '../../hooks/useFirebase';
+import { useEffect } from 'react';
 
 const AdminPosts = () => {
     const [filter, setFilter] = useState(false);
+    const { data, getData, error, loading, patchData, deleteData, success } = useFetch();
+    const { user } = useFirebase();
+    useEffect(() => { getData("https://blogs-server-ms.onrender.com/api/v1/blogs") }, []);
+    console.log(data);
 
     return (
         <div className='container mt-5'>
@@ -51,7 +58,7 @@ const AdminPosts = () => {
                     </Accordion.Item>
                 </Accordion>
             }
-            <table style={{ tableLayout: 'fixed', width: "100%"}} className="my-4">
+            <table style={{ tableLayout: 'fixed' }} className="my-4">
                 <thead>
                     <tr className="bg-dark bg-opacity-25">
                         <th className="py-3 px-3 text-center">ID</th>
@@ -60,139 +67,55 @@ const AdminPosts = () => {
                         <th className="py-3 px-3 text-center">TITLE</th>
                         <th className="py-3 px-3 text-center">CATEGORY</th>
                         <th className="py-3 px-3 text-center">POSTED AT</th>
-                        <th style={{width: "23%"}} className="py-3 px-3 text-center">DESCRIPTION</th>
+                        <th className="py-3 px-3 text-center">DESCRIPTION</th>
                         <th className="py-3 px-3 text-center">ACTIONS</th>
                     </tr>
                 </thead>
 
                 <tbody className="w-100">
+                    {
+                        data.map((post) => <tr className="border-1">
+                            <td className="p-3 ">
+                                <h5 className=" text-center ">{post?._id}</h5>
+                            </td>
+                            <td className="p-3 text-center">
+                                <p className="text-center">{post?.author}</p>
+                            </td>
+                            <td className="p-3 text-center">
+                                <div className="d-flex align-items-center justify-content-center">
+                                    <div className="">
+                                        <img style={{ width: '100px', height: '80px' }} className="rounded" src={post?.img} alt="product-img" />
+                                    </div>
 
-                    <tr className="border-1">
-                        <td className="p-3 ">
-                            <h5 className=" text-center "> 1{ }</h5>
-                        </td>
-                        <td className="p-3 text-center">
-                            <p className="text-center">John Smith{ }</p>
-                        </td>
-                        <td className="p-3 text-center">
-                            <div className="d-flex align-items-center justify-content-center">
-                                <div className="">
-                                    <img style={{ width: '100px', height: '80px' }} className="rounded" src={postImg} alt="product-img" />
                                 </div>
-                                <p className="">{ }</p>
-                            </div>
-                        </td>
+                            </td>
 
-                        <td className="p-3 text-center">
-                            <p className="text-center"> Lorem ipsum dolor sit amet. { }</p>
-                        </td>
-                        <td className="p-3 text-center">
-                            <p>Tech</p>
-                        </td>
-                        <td className="p-3 text-center">
-                            <p>2023-01-07 <br />
-                                3:54:17</p>
-                        </td>
+                            <td className="p-3 text-center">
+                                <p className="text-center">{post?.name} </p>
+                            </td>
+                            <td className="p-3 text-center">
+                                <p>{post?.category}</p>
+                            </td>
+                            <td className="p-3 text-center">
+                                <p>{new Date(post?.createdAt).toDateString()}</p>
+                            </td>
 
-                        <td className="py-3 px-3 text-center">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, ipsam...</p>
-                        </td>
-                        <td className="py-3 px-3 text-center">
-                            <div className="d-flex align-items-center justify-content-center">
-                                <div
-                                    className=""
-                                // onClick={() => deleteHandler(_id)}
-                                >
-                                    <i className="postAction postActionOpen fa-regular fa-folder-open me-4"></i>
-                                    <i className="postAction postActionDelete fa-solid fa-trash-can"></i>
+                            <td className="py-3 px-3 text-center">
+                                <p dangerouslySetInnerHTML={{ __html: post?.post, }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, ipsam...</p>
+                            </td>
+                            <td className="py-3 px-3 text-center">
+                                <div className="d-flex align-items-center justify-content-center">
+                                    <div
+                                        className=""
+                                    // onClick={() => deleteHandler(_id)}
+                                    >
+                                        <i className="postAction postActionOpen fa-regular fa-folder-open me-4"></i>
+                                        <i className="postAction postActionDelete fa-solid fa-trash-can"></i>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr className="border-1">
-                        <td className="p-3 ">
-                            <h5 className=" text-center "> 1{ }</h5>
-                        </td>
-                        <td className="p-3 text-center">
-                            <p className="text-center">John Smith{ }</p>
-                        </td>
-                        <td className="p-3 text-center">
-                            <div className="d-flex align-items-center justify-content-center">
-                                <div className="">
-                                    <img style={{ width: '100px', height: '80px' }} className="rounded" src={postImg} alt="product-img" />
-                                </div>
-                                <p className="">{ }</p>
-                            </div>
-                        </td>
-
-                        <td className="p-3 text-center">
-                            <p className="text-center"> Lorem ipsum dolor sit amet. { }</p>
-                        </td>
-                        <td className="p-3 text-center">
-                            <p>Tech</p>
-                        </td>
-                        <td className="p-3 text-center">
-                            <p>2023-01-07 <br />
-                                3:54:17</p>
-                        </td>
-
-                        <td className="py-3 px-3 text-center">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, ipsam...</p>
-                        </td>
-                        <td className="py-3 px-3 text-center">
-                            <div className="d-flex align-items-center justify-content-center">
-                                <div
-                                    className=""
-                                // onClick={() => deleteHandler(_id)}
-                                >
-                                    <i className="postAction postActionOpen fa-regular fa-folder-open me-4"></i>
-                                    <i className="postAction postActionDelete fa-solid fa-trash-can"></i>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr className="border-1">
-                        <td className="p-3 ">
-                            <h5 className=" text-center "> 1{ }</h5>
-                        </td>
-                        <td className="p-3 text-center">
-                            <p className="text-center">John Smith{ }</p>
-                        </td>
-                        <td className="p-3 text-center">
-                            <div className="d-flex align-items-center justify-content-center">
-                                <div className="">
-                                    <img style={{ width: '100px', height: '80px' }} className="rounded" src={postImg} alt="product-img" />
-                                </div>
-                                <p className="">{ }</p>
-                            </div>
-                        </td>
-
-                        <td className="p-3 text-center">
-                            <p className="text-center"> Lorem ipsum dolor sit amet. { }</p>
-                        </td>
-                        <td className="p-3 text-center">
-                            <p>Tech</p>
-                        </td>
-                        <td className="p-3 text-center">
-                            <p>2023-01-07 <br />
-                                3:54:17</p>
-                        </td>
-
-                        <td className="py-3 px-3 text-center">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, ipsam...</p>
-                        </td>
-                        <td className="py-3 px-3 text-center">
-                            <div className="d-flex align-items-center justify-content-center">
-                                <div
-                                    className=""
-                                // onClick={() => deleteHandler(_id)}
-                                >
-                                    <i className="postAction postActionOpen fa-regular fa-folder-open me-4"></i>
-                                    <i className="postAction  postActionDelete fa-solid fa-trash-can"></i>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>)
+                    }
 
 
                 </tbody>

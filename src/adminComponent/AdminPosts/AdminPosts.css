@@ -1,8 +1,18 @@
-.manageBlogTitle{
+.manageBlogTitle {
     font-family: 'Lora', serif;
     color: #021843;
     font-weight: 550;
 }
+
+.adminPostText {
+    text-align: justify;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
 .filterBtn,
 .sortBtn {
     color: white;

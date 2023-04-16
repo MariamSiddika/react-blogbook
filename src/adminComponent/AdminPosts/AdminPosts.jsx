@@ -1,19 +1,37 @@
 import React from 'react';
 import './AdminPosts.css';
-import postImg from '../../images/food.jpg';
 import { useState } from 'react';
 import { Accordion, Button, Form } from 'react-bootstrap';
 import useFetch from '../../hooks/useFetch';
 import useFirebase from '../../hooks/useFirebase';
 import { useEffect } from 'react';
+import swal from 'sweetalert';
+import { Link } from 'react-router-dom';
 
 const AdminPosts = () => {
     const [filter, setFilter] = useState(false);
     const { data, getData, error, loading, patchData, deleteData, success } = useFetch();
     const { user } = useFirebase();
     useEffect(() => { getData("https://blogs-server-ms.onrender.com/api/v1/blogs") }, []);
-    console.log(data);
-
+    // console.log(data);
+    const handleBlogDelete = (postId) => {
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this blog!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                deleteData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`);
+                swal("Poof! Your blog has been deleted!", {
+                    icon: "success",
+                });
+            } else {
+                swal("Your blog is safe!");
+            }
+        });
+    };
     return (
         <div className='container mt-5'>
             <h2 className='manageBlogTitle shadow mb-5 ps-4 py-2'>Manage Blogs</h2>
@@ -76,7 +94,7 @@ const AdminPosts = () => {
                     {
                         data.map((post) => <tr className="border-1">
                             <td className="p-3 ">
-                                <h5 className=" text-center ">{post?._id}</h5>
+                                <p className=" text-center ">{post?._id}</p>
                             </td>
                             <td className="p-3 text-center">
                                 <p className="text-center">{post?.author}</p>
@@ -100,17 +118,18 @@ const AdminPosts = () => {
                                 <p>{new Date(post?.createdAt).toDateString()}</p>
                             </td>
 
-                            <td className="py-3 px-3 text-center">
-                                <p dangerouslySetInnerHTML={{ __html: post?.post, }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, ipsam...</p>
+                            <td className="adminPostText 3 text-center">
+                                <p dangerouslySetInnerHTML={{ __html: post?.post, }} className='mt-4'></p>
                             </td>
                             <td className="py-3 px-3 text-center">
-                                <div className="d-flex align-items-center justify-content-center">
+                                <div className="d-flex align-ite px-ms-center justify-content-center">
                                     <div
                                         className=""
                                     // onClick={() => deleteHandler(_id)}
                                     >
-                                        <i className="postAction postActionOpen fa-regular fa-folder-open me-4"></i>
-                                        <i className="postAction postActionDelete fa-solid fa-trash-can"></i>
+                                         <Link className='text-decoration-none' to={`/single/${post._id}`}><i className="postAction postActionOpen fa-regular fa-folder-open me-4"></i></Link>
+                                        
+                                        <i onClick={() => handleBlogDelete(post?._id)} className="postAction postActionDelete fa-solid fa-trash-can"></i>
                                     </div>
                                 </div>
                             </td>

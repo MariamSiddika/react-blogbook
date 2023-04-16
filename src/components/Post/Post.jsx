@@ -4,13 +4,7 @@ import { Card, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const Post = ({ post }) => {
-    console.log(post)
-
-    // let navigate = useNavigate();
-    // const routeChange = () => {
-    //     let path = `/single`;
-    //     navigate(path);
-    // };
+    // console.log(post)
     
     const content = post?.post;
     return (

@@ -15,6 +15,7 @@ import AdminDashboard from "./adminComponent/AdminDashboard/AdminDashboard";
 import AdminPosts from "./adminComponent/AdminPosts/AdminPosts";
 import AdminUsers from "./adminComponent/AdminUsers/AdminUsers";
 import UserProfile from "./components/UserProfile/UserProfile";
+import AllBlogs from "./components/AllBlogs/AllBlogs";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -79,6 +80,10 @@ function App() {
         {
           path: '/profile',
           element: <UserProfile></UserProfile>
+        },
+        {
+          path: '/allBlogs',
+          element: <AllBlogs></AllBlogs>
         },
       ]
     },

@@ -38,6 +38,11 @@
     font-size: 18px;
 }
 
+.singlePostCategory {
+    cursor: pointer;
+    color: #b39656;
+}
+
 .singlePostDesc {
     color: #666;
     font-size: 19px;

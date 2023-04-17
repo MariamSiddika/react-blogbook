@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 
 const Register = () => {
     const { data, postData, error, loading } = useFetch();
-    const { dataLoading, signUpWithEmailAndPassword, setUser, user, updateName } = useFirebase();
+    const {  signUpWithEmailAndPassword, setUser, user, updateName } = useFirebase();
 
     const location = useLocation();
     const nameRef = useRef();

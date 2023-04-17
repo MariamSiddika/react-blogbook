@@ -9,7 +9,7 @@
     width: 70vw;
 }
 
-.selectField:focus{
+.selectField:focus {
     outline: none;
 }
 
@@ -31,6 +31,10 @@
 
 .writeInput:focus {
     outline: none;
+}
+
+.selectField {
+    cursor: pointer;
 }
 
 .btn-publish {

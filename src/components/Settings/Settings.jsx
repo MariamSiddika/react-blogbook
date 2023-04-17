@@ -3,6 +3,7 @@ import './Settings.css';
 import { Button, Form, Modal } from 'react-bootstrap';
 import useFirebase from '../../hooks/useFirebase';
 import useFetch from '../../hooks/useFetch';
+import Swal from 'sweetalert2';
 
 const Settings = () => {
 
@@ -39,7 +40,7 @@ const Settings = () => {
     const updateNameRef = useRef();
 
     const updatePassRef = useRef();
-    console.log(user?.email);
+    // console.log(user?.email);
 
     const handleUpdateUserData = (e) => {
 
@@ -61,10 +62,14 @@ const Settings = () => {
         // updateEmailRef.current.value = "";
         updatePassRef.current.value = "";
         // new Swal.fire(
-        //     'Good job!',
-        //     'Your comment is added!',
+        //     'Your Profile Information is Updated!',
         //     'success'
         //   )
+          new Swal({
+            title: "Hurray!",
+            text: "Your Profile is successfully updated :)",
+            icon: "success",
+        });
     };
     return (
         <div className='settings container w-lg-75'>

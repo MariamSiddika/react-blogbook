@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import CommentModal from "../CommentModal/CommentModal";
 import useFetch from "../../hooks/useFetch";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import useFirebase from "../../hooks/useFirebase";
 import swal from "sweetalert";
 import { useRef } from "react";
@@ -17,9 +17,15 @@ const SinglePost = () => {
     const { postId } = useParams();
     const { user } = useFirebase();
 
+    const navigate = useNavigate();
     // const commentEmailRef = useRef();
     const commentRef = useRef();
 
+    const handleCategoryClick = (postCat) => {
+
+        // navigate('/allBlogs');
+        getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?category=${postCat}`);
+    }
     useEffect(() => {
         getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`);
     }, []);
@@ -132,7 +138,11 @@ const SinglePost = () => {
                     Author: <b>{data[0]?.author}</b>
                 </span>
                 <span className="singlePostDate">
-                    <span className="me-4">{data[0]?.category}</span>{" "}
+                <Link className='text-decoration-none' to='/allBlogs' state={data[0]?.category}>
+                            <span onClick={() => handleCategoryClick(data[0]?.category)} className="singlePostCategory me-4">{data[0]?.category}</span></Link>
+
+
+                    {/* <span className="singlePostCategory me-4">{data[0]?.category}</span>{" "} */}
                     {new Date(data[0]?.createdAt).toDateString()}
                 </span>
             </div>

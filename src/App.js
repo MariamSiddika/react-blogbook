@@ -78,7 +78,7 @@ function App() {
           element: <AdminUsers></AdminUsers>
         },
         {
-          path: '/profile',
+          path: '/profile/:userId',
           element: <UserProfile></UserProfile>
         },
         {

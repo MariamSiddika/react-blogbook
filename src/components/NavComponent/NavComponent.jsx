@@ -87,7 +87,7 @@ function NavComponent() {
 
                                         </Dropdown.Toggle>
                                         <Dropdown.Menu>
-                                            <Dropdown.Item as={Link} to="/profile">My Profile</Dropdown.Item>
+                                            <Dropdown.Item as={Link} to={`/profile/${data[0]?._id}`}>My Profile</Dropdown.Item>
                                             <Dropdown.Item as={Link} to="/settings">Settings</Dropdown.Item>
                                         </Dropdown.Menu>
                                     </Dropdown>

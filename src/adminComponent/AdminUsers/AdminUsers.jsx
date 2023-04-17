@@ -3,6 +3,7 @@ import './AdminUsers.css';
 import useFetch from '../../hooks/useFetch';
 import { useEffect } from 'react';
 import swal from 'sweetalert';
+import { Link } from 'react-router-dom';
 
 const AdminUsers = () => {
     const { data, getData, error, loading, patchData, deleteData, success } = useFetch();
@@ -51,7 +52,8 @@ const AdminUsers = () => {
                             </td>
                             <td>
                                 <i onClick={() => handleUserDelete(user?._id)} className="actionIcon actionDelete fa-regular fa-trash-can me-4"></i>
-                                <i className="actionIcon actionView fa-regular fa-eye"></i>
+                                <Link className='text-decoration-none' to={`/profile/${user?._id}`}> <i className="actionIcon actionView fa-regular fa-eye"></i></Link>
+                               
                             </td>
                         </tr>)
                         }

@@ -30,7 +30,6 @@ const Post = ({ post }) => {
                         <Link className='text-decoration-none' to='/allBlogs' state={post?.category}>
                             <span onClick={() => handleCategoryClick(post?.category)} className="postCat mt-3 me-2">{post.category}</span></Link>
 
-
                     </div>
                     <span className="postTitle mt-2">{post.name}</span>
                     <span className="postDate mt-1">{new Date(post.createdAt).toDateString()}</span>

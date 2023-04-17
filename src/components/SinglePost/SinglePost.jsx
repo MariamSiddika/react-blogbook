@@ -20,7 +20,6 @@ const SinglePost = () => {
     // const commentEmailRef = useRef();
     const commentRef = useRef();
 
-    
     useEffect(() => {
         getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`);
     }, []);
@@ -29,8 +28,8 @@ const SinglePost = () => {
     const disLikeCount = data[0]?.dislike_count;
     const [likeCounter, setLikeCounter] = useState(2);
     const [disLikeCounter, setDisLikeCounter] = useState(5);
-    console.log(typeof(data[0]?.like_count))
-    
+    console.log(typeof data[0]?.like_count);
+
     useEffect(() => {
         if (isLiked === true) {
             setIsdisLiked(false);
@@ -48,32 +47,27 @@ const SinglePost = () => {
         setIsLiked((isLiked) => !isLiked);
         if (isLiked === true) {
             setIsdisLiked(false);
-            setLikeCounter(prev => prev - 1);
-            setDisLikeCounter(prev => prev + 1);
-        }
-        else if (isLiked === false) {
-            setLikeCounter(prev => prev + 1);
-            setDisLikeCounter(prev => prev - 1);
+            setLikeCounter((prev) => prev - 1);
+            setDisLikeCounter((prev) => prev + 1);
+        } else if (isLiked === false) {
+            setLikeCounter((prev) => prev + 1);
+            setDisLikeCounter((prev) => prev - 1);
         }
     };
-    // console.log(isLiked, isdisLiked);
 
     const disLikeHandler = () => {
         setIsdisLiked((isdisLiked) => !isdisLiked);
         if (isdisLiked === true) {
             setIsLiked(false);
-            setDisLikeCounter(prev => prev - 1);
-            setLikeCounter(prev => prev + 1);
-        }
-        else if (isdisLiked === false) {
-            setDisLikeCounter(prev => prev + 1);
-            setLikeCounter(prev => prev - 1);
+            setDisLikeCounter((prev) => prev - 1);
+            setLikeCounter((prev) => prev + 1);
+        } else if (isdisLiked === false) {
+            setDisLikeCounter((prev) => prev + 1);
+            setLikeCounter((prev) => prev - 1);
         }
     };
 
-    
-
-    const handleBlogEdit = () => { };
+    const handleBlogEdit = () => {};
     const handleBlogDelete = () => {
         swal({
             title: "Are you sure?",
@@ -100,7 +94,10 @@ const SinglePost = () => {
             comments: [{ email: user.email, comment: commentValue }],
         };
         console.log(userCommentData);
-        patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, userCommentData);
+        patchData(
+            `https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`,
+            userCommentData
+        );
 
         commentRef.current.value = "";
         // new Swal.fire(
@@ -139,8 +136,8 @@ const SinglePost = () => {
                     {new Date(data[0]?.createdAt).toDateString()}
                 </span>
             </div>
-            <p dangerouslySetInnerHTML={{__html: content,}} className="singlePostDesc">
-            {/* {data[0]?.post} */}
+            <p dangerouslySetInnerHTML={{ __html: content }} className="singlePostDesc">
+                {/* {data[0]?.post} */}
             </p>
             <Card.Footer className="cartFooter d-flex align-items-center justify-content-between w-100 position-relative border-bottom">
                 <i
@@ -151,9 +148,7 @@ const SinglePost = () => {
                             : "cartIcon cartIconOne fa-regular fa-heart position-absolute"
                     }
                 ></i>
-                <p className="mb-0 cartIconOneCount position-absolute">
-                    {likeCounter} Likes
-                </p>
+                <p className="mb-0 cartIconOneCount position-absolute">{likeCounter} Likes</p>
 
                 {
                     <i
@@ -165,9 +160,7 @@ const SinglePost = () => {
                         }
                     ></i>
                 }
-                <p className="mb-0 cartIconTwoCount position-absolute">
-                    {disLikeCounter} Dislikes
-                </p>
+                <p className="mb-0 cartIconTwoCount position-absolute">{disLikeCounter} Dislikes</p>
 
                 <i
                     onClick={() => {
@@ -212,9 +205,9 @@ const SinglePost = () => {
                                                     <span className="d-block font-weight-bold name">
                                                         {/* {user?.displayName
                                                             ? user?.displayName : "Anonymous"} */}
-                                                            {
-                                                                 data[0]?.comment?.name ? data[0]?.comment?.name : "Anonymous"
-                                                            }
+                                                        {data[0]?.comment?.name
+                                                            ? data[0]?.comment?.name
+                                                            : "Anonymous"}
                                                     </span>
                                                     <span className="date text-black-50">
                                                         {new Date(
@@ -231,29 +224,29 @@ const SinglePost = () => {
 
                                     <div className="bg-light p-2">
                                         <div className="d-flex flex-row align-items-start">
-                                            {user?.auth ?
-
+                                            {user?.auth ? (
                                                 <img
                                                     className="rounded-circle me-3"
                                                     alt=""
                                                     src={user?.img}
                                                     width="40"
                                                 />
-                                                :
+                                            ) : (
                                                 <i
                                                     className=" me-3 fa-regular fa-user mt-1"
                                                     style={{ fontSize: "25px" }}
                                                 ></i>
-
-                                            }
+                                            )}
                                             {user?.auth && (
-                                                <textarea ref={commentRef} className="form-control ml-1 shadow-none textarea"></textarea>
+                                                <textarea
+                                                    ref={commentRef}
+                                                    className="form-control ml-1 shadow-none textarea"
+                                                ></textarea>
                                             )}
                                         </div>
                                         <div className="mt-2 d-flex justify-content-end">
                                             {user?.auth ? (
                                                 <>
-                                                    
                                                     <button
                                                         className="btn btn-comment me-3 btn-sm shadow-none"
                                                         type="button"

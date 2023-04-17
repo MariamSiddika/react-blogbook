@@ -9,13 +9,15 @@ const Posts = () => {
 
     useEffect(() => { getData("https://blogs-server-ms.onrender.com/api/v1/blogs") }, [])
     // console.log(data);
-
+    const blogData = data;
+    const reversedData = blogData?.reverse();
+    console.log(reversedData);
     return (
         <div className='posts'>
 
             <Row className='mx-4'>
                 {
-                    data.map((post) => <Post key={post._id} post={post}></Post>)
+                    reversedData?.map((post) => <Post key={post._id} post={post}></Post>)
                 }
 
 

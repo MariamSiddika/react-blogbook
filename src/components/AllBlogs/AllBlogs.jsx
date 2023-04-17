@@ -2,16 +2,29 @@ import React from 'react';
 import useFetch from '../../hooks/useFetch';
 import { useEffect } from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const AllBlogs = () => {
     const { data, getData, error, loading, patchData, deleteData, success } = useFetch();
-    useEffect(() => { getData("https://blogs-server-ms.onrender.com/api/v1/blogs") }, []);
+    // const navigate = useNavigate();
+    const location = useLocation();
+    const category = location?.state;
+
+    useEffect(() => {
+        if (category) {
+            getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?category=${category}`)
+        }
+        else {
+            getData(`https://blogs-server-ms.onrender.com/api/v1/blogs`);
+
+        }
+    }, []);
     // console.log(data);
-    const handleCategoryClick = (postCat) => {
-         getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?category=${postCat}`); 
-    }
-    
+    // const handleCategoryClick = (postCat) => {
+    //     navigate('/allBlogs');
+    //     getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?category=${postCat}`);
+    // }
+
     return (
         <div className='posts'>
 
@@ -29,7 +42,7 @@ const AllBlogs = () => {
                                     // onClick={routeChange} 
                                     className="postInfo d-flex flex-column align-items-center">
                                     <div className="postCats">
-                                        <span onClick={() => handleCategoryClick(post?.category)} className="postCat mt-3 me-2">{post?.category}</span>
+                                        <span className="postCat mt-3 me-2">{post?.category}</span>
 
                                     </div>
                                     <span className="postTitle mt-2">{post?.name}</span>

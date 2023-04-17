@@ -8,24 +8,24 @@ import { useEffect } from 'react';
 const UserProfile = () => {
     const { user, updateName } = useFirebase();
     const { data, getData, error, loading } = useFetch();
-    
-    if (user?.email) {
-        getData(`https://blogs-server-ms.onrender.com/api/v1/users?email=${user?.email}`);
 
-    }
-    console.log(data[0]);
+    // if (user?.email) {
+    //     getData(`https://blogs-server-ms.onrender.com/api/v1/users?email=${user?.email}`);
 
-    // useEffect(() =>{
-    //     if(user?.email){
-    //         getData("https://blogs-server-ms.onrender.com/api/v1/blogs?email=siddika@gmail.com")
+    // }
+    // console.log(data[0]);
+
+    // useEffect(() => {
+    //     if (user?.email) {
+    //         getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?email=${user?.email}`)
     //     }
     // }, []);
     if(user?.email){
         getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?email=${user?.email}`)
     }
-    console.log(user?.email);
-    console.log(data);
-   
+    // console.log(user?.email);
+    // console.log(data);
+
     return (
         <div className='userProfile mt-4 mb-5'>
             <div className="profileInfo d-flex align-items-center justify-content-start shadow pb-2">

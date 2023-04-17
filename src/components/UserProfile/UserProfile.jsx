@@ -20,12 +20,15 @@ const UserProfile = () => {
     //         getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?email=${user?.email}`)
     //     }
     // }, []);
-    if(user?.email){
+    if (user?.email) {
         getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?email=${user?.email}`)
     }
     // console.log(user?.email);
-    // console.log(data);
-
+    console.log(data);
+    
+    if (loading) {
+        return 'loading';
+    }
     return (
         <div className='userProfile mt-4 mb-5'>
             <div className="profileInfo d-flex align-items-center justify-content-start shadow pb-2">
@@ -52,13 +55,11 @@ const UserProfile = () => {
             <h1 className='recentBlog mt-5 ps-5 shadow mb-3'>Your Blogs</h1>
             <div className='container pt-5 px-5'>
                 {
-                    data?.map((userPost) => <UserPost key={userPost?._id} userPost={userPost}></UserPost>)
+                    data?.length > 0 && !data?.message ?
+                    data?.map((userPost) => <UserPost key={userPost?._id} userPost={userPost}></UserPost>) : <h5>You have no blogs yet!!</h5>
+                    
                 }
-                {/* <UserPost></UserPost>
-                <UserPost></UserPost>
-                <UserPost></UserPost>
-                <UserPost></UserPost>
-                <UserPost></UserPost> */}
+               
             </div>
         </div>
     );

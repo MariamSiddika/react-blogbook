@@ -8,8 +8,10 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import useFirebase from "../../hooks/useFirebase";
 import swal from "sweetalert";
 import { useRef } from "react";
+import axios from "axios";
 
 const SinglePost = () => {
+    const [userDetail, setUserDetail] = useState([]);
     const [isLiked, setIsLiked] = useState(false);
     const [isdisLiked, setIsdisLiked] = useState(false);
     const [showCommentBox, setshowCommentBox] = useState(true);
@@ -29,12 +31,24 @@ const SinglePost = () => {
     useEffect(() => {
         getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`);
     }, []);
-    // console.log(data);
+    // console.log(data[0]?.comments);
+
+    if (user?.email) {
+        axios.get(`https://blogs-server-ms.onrender.com/api/v1/users?email=${user?.email}`)
+            .then(res => {
+                const resData = res.data[0];
+                setUserDetail(resData);
+                
+            }).catch(err => {
+                console.log(err);
+            })
+    }
+    //   console.log(userDetail);
     const likeCount = data[0]?.like_count;
     const disLikeCount = data[0]?.dislike_count;
-    const [likeCounter, setLikeCounter] = useState(2);
-    const [disLikeCounter, setDisLikeCounter] = useState(5);
-    console.log(typeof data[0]?.like_count);
+    const [likeCounter, setLikeCounter] = useState(likeCount);
+    const [disLikeCounter, setDisLikeCounter] = useState(disLikeCount);
+    // console.log(typeof data[0]?.like_count);
 
     useEffect(() => {
         if (isLiked === true) {
@@ -97,7 +111,7 @@ const SinglePost = () => {
         e.preventDefault();
         const commentValue = commentRef.current.value;
         const userCommentData = {
-            comments: [{ email: user.email, comment: commentValue }],
+            comments: [{ name: userDetail.name, email: userDetail.email, comment: commentValue }],
         };
         console.log(userCommentData);
         patchData(
@@ -215,13 +229,13 @@ const SinglePost = () => {
                                                     <span className="d-block font-weight-bold name">
                                                         {/* {user?.displayName
                                                             ? user?.displayName : "Anonymous"} */}
-                                                        {data[0]?.comment?.name
-                                                            ? data[0]?.comment?.name
+                                                        {comment?.name
+                                                            ? comment?.name
                                                             : "Anonymous"}
                                                     </span>
                                                     <span className="date text-black-50">
                                                         {new Date(
-                                                            data[0]?.createdAt
+                                                            comment?.createdAt
                                                         ).toDateString()}
                                                     </span>
                                                 </div>

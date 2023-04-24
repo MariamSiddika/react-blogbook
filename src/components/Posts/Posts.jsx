@@ -13,7 +13,7 @@ const Posts = () => {
     // console.log(data);
     const blogData = data;
     const reversedData = blogData?.reverse();
-    console.log(reversedData);
+    // console.log(reversedData);
     return (
         <div className='posts'>
 

@@ -151,7 +151,7 @@ const useFirebase = (location) => {
             if (user) {
                 setUser(user);
                 setLoading(false);
-                console.log(user);
+                // console.log(user);
                 
                 
             } else {

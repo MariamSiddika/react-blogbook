@@ -59,9 +59,9 @@ const Post = ({ post }) => {
                 </Link>
 
                 <Card.Footer className="cartFooter d-flex align-items-center justify-content-between w-100 border-bottom">
-                    <Link className='text-decoration-none' to={`/single/${post._id}`}><p className="reactedCount mb-0">{post.like_count} likes</p></Link>
-                    <Link className='text-decoration-none' to={`/single/${post._id}`}><p className="reactedCount mb-0">{post.dislike_count} dislikes</p></Link>
-                    <Link className='text-decoration-none' to={`/single/${post._id}`}><p className="reactedCount mb-0">{post.comments.length} comments</p></Link>
+                    <Link className='text-decoration-none' to={`/single/${post._id}`}><p className="reactedCount mb-0">{post?.like_count} likes</p></Link>
+                    <Link className='text-decoration-none' to={`/single/${post._id}`}><p className="reactedCount mb-0">{post?.dislike_count} dislikes</p></Link>
+                    <Link className='text-decoration-none' to={`/single/${post._id}`}><p className="reactedCount mb-0">{post?.comments.length} comments</p></Link>
                 </Card.Footer>
             </Card>
         </Col>

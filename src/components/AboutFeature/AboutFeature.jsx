@@ -11,7 +11,9 @@ const AboutFeature = () => {
         <div className="container" data-aos="fade-up">
 
           <div className="row about-cols">
-            <div className="col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <div className="col-md-4"  data-aos="fade-up"
+                data-aos-easing="ease-out-cubic"
+                data-aos-duration="2000">
               <div className="about-col">
                 <div className="img">
                   <img src={featureOne} alt="" className="img-fluid" />
@@ -23,7 +25,9 @@ const AboutFeature = () => {
                 </p>
               </div>
             </div>
-            <div className="col-md-4" data-aos="fade-up" data-aos-delay="200">
+            <div className="col-md-4"  data-aos="fade-up"
+                data-aos-easing="ease-out-cubic"
+                data-aos-duration="2000">
               <div className="about-col">
                 <div className="img">
                   <img src={featureTwo} alt="" className="img-fluid" />
@@ -35,7 +39,9 @@ const AboutFeature = () => {
                 </p>
               </div>
             </div>
-            <div className="col-md-4" data-aos="fade-up" data-aos-delay="300">
+            <div className="col-md-4"  data-aos="fade-up"
+                data-aos-easing="ease-out-cubic"
+                data-aos-duration="2000">
               <div className="about-col">
                 <div className="img">
                   <img src={featureThree} alt="" className="img-fluid" />

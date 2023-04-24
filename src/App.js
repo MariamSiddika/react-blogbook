@@ -16,6 +16,7 @@ import AdminPosts from "./adminComponent/AdminPosts/AdminPosts";
 import AdminUsers from "./adminComponent/AdminUsers/AdminUsers";
 import UserProfile from "./components/UserProfile/UserProfile";
 import AllBlogs from "./components/AllBlogs/AllBlogs";
+import './App.css';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);

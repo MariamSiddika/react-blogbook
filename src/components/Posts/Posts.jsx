@@ -4,10 +4,12 @@ import Post from '../Post/Post';
 import './Posts.css';
 import useFetch from '../../hooks/useFetch';
 
+
 const Posts = () => {
     const { data, getData, error, loading } = useFetch();
 
     useEffect(() => { getData("https://blogs-server-ms.onrender.com/api/v1/blogs") }, [])
+   
     // console.log(data);
     const blogData = data;
     const reversedData = blogData?.reverse();
@@ -19,8 +21,6 @@ const Posts = () => {
                 {
                     reversedData?.map((post) => <Post key={post._id} post={post}></Post>)
                 }
-
-
             </Row>
             {/* <button className='btn btn-lg d-flex mx-auto text-white showMoreBtn px-5 mb-3'>Show More</button> */}
         </div>

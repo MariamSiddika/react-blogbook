@@ -3,11 +3,15 @@ import "./Post.css";
 import { Card, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
+import { useEffect } from "react";
+
 
 const Post = ({ post }) => {
     const navigate = useNavigate();
     const { data, getData, error, loading, patchData, deleteData, success } = useFetch();
-
+    // useEffect(() => {
+    //     AOS.init({duration: 2000})
+    // }, []);
     // console.log(post)
     const handleCategoryClick = (postCat) => {
 
@@ -17,14 +21,19 @@ const Post = ({ post }) => {
     const content = post?.post;
     return (
         <Col xs={12} md={6} lg={4}>
-            <Card className="post mt-4 mb-5 mx-3 shadow">
+            <Card data-aos="fade-up"
+                data-aos-easing="ease-out-cubic"
+                data-aos-duration="2000" className="post mt-4 mb-5 mx-3 shadow">
                 {
                     post.img && <img
                         className="postImg w-100 rounded mb-2" src={post.img} alt="" />
                 }
 
                 <div
-                    // onClick={routeChange} 
+                data-aos="fade-up"
+                data-aos-easing="ease-out-cubic"
+                data-aos-duration="1000" 
+                    
                     className="postInfo d-flex flex-column align-items-center">
                     <div className="postCats">
                         <Link className='text-decoration-none' to='/allBlogs' state={post?.category}>
@@ -40,7 +49,10 @@ const Post = ({ post }) => {
 
                 </div>
                 <Link className='text-decoration-none' to={`/single/${post._id}`}>
-                    <div className="d-flex align-items-center justify-content-end ">
+                    <div data-aos="fade-up"
+                data-aos-easing="ease-out-cubic"
+                data-aos-duration="1000"  
+                className="d-flex align-items-center justify-content-end ">
                         <button className="btn-read-blog mb-3 me-3 mt-0"><span>Read Blog</span>
                             <i className="fa-solid fa-arrow-right"></i></button>
                     </div>

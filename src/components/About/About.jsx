@@ -7,7 +7,9 @@ const About = () => {
     return (
         <div>
             <section className="about d-flex align-items-center w-100">
-                <div className="container">
+                <div  data-aos="fade-up"
+                data-aos-easing="ease-out-cubic"
+                data-aos-duration="2000" className="container">
                     <div className="row">
                         <div className="col-lg-6 d-flex flex-column justify-content-center">
                             <h1 className='m-0' data-aos="fade-up">We offer modern solutions for writing your Blogs</h1>

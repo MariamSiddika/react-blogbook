@@ -6,7 +6,9 @@ import contactImg from '../../images/contact.json';
 const Contact = () => {
     return (
         <div className='contact d-lg-flex align-items-center justify-content-around'>
-            <div className='contactAnimation'>
+            <div data-aos="fade-up"
+                data-aos-easing="ease-out-cubic"
+                data-aos-duration="2000" className='contactAnimation'>
                 <Lottie
                     animationData={contactImg}
                 />
@@ -14,7 +16,9 @@ const Contact = () => {
 
             <div className="contactDetail d-lg-flex justify-content-between align-items-center pe-5">
                 <div className="detailInfo">
-                    <div className="d-flex pb-3 mt-3">
+                    <div data-aos="fade-up"
+                        data-aos-easing="ease-out-cubic"
+                        data-aos-duration="1000" className="d-flex pb-3 mt-3">
                         <div>
                             <i className="fas fa-map-marker-alt fs-3 me-5 mt-1"></i>
                         </div>
@@ -23,7 +27,9 @@ const Contact = () => {
                             <p>Madas Center 8th Floor, 379 Gulshan 2, <br /> New York, NY 10018 US</p>
                         </div>
                     </div>
-                    <div className="d-flex pb-3">
+                    <div data-aos="fade-up"
+                        data-aos-easing="ease-out-cubic"
+                        data-aos-duration="2000" className="d-flex pb-3">
                         <div>
                             <i className="fa-solid fa-phone fs-3 me-5 mt-1"></i>
                         </div>
@@ -32,7 +38,9 @@ const Contact = () => {
                             <p className="text-success pt-1 pb-1 mb-0">+18001236870</p>
                         </div>
                     </div>
-                    <div className="d-flex pb-3">
+                    <div data-aos="fade-up"
+                        data-aos-easing="ease-out-cubic"
+                        data-aos-duration="3000" className="d-flex pb-3">
                         <div>
                             <i className="fas fa-envelope fs-3 me-5 mt-1"></i>
                         </div>

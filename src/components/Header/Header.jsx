@@ -5,7 +5,9 @@ import { TypeAnimation } from 'react-type-animation';
 
 const Header = () => {
     return (
-        <div className='header'>
+        <div
+         
+        className='header'>
             <div className="headerTitle d-flex align-items-center flex-column">
                 <TypeAnimation className='headerTitleSm'
                     sequence={[

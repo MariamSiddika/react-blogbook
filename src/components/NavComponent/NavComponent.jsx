@@ -1,7 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import './NavComponent.css';
 import { Button, Dropdown, Form, InputGroup, Modal } from 'react-bootstrap';
 import { useState } from 'react';
@@ -37,19 +37,23 @@ function NavComponent() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <div className="topCenter  ">
                         <Nav className="topList d-flex justify-content-center align-items-center">
-                            <Nav.Link as={Link} style={{ marginRight: '30px' }} to="/home" className="topListItem"><li>HOME</li></Nav.Link>
-                            <Nav.Link as={Link} style={{ marginRight: '30px' }} to="/about" className="topListItem"><li>ABOUT</li></Nav.Link>
-                            <Nav.Link as={Link} style={{ marginRight: '30px' }} to="/contact" className="topListItem"><li>CONTACT</li></Nav.Link>
+                            <NavLink to="/home" style={({ isActive }) => { return { borderBottom: isActive ? "2px solid goldenRod" : "" } }} className="topListItem listmargin" ><li>HOME</li></NavLink>
+                            <NavLink to="/about"
+                                style={({ isActive }) => { return { borderBottom: isActive ? "2px solid goldenRod" : "" } }}
+                                className="topListItem listmargin"><li>ABOUT</li></NavLink>
+                            <NavLink to="/contact"
+                                style={({ isActive }) => { return { borderBottom: isActive ? "2px solid goldenRod" : "" } }}
+                                className="topListItem listmargin"><li>CONTACT</li></NavLink>
                             {
                                 user.auth &&
-                                <Nav.Link as={Link} to="/write" className="topListItem"><li>WRITE</li></Nav.Link>
+                                <NavLink to="/write" style={({ isActive }) => { return { borderBottom: isActive ? "2px solid goldenRod" : "" } }} className="topListItem"><li>WRITE</li></NavLink>
                                 // : 
                                 // <Navigate to={'/home'} />
 
                             }
                             {
                                 !user.auth &&
-                                <Nav.Link as={Link} to="/register" className="topListItem me-0"><li>REGISTER</li></Nav.Link>
+                                <NavLink to="/register" className="topListItem me-0"style={({isActive}) => {return {borderBottom: isActive? "2px solid goldenRod" : ""}}}><li>REGISTER</li></NavLink>
                             }
 
 
@@ -92,7 +96,7 @@ function NavComponent() {
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 </>
-                                : <Nav.Link as={Link} style={{ marginRight: '30px' }} to="/login" className="topListItem"><button className='navLoginBtn  border-0'>Login</button></Nav.Link>
+                                : <NavLink style={{ marginRight: '30px' }} to="/login" className="topListItem"><button className='navLoginBtn  border-0'>Login</button></NavLink>
 
                         }
 

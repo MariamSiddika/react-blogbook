@@ -53,7 +53,6 @@ const Write = () => {
         const name = titleRef.current.value;
         const category = categoryRef?.current?.props?.value?.value;
         // console.log(category)
-        // const htmlRemoveRegex = /(<([^>]+)>)/gi;
         let post = content;
         
         // console.log(post);

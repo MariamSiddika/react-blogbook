@@ -4,14 +4,14 @@ import { useState } from "react";
 import { useEffect } from "react";
 import CommentModal from "../CommentModal/CommentModal";
 import useFetch from "../../hooks/useFetch";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useFirebase from "../../hooks/useFirebase";
 import swal from "sweetalert";
 import { useRef } from "react";
 import axios from "axios";
 
 const SinglePost = () => {
-    const [userDetail, setUserDetail] = useState([]);
+    const [userDetail, setUserDetail] = useState(null);
     const [isLiked, setIsLiked] = useState(false);
     const [isdisLiked, setIsdisLiked] = useState(false);
     const [showCommentBox, setshowCommentBox] = useState(true);
@@ -19,7 +19,6 @@ const SinglePost = () => {
     const { postId } = useParams();
     const { user } = useFirebase();
 
-    const navigate = useNavigate();
     // const commentEmailRef = useRef();
     const commentRef = useRef();
 
@@ -53,13 +52,13 @@ const SinglePost = () => {
     useEffect(() => {
         if (isLiked === true) {
             setIsdisLiked(false);
-            console.log(isLiked, isdisLiked);
+            // console.log(isLiked, isdisLiked);
         }
     }, [isLiked]);
     useEffect(() => {
         if (isdisLiked === true) {
             setIsLiked(false);
-            console.log(isLiked, isdisLiked);
+            // console.log(isLiked, isdisLiked);
         }
     }, [isdisLiked]);
 
@@ -111,7 +110,7 @@ const SinglePost = () => {
         e.preventDefault();
         const commentValue = commentRef.current.value;
         const userCommentData = {
-            comments: [{ name: userDetail.name, email: userDetail.email, comment: commentValue }],
+            comments: [...data[0]?.comments, { name: userDetail.name, email: userDetail.email, comment: commentValue }],
         };
         console.log(userCommentData);
         patchData(
@@ -241,7 +240,7 @@ const SinglePost = () => {
                                                 </div>
                                             </div>
                                             <div className="mt-2">
-                                                <p className="comment-text">{comment.comment}</p>
+                                                <p className="comment-text">{comment?.comment}</p>
                                             </div>
                                         </div>
                                     ))}
@@ -274,6 +273,7 @@ const SinglePost = () => {
                                                     <button
                                                         className="btn btn-comment me-3 btn-sm shadow-none"
                                                         type="button"
+                                                        // disabled = {!userDetail}
                                                         onClick={handleComment}
                                                     >
                                                         Post comment

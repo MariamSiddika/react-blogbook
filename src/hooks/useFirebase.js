@@ -36,8 +36,8 @@ const useFirebase = (location) => {
         return createUserWithEmailAndPassword(auth, email, password);
     };
 
-    const signInWithEmail = (email, password, location) => {
-        return signInWithEmailAndPassword(auth, email, password)
+    const signInWithEmail = async(email, password, location) => {
+        await signInWithEmailAndPassword(auth, email, password)
             .then((result) => {
                 setUser(result.user);
                 setLoading(false)
@@ -53,8 +53,8 @@ const useFirebase = (location) => {
             });
     };
 
-    const signInWithGoogle = (location) => {
-        return signInWithPopup(auth, googleProvider)
+    const signInWithGoogle = async(location) => {
+        await signInWithPopup(auth, googleProvider)
             .then((result) => {
                 setUser(result.user);
                 setLoading(false)

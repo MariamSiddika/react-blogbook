@@ -70,7 +70,7 @@ function NavComponent() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <div className="topCenter  ">
                         <Nav className="topList d-flex justify-content-center align-items-center">
-                            <NavLink to="/home" style={({ isActive }) => { return { borderBottom: isActive ? "2px solid goldenRod" : "" } }} className="topListItem listmargin" ><li>HOME</li></NavLink>
+                            <NavLink to="/" style={({ isActive }) => { return { borderBottom: isActive ? "2px solid goldenRod" : "" } }} className="topListItem listmargin" ><li>HOME</li></NavLink>
                             <NavLink to="/about"
                                 style={({ isActive }) => { return { borderBottom: isActive ? "2px solid goldenRod" : "" } }}
                                 className="topListItem listmargin"><li>ABOUT</li></NavLink>

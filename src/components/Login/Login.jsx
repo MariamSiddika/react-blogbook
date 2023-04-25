@@ -26,7 +26,7 @@ const Login = () => {
      const location = useLocation();
 
      const {
-         loading,
+         dataLoading,
         //  signInWithGoogle,
         //  signInWithGithub,
         //  signInWithTwitter,
@@ -59,7 +59,7 @@ const Login = () => {
         border-color: red;
     `;
 
-     if (loading) {
+     if (dataLoading) {
         return (
             <ClockLoader
                 color="#E12454"
@@ -72,7 +72,7 @@ const Login = () => {
     }
 
     if (user?.auth) {
-        return <Navigate to={'/home'} />
+        return <Navigate to={'/'} />
     }
 
     return (

@@ -4,10 +4,10 @@ import { ClockLoader } from "react-spinners";
 import { css } from "@emotion/react";
 import useFirebase from "../../hooks/useFirebase";
 
+const PrivateRoute = ({ children }) => {
+    const { user, dataLoading } = useFirebase();
+    console.log(user);
 
-const PrivateRoute = ({ children, ...rest }) => {
-    const { loading, user } = useFirebase();
-    
     const location = useLocation();
     const override = css`
         display: block;
@@ -15,7 +15,7 @@ const PrivateRoute = ({ children, ...rest }) => {
         border-color: red;
     `;
 
-    if (loading) {
+    if (dataLoading) {
         return (
             <ClockLoader
                 color="#E12454"
@@ -26,8 +26,8 @@ const PrivateRoute = ({ children, ...rest }) => {
             />
         );
     }
-    //console.log(user)
-    return user.auth ? children : <Navigate to="/register" state={{ from: location }}></Navigate>;
+    // console.log(user);
+    return user.auth ? children : <Navigate to="/login" state={{ from: location }}></Navigate>;
 };
 
 export default PrivateRoute;

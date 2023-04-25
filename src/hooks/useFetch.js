@@ -1,7 +1,7 @@
 // import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { axios } from "axios";
+import  axios  from "axios";
 
 const useFetch = () => {
     const [data, setData] = useState([]);

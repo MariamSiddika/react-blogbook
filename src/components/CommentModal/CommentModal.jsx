@@ -48,7 +48,7 @@ function CommentModal({ data }) {
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Title>Post Your Comment on This Blog</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>

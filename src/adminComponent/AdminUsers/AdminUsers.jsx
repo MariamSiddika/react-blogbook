@@ -1,7 +1,32 @@
 import React from 'react';
 import './AdminUsers.css';
+import useFetch from '../../hooks/useFetch';
+import { useEffect } from 'react';
+import swal from 'sweetalert';
+import { Link } from 'react-router-dom';
 
 const AdminUsers = () => {
+    const { data, getData, error, loading, patchData, deleteData, success } = useFetch();
+    useEffect(() => { getData("https://blogs-server-ms.onrender.com/api/v1/users?role=user") }, []);
+
+    const handleUserDelete = (userId) => {
+        swal({
+            title: "Are you sure?",
+            text: "If you proceed, this user will be permanently removed!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                deleteData(`https://blogs-server-ms.onrender.com/api/v1/users?_id=${userId}`);
+                swal("Poof! The user has been removed!", {
+                    icon: "success",
+                });
+            } else {
+                swal("The user is safe!");
+            }
+        });
+    };
     return (
         <div className='container mt-5'>
             <h2 className='mb-5 manageBloggersTitle shadow ps-4 py-2'>Manage Bloggers</h2>
@@ -17,62 +42,23 @@ const AdminUsers = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>mark@mail.com</td>
-                            <td>2023-01-07 <br />
-                                3:54:17</td>
+                        {
+                            data.map((user) => <tr>
+                            <td>{user?._id}</td>
+                            <td>{user?.name}</td>
+                            <td>{user?.email}</td>
                             <td>
-                                <i className="actionIcon actionDelete fa-regular fa-trash-can me-4"></i>
-                                <i className="actionIcon actionView fa-regular fa-eye"></i>
+                                {new Date(user?.createdAt).toDateString()}
                             </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Mark</td>
-                            <td>mark@mail.com</td>
-                            <td>2023-01-07 <br />
-                                3:54:17</td>
                             <td>
-                                <i className="actionIcon actionDelete fa-regular fa-trash-can me-4"></i>
-                                <i className="actionIcon actionView fa-regular fa-eye"></i>
+                                <i onClick={() => handleUserDelete(user?._id)} className="actionIcon actionDelete fa-regular fa-trash-can me-4"></i>
+                                <Link className='text-decoration-none' to={`/profile/${user?._id}`}> <i className="actionIcon actionView fa-regular fa-eye"></i></Link>
+                               
                             </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Mark</td>
-                            <td>mark@mail.com</td>
-                            <td>2023-01-07 <br />
-                                3:54:17</td>
-                            <td>
-                                <i className="actionIcon actionDelete fa-regular fa-trash-can me-4"></i>
-                                <i className="actionIcon actionView fa-regular fa-eye"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">4</th>
-                            <td>Mark</td>
-                            <td>mark@mail.com</td>
-                            <td>2023-01-07 <br />
-                                3:54:17</td>
-                            <td>
-                                <i className="actionIcon actionDelete fa-regular fa-trash-can me-4"></i>
-                                <i className="actionIcon actionView fa-regular fa-eye"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">5</th>
-                            <td>Mark</td>
-                            <td>mark@mail.com</td>
-                            <td>2023-01-07 <br />
-                                3:54:17</td>
-                            <td>
-                                <i className="actionIcon actionDelete fa-regular fa-trash-can me-4"></i>
-                                <i className="actionIcon actionView fa-regular fa-eye"></i>
-                            </td>
-                        </tr>
-                      
+                        </tr>)
+                        }
+                        
+                       
 
                     </tbody>
                 </table>

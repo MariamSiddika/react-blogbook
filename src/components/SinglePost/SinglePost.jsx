@@ -4,12 +4,14 @@ import { useState } from "react";
 import { useEffect } from "react";
 import CommentModal from "../CommentModal/CommentModal";
 import useFetch from "../../hooks/useFetch";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useFirebase from "../../hooks/useFirebase";
 import swal from "sweetalert";
 import { useRef } from "react";
+import axios from "axios";
 
 const SinglePost = () => {
+    const [userDetail, setUserDetail] = useState(null);
     const [isLiked, setIsLiked] = useState(false);
     const [isdisLiked, setIsdisLiked] = useState(false);
     const [showCommentBox, setshowCommentBox] = useState(true);
@@ -20,6 +22,26 @@ const SinglePost = () => {
     // const commentEmailRef = useRef();
     const commentRef = useRef();
 
+    const handleCategoryClick = (postCat) => {
+        // navigate('/allBlogs');
+        getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?category=${postCat}`);
+    };
+    useEffect(() => {
+        getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`);
+    }, []);
+    // console.log(data[0]?.comments);
+
+    if (user?.email) {
+        axios
+            .get(`https://blogs-server-ms.onrender.com/api/v1/users?email=${user?.email}`)
+            .then((res) => {
+                const resData = res.data[0];
+                setUserDetail(resData);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
     useEffect(() => {
         getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`);
     }, []);
@@ -31,17 +53,12 @@ const SinglePost = () => {
     console.log(typeof data[0]?.like_count);
 
     useEffect(() => {
-        // if (isLiked === true) {
-        //     setIsdisLiked(false);
-        //     console.log(likeCount, disLikeCount);
-        // }
-
         if (isLiked) {
             setIsdisLiked(false);
             setLikeCounter((prev) => prev + 1);
-            setDisLikeCounter((prev) => prev - 1);
+            setDisLikeCounter((prev) => (prev - 1 < 0 ? 0 : prev - 1));
         } else if (!isLiked) {
-            setLikeCounter((prev) => prev - 1);
+            setLikeCounter((prev) => (prev - 1 < 0 ? 0 : prev - 1));
             setDisLikeCounter((prev) => prev + 1);
         }
     }, [isLiked, likeCount, disLikeCount]);
@@ -54,36 +71,20 @@ const SinglePost = () => {
         if (isdisLiked === true) {
             setIsLiked(false);
             setDisLikeCounter((prev) => prev + 1);
-            setLikeCounter((prev) => prev - 1);
+            setLikeCounter((prev) => (prev - 1 < 0 ? 0 : prev - 1));
         } else if (isdisLiked === false) {
-            setDisLikeCounter((prev) => prev - 1);
+            setDisLikeCounter((prev) => (prev - 1 < 0 ? 0 : prev - 1));
             setLikeCounter((prev) => prev + 1);
         }
     }, [isdisLiked, likeCount, disLikeCount]);
 
     const likeHandler = () => {
         setIsLiked((isLiked) => !isLiked);
-        // if (isLiked) {
-        //     setIsdisLiked(false);
-        //     setLikeCounter((prev) => prev - 1);
-        //     setDisLikeCounter((prev) => prev + 1);
-        // } else if (!isLiked) {
-        //     setLikeCounter((prev) => prev + 1);
-        //     setDisLikeCounter((prev) => prev - 1);
-        // }
     };
     // console.log(isLiked, isdisLiked);
 
     const disLikeHandler = () => {
         setIsdisLiked((isdisLiked) => !isdisLiked);
-        // if (isdisLiked === true) {
-        //     setIsLiked(false);
-        //     setDisLikeCounter((prev) => prev - 1);
-        //     setLikeCounter((prev) => prev + 1);
-        // } else if (isdisLiked === false) {
-        //     setDisLikeCounter((prev) => prev + 1);
-        //     setLikeCounter((prev) => prev - 1);
-        // }
     };
 
     const handleBlogEdit = () => {};
@@ -110,7 +111,10 @@ const SinglePost = () => {
         e.preventDefault();
         const commentValue = commentRef.current.value;
         const userCommentData = {
-            comments: [{ email: user.email, comment: commentValue }],
+            comments: [
+                ...data[0]?.comments,
+                { name: userDetail.name, email: userDetail.email, comment: commentValue },
+            ],
         };
         console.log(userCommentData);
         patchData(
@@ -151,7 +155,16 @@ const SinglePost = () => {
                     Author: <b>{data[0]?.author}</b>
                 </span>
                 <span className="singlePostDate">
-                    <span className="me-4">{data[0]?.category}</span>{" "}
+                    <Link className="text-decoration-none" to="/allBlogs" state={data[0]?.category}>
+                        <span
+                            onClick={() => handleCategoryClick(data[0]?.category)}
+                            className="singlePostCategory me-4"
+                        >
+                            {data[0]?.category}
+                        </span>
+                    </Link>
+
+                    {/* <span className="singlePostCategory me-4">{data[0]?.category}</span>{" "} */}
                     {new Date(data[0]?.createdAt).toDateString()}
                 </span>
             </div>
@@ -167,9 +180,7 @@ const SinglePost = () => {
                             : "cartIcon cartIconOne fa-regular fa-heart position-absolute"
                     }
                 ></i>
-                <p className="mb-0 cartIconOneCount position-absolute">
-                    {likeCounter < 0 ? 0 : likeCounter} Likes
-                </p>
+                <p className="mb-0 cartIconOneCount position-absolute">{likeCounter} Likes</p>
 
                 {
                     <i
@@ -181,9 +192,7 @@ const SinglePost = () => {
                         }
                     ></i>
                 }
-                <p className="mb-0 cartIconTwoCount position-absolute">
-                    {disLikeCounter < 0 ? 0 : disLikeCounter} Dislikes
-                </p>
+                <p className="mb-0 cartIconTwoCount position-absolute">{disLikeCounter} Dislikes</p>
 
                 <i
                     onClick={() => {
@@ -228,19 +237,19 @@ const SinglePost = () => {
                                                     <span className="d-block font-weight-bold name">
                                                         {/* {user?.displayName
                                                             ? user?.displayName : "Anonymous"} */}
-                                                        {data[0]?.comment?.name
-                                                            ? data[0]?.comment?.name
+                                                        {comment?.name
+                                                            ? comment?.name
                                                             : "Anonymous"}
                                                     </span>
                                                     <span className="date text-black-50">
                                                         {new Date(
-                                                            data[0]?.createdAt
+                                                            comment?.createdAt
                                                         ).toDateString()}
                                                     </span>
                                                 </div>
                                             </div>
                                             <div className="mt-2">
-                                                <p className="comment-text">{comment.comment}</p>
+                                                <p className="comment-text">{comment?.comment}</p>
                                             </div>
                                         </div>
                                     ))}
@@ -273,6 +282,7 @@ const SinglePost = () => {
                                                     <button
                                                         className="btn btn-comment me-3 btn-sm shadow-none"
                                                         type="button"
+                                                        // disabled = {!userDetail}
                                                         onClick={handleComment}
                                                     >
                                                         Post comment

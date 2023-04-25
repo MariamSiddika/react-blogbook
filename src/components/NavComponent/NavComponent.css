@@ -40,6 +40,10 @@
     cursor: pointer;
 }
 
+.listmargin {
+    margin-right: 50px;
+}
+
 .topIcon {
     font-size: 20px;
     margin-right: 10px;
@@ -67,8 +71,7 @@
 }
 
 .topListItem:hover {
-    font-weight: 600;
-    color: teal;
+    color: rgb(1, 92, 92);
 }
 
 .dropDownBtn {

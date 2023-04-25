@@ -7,6 +7,7 @@ import makeAnimated from 'react-select/animated';
 import useFetch from '../../hooks/useFetch';
 import { useRef } from 'react';
 import useFirebase from '../../hooks/useFirebase';
+import Swal from 'sweetalert2';
 
 const Write = () => {
     // const editor = useRef(null);
@@ -52,8 +53,7 @@ const Write = () => {
         const name = titleRef.current.value;
         const category = categoryRef?.current?.props?.value?.value;
         // console.log(category)
-        // const htmlRemoveRegex = /(<([^>]+)>)/gi;
-        const post = content;
+        let post = content;
         
         // console.log(post);
         const img = imageUpload;
@@ -64,13 +64,23 @@ const Write = () => {
             "https://blogs-server-ms.onrender.com/api/v1/blogs",
             blogData
         );
+        titleRef.current.value = "";
+        categoryRef.current.props.value.value = "";
+        post = "";
+        new Swal({
+            title: "Hurray!",
+            text: "Your blog is successfully uploaded :)",
+            icon: "success",
+        });
         console.log(blogUpload);
     };
 
     return (
         <div className='write pt-5 d-flex flex-column justify-content-center align-items-center'>
            
-            <img className='writeImg' src={imageUpload? imageUpload : postImg} alt="" />
+            {/* <img className='writeImg' src={imageUpload? imageUpload : postImg} alt="" /> */}
+           { imageUpload &&
+            <img className='writeImg' src={ imageUpload } alt="" />}
             <form className='writeForm'>
 
                 <div className="writeFormGroup d-flex align-items-center">

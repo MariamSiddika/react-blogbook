@@ -1,38 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './UseProfile.css';
 import UserPost from '../UserPost/UserPost';
 import useFirebase from '../../hooks/useFirebase';
 import useFetch from '../../hooks/useFetch';
 import { useEffect } from 'react';
+import axios from 'axios';
 
 const UserProfile = () => {
     const { user, updateName } = useFirebase();
     const { data, getData, error, loading } = useFetch();
+    const [userDetail, setUserDetail] = useState([]);
 
-    // if (user?.email) {
-    //     getData(`https://blogs-server-ms.onrender.com/api/v1/users?email=${user?.email}`);
-
-    // }
-    // console.log(data[0]);
-
-    // useEffect(() => {
-    //     if (user?.email) {
-    //         getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?email=${user?.email}`)
-    //     }
-    // }, []);
-    if(user?.email){
+    if (user?.email) {
         getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?email=${user?.email}`)
     }
     // console.log(user?.email);
     // console.log(data);
 
+    if (user?.email) {
+        axios.get(`https://blogs-server-ms.onrender.com/api/v1/users?email=${user?.email}`)
+            .then(res => {
+                const resData = res.data[0];
+                setUserDetail(resData);
+                
+            }).catch(err => {
+                console.log(err);
+            })
+    }
+    //   console.log(userDetail);
+
+
+    if (loading) {
+        return 'loading';
+    }
     return (
         <div className='userProfile mt-4 mb-5'>
             <div className="profileInfo d-flex align-items-center justify-content-start shadow pb-2">
                 {
-                    user?.img
+                    userDetail?.img
                         ?
-                        <img className='userPp ms-5' src={user?.img} alt="" />
+                        <img className='userPp ms-5' src={userDetail?.img} alt="" />
                         :
                         <i
                             className=" fa-regular fa-user ms-5 ps-2"
@@ -42,23 +49,21 @@ const UserProfile = () => {
 
                 {/* <img className='userPp  ms-5' src={pp} alt="" /> */}
                 <div className='userInfo  ms-5'>
-                    <h4 className='infoName'>{user?.displayName}</h4>
+                    <h4 className='infoName'>{userDetail?.name}</h4>
                     <div className='d-flex align-items-center justify-content-start'>
                         <i className="fa-solid fa-envelope infoMailIcon me-2"></i>
-                        <p className='mb-0 infoMail'>{user?.email}</p>
+                        <p className='mb-0 infoMail'>{userDetail?.email}</p>
                     </div>
                 </div>
             </div>
             <h1 className='recentBlog mt-5 ps-5 shadow mb-3'>Your Blogs</h1>
             <div className='container pt-5 px-5'>
                 {
-                    data?.map((userPost) => <UserPost key={userPost?._id} userPost={userPost}></UserPost>)
+                    data?.length > 0 && !data?.message ?
+                        data?.map((userPost) => <UserPost key={userPost?._id} userPost={userPost}></UserPost>) : <h5>You have no blogs yet!!</h5>
+
                 }
-                {/* <UserPost></UserPost>
-                <UserPost></UserPost>
-                <UserPost></UserPost>
-                <UserPost></UserPost>
-                <UserPost></UserPost> */}
+
             </div>
         </div>
     );

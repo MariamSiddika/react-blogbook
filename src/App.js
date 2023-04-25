@@ -17,6 +17,7 @@ import AdminUsers from "./adminComponent/AdminUsers/AdminUsers";
 import UserProfile from "./components/UserProfile/UserProfile";
 import AllBlogs from "./components/AllBlogs/AllBlogs";
 import './App.css';
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -48,7 +49,10 @@ function App() {
         },
         {
           path: '/write',
-          element: <Write></Write>
+          element:
+            <PrivateRoute>
+              <Write></Write>
+            </PrivateRoute>
         },
         {
           path: '/single/:postId',
@@ -56,7 +60,10 @@ function App() {
         },
         {
           path: '/settings',
-          element: <Settings></Settings>
+          element: 
+          <PrivateRoute>
+              <Settings></Settings>
+            </PrivateRoute>
         },
         {
           path: '/login',
@@ -80,7 +87,10 @@ function App() {
         },
         {
           path: '/profile/:userId',
-          element: <UserProfile></UserProfile>
+          element: 
+          <PrivateRoute>
+              <UserProfile></UserProfile>
+            </PrivateRoute>
         },
         {
           path: '/allBlogs',

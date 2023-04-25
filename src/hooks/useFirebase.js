@@ -16,6 +16,7 @@ import {
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import initializeConfigue from "../Firebase/Firebase.init";
+import axios from "axios";
 
 initializeConfigue();
 const useFirebase = (location) => {
@@ -26,42 +27,59 @@ const useFirebase = (location) => {
     // const facebookProvider = new FacebookAuthProvider();
 
     const [user, setUser] = useState({});
+    const [userData, setUserData] = useState([]);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-    
-
-    const signUpWithEmailAndPassword = (email, password,location) => {
+    const signUpWithEmailAndPassword = (email, password, location) => {
         return createUserWithEmailAndPassword(auth, email, password);
     };
 
-    const signInWithEmail = async(email, password, location) => {
+    const signInWithEmail = async (email, password, location) => {
         await signInWithEmailAndPassword(auth, email, password)
             .then((result) => {
                 setUser(result.user);
-                setLoading(false)
-                if (location?.state?.from) {
-                    return navigate(location?.state?.from);
-                } else {
-                    
-                    return navigate("/");
-                }
+                // setLoading(false);
+
+                // setLoading(true)
+                console.log(result.user);
+                axios
+                    .get(
+                        `https://blogs-server-ms.onrender.com/api/v1/users?email=${result.user?.email}`
+                    )
+                    .then((res) => {
+                        console.log(res);
+                        // const resData = res?.data[0];
+                        
+                        if (res?.data[0]?.role === "admin") {
+                            // setLoading(false);
+                            return navigate("/admin");
+                        }
+                        if (location?.state?.from) {
+                            setLoading(false);
+                            return navigate(location?.state?.from);
+                        } else {
+                            return navigate("/");
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
             })
             .catch((error) => {
                 console.log(error);
             });
     };
 
-    const signInWithGoogle = async(location) => {
+    const signInWithGoogle = async (location) => {
         await signInWithPopup(auth, googleProvider)
             .then((result) => {
                 setUser(result.user);
-                setLoading(false)
+                setLoading(false);
                 if (location?.state?.from) {
                     return navigate(location?.state?.from);
                 } else {
-                   
                     return navigate("/");
                 }
             })
@@ -78,7 +96,7 @@ const useFirebase = (location) => {
     //             if (location?.state?.from) {
     //                 return navigate(location?.state?.from);
     //             } else {
-                    
+
     //                 return navigate("/home");
     //             }
     //         })
@@ -95,7 +113,7 @@ const useFirebase = (location) => {
     //             if (location?.state?.from) {
     //                 return navigate(location?.state?.from);
     //             } else {
-                    
+
     //                 return navigate("/home");
     //             }
     //         })
@@ -112,7 +130,7 @@ const useFirebase = (location) => {
     //         if (location?.state?.from) {
     //             return navigate(location?.state?.from);
     //         } else {
-                
+
     //             return navigate("/home");
     //         }
     //     })
@@ -130,7 +148,6 @@ const useFirebase = (location) => {
     const updateName = (name) => {
         updateProfile(auth.currentUser, {
             displayName: name,
-            
         })
             .then(() => {
                 // Profile updated!
@@ -146,14 +163,11 @@ const useFirebase = (location) => {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-            
-            setLoading(true)
+            setLoading(true);
             if (user) {
                 setUser(user);
                 setLoading(false);
                 // console.log(user);
-                
-                
             } else {
                 setUser({});
                 setLoading(false);

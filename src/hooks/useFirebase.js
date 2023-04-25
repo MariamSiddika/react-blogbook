@@ -45,7 +45,7 @@ const useFirebase = (location) => {
                     return navigate(location?.state?.from);
                 } else {
                     
-                    return navigate("/home");
+                    return navigate("/");
                 }
             })
             .catch((error) => {
@@ -62,7 +62,7 @@ const useFirebase = (location) => {
                     return navigate(location?.state?.from);
                 } else {
                    
-                    return navigate("/home");
+                    return navigate("/");
                 }
             })
             .catch((error) => {

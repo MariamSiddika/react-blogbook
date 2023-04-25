@@ -56,9 +56,9 @@ const SinglePost = () => {
         if (isLiked) {
             setIsdisLiked(false);
             setLikeCounter((prev) => prev + 1);
-            setDisLikeCounter((prev) => prev - 1);
+            setDisLikeCounter((prev) => (prev - 1 < 0 ? 0 : prev - 1));
         } else if (!isLiked) {
-            setLikeCounter((prev) => prev - 1);
+            setLikeCounter((prev) => (prev - 1 < 0 ? 0 : prev - 1));
             setDisLikeCounter((prev) => prev + 1);
         }
     }, [isLiked, likeCount, disLikeCount]);
@@ -66,9 +66,9 @@ const SinglePost = () => {
         if (isdisLiked === true) {
             setIsLiked(false);
             setDisLikeCounter((prev) => prev + 1);
-            setLikeCounter((prev) => prev - 1);
+            setLikeCounter((prev) => (prev - 1 < 0 ? 0 : prev - 1));
         } else if (isdisLiked === false) {
-            setDisLikeCounter((prev) => prev - 1);
+            setDisLikeCounter((prev) => (prev - 1 < 0 ? 0 : prev - 1));
             setLikeCounter((prev) => prev + 1);
         }
     }, [isdisLiked, likeCount, disLikeCount]);

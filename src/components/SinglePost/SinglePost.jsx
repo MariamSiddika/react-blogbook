@@ -23,67 +23,63 @@ const SinglePost = () => {
     const commentRef = useRef();
 
     const handleCategoryClick = (postCat) => {
-
         // navigate('/allBlogs');
         getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?category=${postCat}`);
-    }
+    };
     useEffect(() => {
         getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`);
     }, []);
     // console.log(data[0]?.comments);
 
     if (user?.email) {
-        axios.get(`https://blogs-server-ms.onrender.com/api/v1/users?email=${user?.email}`)
-            .then(res => {
+        axios
+            .get(`https://blogs-server-ms.onrender.com/api/v1/users?email=${user?.email}`)
+            .then((res) => {
                 const resData = res.data[0];
                 setUserDetail(resData);
-                
-            }).catch(err => {
-                console.log(err);
             })
+            .catch((err) => {
+                console.log(err);
+            });
     }
-    //   console.log(userDetail);
+    useEffect(() => {
+        getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`);
+    }, []);
     const likeCount = data[0]?.like_count;
     const disLikeCount = data[0]?.dislike_count;
-    const [likeCounter, setLikeCounter] = useState(likeCount);
-    const [disLikeCounter, setDisLikeCounter] = useState(disLikeCount);
-    // console.log(typeof data[0]?.like_count);
+    console.log(likeCount, disLikeCount);
+    const [likeCounter, setLikeCounter] = useState(likeCount ? likeCount : 0);
+    const [disLikeCounter, setDisLikeCounter] = useState(disLikeCount ? disLikeCount : 0);
+    console.log(typeof data[0]?.like_count);
 
     useEffect(() => {
-        if (isLiked === true) {
+        if (isLiked) {
             setIsdisLiked(false);
-            // console.log(isLiked, isdisLiked);
+            setLikeCounter((prev) => prev + 1);
+            setDisLikeCounter((prev) => prev - 1);
+        } else if (!isLiked) {
+            setLikeCounter((prev) => prev - 1);
+            setDisLikeCounter((prev) => prev + 1);
         }
-    }, [isLiked]);
+    }, [isLiked, likeCount, disLikeCount]);
     useEffect(() => {
         if (isdisLiked === true) {
             setIsLiked(false);
-            // console.log(isLiked, isdisLiked);
+            setDisLikeCounter((prev) => prev + 1);
+            setLikeCounter((prev) => prev - 1);
+        } else if (isdisLiked === false) {
+            setDisLikeCounter((prev) => prev - 1);
+            setLikeCounter((prev) => prev + 1);
         }
-    }, [isdisLiked]);
+    }, [isdisLiked, likeCount, disLikeCount]);
 
     const likeHandler = () => {
         setIsLiked((isLiked) => !isLiked);
-        if (isLiked === true) {
-            setIsdisLiked(false);
-            setLikeCounter((prev) => prev - 1);
-            setDisLikeCounter((prev) => prev + 1);
-        } else if (isLiked === false) {
-            setLikeCounter((prev) => prev + 1);
-            setDisLikeCounter((prev) => prev - 1);
-        }
     };
+    // console.log(isLiked, isdisLiked);
 
     const disLikeHandler = () => {
         setIsdisLiked((isdisLiked) => !isdisLiked);
-        if (isdisLiked === true) {
-            setIsLiked(false);
-            setDisLikeCounter((prev) => prev - 1);
-            setLikeCounter((prev) => prev + 1);
-        } else if (isdisLiked === false) {
-            setDisLikeCounter((prev) => prev + 1);
-            setLikeCounter((prev) => prev - 1);
-        }
     };
 
     const handleBlogEdit = () => {};
@@ -110,7 +106,10 @@ const SinglePost = () => {
         e.preventDefault();
         const commentValue = commentRef.current.value;
         const userCommentData = {
-            comments: [...data[0]?.comments, { name: userDetail.name, email: userDetail.email, comment: commentValue }],
+            comments: [
+                ...data[0]?.comments,
+                { name: userDetail.name, email: userDetail.email, comment: commentValue },
+            ],
         };
         console.log(userCommentData);
         patchData(
@@ -151,9 +150,14 @@ const SinglePost = () => {
                     Author: <b>{data[0]?.author}</b>
                 </span>
                 <span className="singlePostDate">
-                <Link className='text-decoration-none' to='/allBlogs' state={data[0]?.category}>
-                            <span onClick={() => handleCategoryClick(data[0]?.category)} className="singlePostCategory me-4">{data[0]?.category}</span></Link>
-
+                    <Link className="text-decoration-none" to="/allBlogs" state={data[0]?.category}>
+                        <span
+                            onClick={() => handleCategoryClick(data[0]?.category)}
+                            className="singlePostCategory me-4"
+                        >
+                            {data[0]?.category}
+                        </span>
+                    </Link>
 
                     {/* <span className="singlePostCategory me-4">{data[0]?.category}</span>{" "} */}
                     {new Date(data[0]?.createdAt).toDateString()}

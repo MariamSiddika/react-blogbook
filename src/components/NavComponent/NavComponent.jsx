@@ -7,21 +7,54 @@ import { Button, Dropdown, Form, InputGroup, Modal } from 'react-bootstrap';
 import { useState } from 'react';
 import useFirebase from '../../hooks/useFirebase';
 import useFetch from '../../hooks/useFetch';
+import { useRef } from 'react';
+import axios from "axios";
+
 
 function NavComponent() {
+    const [blogData, setBlogData] = useState(null);
     const [show, setShow] = useState(false);
     const { logOut, user } = useFirebase();
-
+    // const [searchOption, setSearchOption] = useState();
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const { data, getData, setDataLoading, patchData, postData, error, loading } = useFetch();
-
+    const searchRef = useRef();
     if (user?.email) {
         getData(`https://blogs-server-ms.onrender.com/api/v1/users?email=${user?.email}`);
 
     }
     // console.log(data[0]);
+    // const searchHandler = (query) => {
+    //     if (query) {
+    //         // console.log(query)
+    //         setSearchOption(query);
+    //     }
+    //     if (query === "") {
+    //         setSearchOption(false);
+    //     } 
+    // };
+    const handleSearch = async () => {
+        const searchValue = searchRef.current.value;
+        console.log(searchValue);
 
+        // navigate('/allBlogs');
+        await axios.get(`https://blogs-server-ms.onrender.com/api/v1/blogs`)
+            .then(res => {
+                const resData = res.data;
+                //    console.log(resData) 
+                
+                const filteredData = resData?.filter((singleResData) => {
+                    //console.log(data.name.toLowerCase());
+                    return singleResData?.name?.toLowerCase().includes(searchValue?.toLowerCase());
+                });
+                setBlogData(filteredData);
+                console.log(blogData);
+
+            }).catch(err => {
+                console.log(err);
+            })
+    }
     return (
 
         <Navbar className='top sticky-top d-flex align-items-center justify-content-center' expand="lg">
@@ -53,7 +86,7 @@ function NavComponent() {
                             }
                             {
                                 !user.auth &&
-                                <NavLink to="/register" className="topListItem me-0"style={({isActive}) => {return {borderBottom: isActive? "2px solid goldenRod" : ""}}}><li>REGISTER</li></NavLink>
+                                <NavLink to="/register" className="topListItem me-0" style={({ isActive }) => { return { borderBottom: isActive ? "2px solid goldenRod" : "" } }}><li>REGISTER</li></NavLink>
                             }
 
 
@@ -106,13 +139,19 @@ function NavComponent() {
 
                             <InputGroup className="p-3">
                                 <Form.Control
+                                    ref={searchRef}
                                     placeholder="Search by Name or Category"
                                     type='text'
                                     aria-label="Search"
                                 />
-                                <Button className='searchButton'>
+                                <Link className='text-decoration-none' to='/allBlogs' blogState={blogData}>
+                                    <Button onClick={handleSearch} className='searchButton'>
+                                        Search
+                                    </Button></Link>
+                                {/* 
+                                <Button onClick={handleSearch} className='searchButton'>
                                     Search
-                                </Button>
+                                </Button> */}
                             </InputGroup>
                         </Modal>
 

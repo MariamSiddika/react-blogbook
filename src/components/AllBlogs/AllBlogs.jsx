@@ -1,14 +1,17 @@
 import React from 'react';
 import useFetch from '../../hooks/useFetch';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const AllBlogs = () => {
+       
     const { data, getData, error, loading, patchData, deleteData, success } = useFetch();
     // const navigate = useNavigate();
     const location = useLocation();
     const category = location?.state;
+    const blogData = location?.blogState;
+    console.log(blogData);
 
     useEffect(() => {
         if (category) {
@@ -24,7 +27,7 @@ const AllBlogs = () => {
     //     navigate('/allBlogs');
     //     getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?category=${postCat}`);
     // }
-
+   
     return (
         <div className='posts'>
 

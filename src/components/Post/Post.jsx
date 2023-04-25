@@ -36,6 +36,7 @@ const Post = ({ post }) => {
                     
                     className="postInfo d-flex flex-column align-items-center">
                     <div className="postCats">
+                        
                         <Link className='text-decoration-none' to='/allBlogs' state={post?.category}>
                             <span onClick={() => handleCategoryClick(post?.category)} className="postCat mt-3 me-2">{post.category}</span></Link>
 

@@ -68,6 +68,13 @@ const SinglePost = () => {
                 like_count: like,
             });
         }
+        if (like.includes(email)) {
+            const newLike = like.filter((likeItem) => likeItem !== email);
+            patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
+                like_count: newLike,
+            });
+        }
+
         if (disLike.includes(email)) {
             const newDisLike = disLike.filter((disLikeItem) => disLikeItem !== email);
             patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
@@ -85,6 +92,12 @@ const SinglePost = () => {
             disLike.push(email);
             patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 dislike_count: disLike,
+            });
+        }
+        if (disLike.includes(email)) {
+            const newDisLike = disLike.filter((disLikeItem) => disLikeItem !== email);
+            patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
+                dislike_count: newDisLike,
             });
         }
         if (like.includes(email)) {

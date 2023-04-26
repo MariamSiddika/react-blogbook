@@ -12,8 +12,7 @@ import axios from "axios";
 
 const SinglePost = () => {
     const [userDetail, setUserDetail] = useState(null);
-    const [isLiked, setIsLiked] = useState(false);
-    const [isdisLiked, setIsdisLiked] = useState(false);
+
     const [showCommentBox, setshowCommentBox] = useState(true);
     const { data, getData, error, loading, patchData, deleteData, success } = useFetch();
     const { postId } = useParams();
@@ -29,7 +28,7 @@ const SinglePost = () => {
     useEffect(() => {
         getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`);
     }, []);
-    // console.log(data[0]?.comments);
+    // console.log(comments);
 
     if (user?.email) {
         axios
@@ -42,49 +41,73 @@ const SinglePost = () => {
                 console.log(err);
             });
     }
-    useEffect(() => {
-        getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`);
-    }, []);
-    const likeCount = data[0]?.like_count;
-    const disLikeCount = data[0]?.dislike_count;
-    console.log(likeCount, disLikeCount);
-    const [likeCounter, setLikeCounter] = useState(likeCount ? likeCount : 0);
-    const [disLikeCounter, setDisLikeCounter] = useState(disLikeCount ? disLikeCount : 0);
-    console.log(typeof data[0]?.like_count);
 
-    useEffect(() => {
-        if (isLiked) {
-            setIsdisLiked(false);
-            setLikeCounter((prev) => prev + 1);
-            // setDisLikeCounter((prev) => (prev - 1 < 0 ? 0 : prev - 1));
-        } else if (!isLiked) {
-            setLikeCounter((prev) => (prev - 1 < 0 ? 0 : prev - 1));
-            // setDisLikeCounter((prev) => prev + 1);
+    const {
+        _id,
+        like_count,
+        dislike_count,
+        comments,
+        title,
+        description,
+        category,
+        img,
+        name,
+        post,
+        email,
+        author,
+        createdAt,
+        updatedAt,
+    } = data[0] || {};
+
+    const likeHandler = (postId, email) => {
+        const like = [...like_count];
+        const disLike = [...dislike_count];
+        if (!like.includes(email)) {
+            like.push(email);
+            patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
+                like_count: like,
+            });
         }
-    }, [isLiked, likeCount]);
-    useEffect(() => {
-        // if (isdisLiked === true) {
-        //     setIsLiked(false);
-        //     console.log(likeCount, disLikeCount);
-        // }
-
-        if (isdisLiked === true) {
-            setIsLiked(false);
-            setDisLikeCounter((prev) => prev + 1);
-            // setLikeCounter((prev) => (prev - 1 < 0 ? 0 : prev - 1));
-        } else if (isdisLiked === false) {
-            setDisLikeCounter((prev) => (prev - 1 < 0 ? 0 : prev - 1));
-            // setLikeCounter((prev) => prev + 1);
+        if (like.includes(email)) {
+            const newLike = like.filter((likeItem) => likeItem !== email);
+            patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
+                like_count: newLike,
+            });
         }
-    }, [isdisLiked, disLikeCount]);
 
-    const likeHandler = () => {
-        setIsLiked((isLiked) => !isLiked);
+        if (disLike.includes(email)) {
+            const newDisLike = disLike.filter((disLikeItem) => disLikeItem !== email);
+            patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
+                dislike_count: newDisLike,
+            });
+        }
+        console.log(like);
+        console.log(disLike);
     };
-    // console.log(isLiked, isdisLiked);
 
-    const disLikeHandler = () => {
-        setIsdisLiked((isdisLiked) => !isdisLiked);
+    const disLikeHandler = (postId, email) => {
+        const like = [...like_count];
+        const disLike = [...dislike_count];
+        if (!disLike.includes(email)) {
+            disLike.push(email);
+            patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
+                dislike_count: disLike,
+            });
+        }
+        if (disLike.includes(email)) {
+            const newDisLike = disLike.filter((disLikeItem) => disLikeItem !== email);
+            patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
+                dislike_count: newDisLike,
+            });
+        }
+        if (like.includes(email)) {
+            const newLike = like.filter((likeItem) => likeItem !== email);
+            patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
+                like_count: newLike,
+            });
+        }
+        console.log(like);
+        console.log(disLike);
     };
 
     const handleBlogEdit = () => {};
@@ -112,11 +135,11 @@ const SinglePost = () => {
         const commentValue = commentRef.current.value;
         const userCommentData = {
             comments: [
-                ...data[0]?.comments,
+                ...comments,
                 { name: userDetail.name, email: userDetail.email, comment: commentValue },
             ],
         };
-        console.log(userCommentData);
+        // console.log(userCommentData);
         patchData(
             `https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`,
             userCommentData
@@ -129,15 +152,15 @@ const SinglePost = () => {
         //     'success'
         //   )
     };
-    const content = data[0]?.post;
+    const content = post;
     return (
         <Card className="singlePost p-4 mb-4 mt-3">
             <div className="singlePostWrapper pe-0">
-                <img src={data[0]?.img} alt="" className="singlePostImg w-100 rounded" />
+                <img src={img} alt="" className="singlePostImg w-100 rounded" />
             </div>
             <h1 className="singlePostTitle text-center m-2 fs-2 fw-bolder">
-                {data[0]?.name}
-                {user?.email === data[0]?.email && (
+                {name}
+                {user?.email === email && (
                     <div className="singlePostEdit float-end">
                         <i
                             onClick={handleBlogEdit}
@@ -152,47 +175,56 @@ const SinglePost = () => {
             </h1>
             <div className="singlePostInfo mb-4 d-flex justify-content-between">
                 <span className="singlePostAuthor">
-                    Author: <b>{data[0]?.author}</b>
+                    Author: <b>{author}</b>
                 </span>
                 <span className="singlePostDate">
-                    <Link className="text-decoration-none" to="/allBlogs" state={data[0]?.category}>
+                    <Link className="text-decoration-none" to="/allBlogs" state={category}>
                         <span
-                            onClick={() => handleCategoryClick(data[0]?.category)}
+                            onClick={() => handleCategoryClick(category)}
                             className="singlePostCategory me-4"
                         >
-                            {data[0]?.category}
+                            {category}
                         </span>
                     </Link>
 
-                    {/* <span className="singlePostCategory me-4">{data[0]?.category}</span>{" "} */}
-                    {new Date(data[0]?.createdAt).toDateString()}
+                    {/* <span className="singlePostCategory me-4">{category}</span>{" "} */}
+                    {new Date(createdAt).toDateString()}
                 </span>
             </div>
             <p dangerouslySetInnerHTML={{ __html: content }} className="singlePostDesc">
-                {/* {data[0]?.post} */}
+                {/* {post} */}
             </p>
             <Card.Footer className="cartFooter d-flex align-items-center justify-content-between w-100 position-relative border-bottom">
-                <i
-                    onClick={likeHandler}
-                    className={
-                        isLiked && !isdisLiked
-                            ? "cartIcon reactedIcon cartIconOne fa-solid fa-heart position-absolute"
-                            : "cartIcon cartIconOne fa-regular fa-heart position-absolute"
-                    }
-                ></i>
-                <p className="mb-0 cartIconOneCount position-absolute">{likeCounter} Likes</p>
-
-                {
+                {user?.auth && (
                     <i
-                        onClick={disLikeHandler}
+                        onClick={() => likeHandler(_id, user?.email)}
                         className={
-                            isdisLiked && !isLiked
-                                ? "cartIcon reactedIcon cartIconTwo fa-solid fa-thumbs-down position-absolute"
-                                : "cartIcon cartIconTwo fa-regular fa-thumbs-down position-absolute"
+                            "cartIcon reactedIcon cartIconOne fa-solid fa-heart position-absolute"
+                            //     isLiked && !isdisLiked
+                            //         ? "cartIcon reactedIcon cartIconOne fa-solid fa-heart position-absolute"
+                            //         : "cartIcon cartIconOne fa-regular fa-heart position-absolute"
                         }
                     ></i>
-                }
-                <p className="mb-0 cartIconTwoCount position-absolute">{disLikeCounter} Dislikes</p>
+                )}
+                <p className="mb-0 cartIconOneCount position-absolute">
+                    {like_count?.length} Likes
+                </p>
+
+                {user?.auth && (
+                    <i
+                        onClick={() => disLikeHandler(_id, user?.email)}
+                        className={
+                            "cartIcon cartIconTwo fa-regular fa-thumbs-down position-absolute"
+
+                            //     isdisLiked && !isLiked
+                            //         ? "cartIcon reactedIcon cartIconTwo fa-solid fa-thumbs-down position-absolute"
+                            //         : "cartIcon cartIconTwo fa-regular fa-thumbs-down position-absolute"
+                        }
+                    ></i>
+                )}
+                <p className="mb-0 cartIconTwoCount position-absolute">
+                    {dislike_count?.length} Dislikes
+                </p>
 
                 <i
                     onClick={() => {
@@ -201,22 +233,20 @@ const SinglePost = () => {
                     }}
                     className="cartIcon cartIconThree fa-regular fa-comment position-absolute "
                 ></i>
-                <p className="mb-0 commentCount position-absolute">
-                    {data[0]?.comments?.length} Comments
-                </p>
+                <p className="mb-0 commentCount position-absolute">{comments?.length} Comments</p>
             </Card.Footer>
 
             {/* Comment section */}
             {showCommentBox && (
                 <div className="commentBox">
                     <h3 className="mt-2">
-                        <span>{data[0]?.comments?.length}</span> Comment
+                        <span>{comments?.length}</span> Comment
                     </h3>
                     <div className="">
                         <div className="w-100 d-flex justify-content-center">
                             <div className="w-100">
                                 <div className="d-flex flex-column comment-section">
-                                    {data[0]?.comments?.map((comment) => (
+                                    {comments?.map((comment) => (
                                         <div className="bg-white p-2">
                                             <div className="d-flex flex-row">
                                                 {user.img ? (

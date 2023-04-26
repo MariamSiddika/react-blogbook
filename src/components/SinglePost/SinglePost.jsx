@@ -59,22 +59,42 @@ const SinglePost = () => {
         updatedAt,
     } = data[0] || {};
 
-    const likeHandler = (id, email) => {
-        // setIsdisLiked((isdisLiked) => !isdisLiked);
-        // console.log(disLikeCounter);
+    const likeHandler = (postId, email) => {
         const like = [...like_count];
-        if(!like.includes(email)){
-            like.push(email)
+        const disLike = [...dislike_count];
+        if (!like.includes(email)) {
+            like.push(email);
             patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 like_count: like,
             });
         }
-        console.log(like)
+        if (disLike.includes(email)) {
+            const newDisLike = disLike.filter((disLikeItem) => disLikeItem !== email);
+            patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
+                dislike_count: newDisLike,
+            });
+        }
+        console.log(like);
+        console.log(disLike);
     };
 
-    const disLikeHandler = () => {
-        // setIsdisLiked((isdisLiked) => !isdisLiked);
-        // console.log(disLikeCounter);
+    const disLikeHandler = (postId, email) => {
+        const like = [...like_count];
+        const disLike = [...dislike_count];
+        if (!disLike.includes(email)) {
+            disLike.push(email);
+            patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
+                dislike_count: disLike,
+            });
+        }
+        if (like.includes(email)) {
+            const newLike = like.filter((likeItem) => likeItem !== email);
+            patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
+                like_count: newLike,
+            });
+        }
+        console.log(like);
+        console.log(disLike);
     };
 
     const handleBlogEdit = () => {};
@@ -179,7 +199,7 @@ const SinglePost = () => {
 
                 {user?.auth && (
                     <i
-                        onClick={disLikeHandler}
+                        onClick={() => disLikeHandler(_id, user?.email)}
                         className={
                             "cartIcon cartIconTwo fa-regular fa-thumbs-down position-absolute"
 

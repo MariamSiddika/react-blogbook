@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const useFetch = () => {
     const [data, setData] = useState([]);
@@ -44,9 +45,11 @@ const useFetch = () => {
                 if (res.data.status === "Successful") {
                     setSuccess(true);
 
-                    toast.success(
-                        "Hurray! your data updated successfully. If you can't see any update, please refresh the page. we're working on real-time data fetching. that's coming soon. inshallah! "
-                    );
+                    Swal.fire(
+                        'Good job!',
+                        'You clicked the button!',
+                        'success'
+                      )
                 }
             })
             .catch((err) => {

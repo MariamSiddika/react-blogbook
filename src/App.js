@@ -22,6 +22,8 @@ import NavComponent from "./components/NavComponent/NavComponent";
 import Footer from "./components/Footer/Footer";
 import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
+import { ClockLoader } from "react-spinners";
+import { css } from "@emotion/react";
 
 function App() {
     const [isLoading, setIsLoading] = useState(true);
@@ -30,6 +32,27 @@ function App() {
             setIsLoading(false);
         }, 2000);
     });
+    const override = css`
+        display: block;
+        margin: 0 auto;
+
+        border-color: red;
+    `;
+    if (isLoading) {
+        return (
+            <div className="w-100 d-flex justify-content-center align-items-center">
+            <ClockLoader
+                color="#E12454"
+                size={"300"}
+                loading={true}
+                css={override}
+                display={"block"}
+            />
+            </div>
+        );
+    }
+
+    
     return (
         <div>
             <NavComponent></NavComponent>

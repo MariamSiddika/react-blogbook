@@ -65,14 +65,17 @@ const SinglePost = () => {
         if (!like.includes(email)) {
             like.push(email);
             patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
-                like_count: like,
+                like_count: like,                
             });
+           window.location.reload();
         }
         if (like.includes(email)) {
             const newLike = like.filter((likeItem) => likeItem !== email);
             patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 like_count: newLike,
             });
+            window.location.reload();
+
         }
 
         if (disLike.includes(email)) {
@@ -80,9 +83,13 @@ const SinglePost = () => {
             patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 dislike_count: newDisLike,
             });
+            window.location.reload();
+
         }
-        console.log(like);
-        console.log(disLike);
+
+        //console.log(like);
+        // console.log(disLike);
+        
     };
 
     const disLikeHandler = (postId, email) => {
@@ -93,21 +100,24 @@ const SinglePost = () => {
             patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 dislike_count: disLike,
             });
+            // window.location.reload();
         }
         if (disLike.includes(email)) {
             const newDisLike = disLike.filter((disLikeItem) => disLikeItem !== email);
             patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 dislike_count: newDisLike,
             });
+            // window.location.reload();
         }
         if (like.includes(email)) {
             const newLike = like.filter((likeItem) => likeItem !== email);
             patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 like_count: newLike,
             });
+           //window.location.reload();
         }
-        console.log(like);
-        console.log(disLike);
+        // console.log(like);
+        // console.log(disLike);
     };
 
     const handleBlogEdit = () => {};
@@ -199,10 +209,10 @@ const SinglePost = () => {
                     <i
                         onClick={() => likeHandler(_id, user?.email)}
                         className={
-                            "cartIcon reactedIcon cartIconOne fa-solid fa-heart position-absolute"
-                            //     isLiked && !isdisLiked
-                            //         ? "cartIcon reactedIcon cartIconOne fa-solid fa-heart position-absolute"
-                            //         : "cartIcon cartIconOne fa-regular fa-heart position-absolute"
+                            // "cartIcon reactedIcon cartIconOne fa-solid fa-heart position-absolute"
+                                like_count.includes(user?.email)
+                                    ? "cartIcon reactedIcon cartIconOne fa-solid fa-heart position-absolute"
+                                    : "cartIcon cartIconOne fa-regular fa-heart position-absolute"
                         }
                     ></i>
                 )}
@@ -214,11 +224,11 @@ const SinglePost = () => {
                     <i
                         onClick={() => disLikeHandler(_id, user?.email)}
                         className={
-                            "cartIcon cartIconTwo fa-regular fa-thumbs-down position-absolute"
+                            // "cartIcon cartIconTwo fa-regular fa-thumbs-down position-absolute"
 
-                            //     isdisLiked && !isLiked
-                            //         ? "cartIcon reactedIcon cartIconTwo fa-solid fa-thumbs-down position-absolute"
-                            //         : "cartIcon cartIconTwo fa-regular fa-thumbs-down position-absolute"
+                            dislike_count.includes(user?.email)
+                                    ? "cartIcon reactedIcon cartIconTwo fa-solid fa-thumbs-down position-absolute"
+                                    : "cartIcon cartIconTwo fa-regular fa-thumbs-down position-absolute"
                         }
                     ></i>
                 )}

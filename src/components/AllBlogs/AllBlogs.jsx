@@ -1,18 +1,18 @@
 import React from "react";
 import useFetch from "../../hooks/useFetch";
 import { useState, useEffect } from "react";
-import { Card, Col, Row } from "react-bootstrap";
+import { Button, Card, Col, Form, InputGroup, Row } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { css } from "@emotion/react";
 import { ClockLoader } from "react-spinners";
 
 const AllBlogs = () => {
+    const [searchOption, setSearchOption] = useState();
     const { data, getData, error, loading, patchData, deleteData, success } = useFetch();
-    // const navigate = useNavigate();
     const location = useLocation();
     const category = location?.state;
     const blogData = location?.blogState;
-    console.log(blogData);
+    // console.log(blogData);
 
     useEffect(() => {
         if (category) {
@@ -28,22 +28,34 @@ const AllBlogs = () => {
     // }
 
     const override = css`
-        display: block;
-        margin: 0 auto;
-        border-color: red;
+    display: block;
+    margin: 0 auto;
+    border-color: red;
     `;
 
     if (loading) {
         return (
-            <ClockLoader
-                color="#E12454"
-                size={"300"}
-                loading={true}
-                css={override}
-                display={"block"}
-            />
+            <div className="w-100 h-100 my-auto d-flex justify-content-center align-items-center mt-5">
+                <ClockLoader
+                    color="#E12454"
+                    size={"300"}
+                    loading={true}
+                    css={override}
+                    display={"block"}
+                />
+            </div>
         );
     }
+    //Search handlee
+    const searchHandler = (query) => {
+        if (query) {
+            // console.log(query)
+            setSearchOption(query);
+        }
+        if (query === "") {
+            setSearchOption(false);
+        }
+    };
 
     let content;
 
@@ -62,7 +74,6 @@ const AllBlogs = () => {
                             )}
 
                             <div
-                                // onClick={routeChange}
                                 className="postInfo d-flex flex-column align-items-center"
                             >
                                 <div className="postCats">
@@ -72,13 +83,10 @@ const AllBlogs = () => {
                                 <span className="postDate mt-1">
                                     {new Date(post?.createdAt).toDateString()}
                                 </span>
-                                {/* <span className="postDate mt-1">1 hour ago</span> */}
                                 <p
                                     dangerouslySetInnerHTML={{ __html: post?.post }}
                                     className="postDesc mt-3 w-100 px-3"
                                 >
-                                    {/* {post.post} */}
-                                    {/* // <div dangerouslySetInnerHTML={{_html:post}} /> */}
                                 </p>
                             </div>
                             <Link className="text-decoration-none" to={`/single/${post?._id}`}>
@@ -92,16 +100,16 @@ const AllBlogs = () => {
 
                             <Card.Footer className="cartFooter d-flex align-items-center justify-content-between w-100 border-bottom">
                                 <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                                    <p className="reactedCount mb-0">{post?.like_count} likes</p>
+                                    <p className="reactedCount mb-0">{post?.like_count?.length} likes</p>
                                 </Link>
                                 <Link className="text-decoration-none" to={`/single/${post?._id}`}>
                                     <p className="reactedCount mb-0">
-                                        {post?.dislike_count} dislikes
+                                        {post?.dislike_count?.length} dislikes
                                     </p>
                                 </Link>
                                 <Link className="text-decoration-none" to={`/single/${post?._id}`}>
                                     <p className="reactedCount mb-0">
-                                        {post?.comments.length} comments
+                                        {post?.comments?.length} comments
                                     </p>
                                 </Link>
                             </Card.Footer>
@@ -126,7 +134,6 @@ const AllBlogs = () => {
                             )}
 
                             <div
-                                // onClick={routeChange}
                                 className="postInfo d-flex flex-column align-items-center"
                             >
                                 <div className="postCats">
@@ -136,13 +143,10 @@ const AllBlogs = () => {
                                 <span className="postDate mt-1">
                                     {new Date(post?.createdAt).toDateString()}
                                 </span>
-                                {/* <span className="postDate mt-1">1 hour ago</span> */}
                                 <p
                                     dangerouslySetInnerHTML={{ __html: post?.post }}
                                     className="postDesc mt-3 w-100 px-3"
                                 >
-                                    {/* {post.post} */}
-                                    {/* // <div dangerouslySetInnerHTML={{_html:post}} /> */}
                                 </p>
                             </div>
                             <Link className="text-decoration-none" to={`/single/${post?._id}`}>
@@ -156,16 +160,16 @@ const AllBlogs = () => {
 
                             <Card.Footer className="cartFooter d-flex align-items-center justify-content-between w-100 border-bottom">
                                 <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                                    <p className="reactedCount mb-0">{post?.like_count} likes</p>
+                                    <p className="reactedCount mb-0">{post?.like_count?.length} likes</p>
                                 </Link>
                                 <Link className="text-decoration-none" to={`/single/${post?._id}`}>
                                     <p className="reactedCount mb-0">
-                                        {post?.dislike_count} dislikes
+                                        {post?.dislike_count?.length} dislikes
                                     </p>
                                 </Link>
                                 <Link className="text-decoration-none" to={`/single/${post?._id}`}>
                                     <p className="reactedCount mb-0">
-                                        {post?.comments.length} comments
+                                        {post?.comments?.length} comments
                                     </p>
                                 </Link>
                             </Card.Footer>
@@ -186,7 +190,6 @@ const AllBlogs = () => {
                         )}
 
                         <div
-                            // onClick={routeChange}
                             className="postInfo d-flex flex-column align-items-center"
                         >
                             <div className="postCats">
@@ -196,13 +199,10 @@ const AllBlogs = () => {
                             <span className="postDate mt-1">
                                 {new Date(post?.createdAt).toDateString()}
                             </span>
-                            {/* <span className="postDate mt-1">1 hour ago</span> */}
                             <p
                                 dangerouslySetInnerHTML={{ __html: post?.post }}
                                 className="postDesc mt-3 w-100 px-3"
                             >
-                                {/* {post.post} */}
-                                {/* // <div dangerouslySetInnerHTML={{_html:post}} /> */}
                             </p>
                         </div>
                         <Link className="text-decoration-none" to={`/single/${post?._id}`}>
@@ -216,10 +216,10 @@ const AllBlogs = () => {
 
                         <Card.Footer className="cartFooter d-flex align-items-center justify-content-between w-100 border-bottom">
                             <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                                <p className="reactedCount mb-0">{post?.like_count} likes</p>
+                                <p className="reactedCount mb-0">{post?.like_count?.length} likes</p>
                             </Link>
                             <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                                <p className="reactedCount mb-0">{post?.dislike_count} dislikes</p>
+                                <p className="reactedCount mb-0">{post?.dislike_count?.length} dislikes</p>
                             </Link>
                             <Link className="text-decoration-none" to={`/single/${post?._id}`}>
                                 <p className="reactedCount mb-0">
@@ -235,8 +235,24 @@ const AllBlogs = () => {
 
     return (
         <div className="posts">
+            <div className="">
+                <InputGroup className="w-50 mx-auto my-5 d-flex align-items-center justify-content-center">
+                    <Form.Control
+                        onChange={(e) => {
+                            console.log(e.target.value)
+                            searchHandler(e.target.value)
+                        }}
+                        // ref={searchRef}
+                        placeholder="Search by Name"
+                        type="text"
+                        aria-label="Search"
+                    />
+                    <Button className="searchButton">
+                        Search
+                    </Button>
+                </InputGroup>
+            </div>
             {content}
-            {/* <button className='btn btn-lg d-flex mx-auto text-white showMoreBtn px-5 mb-3'>Show More</button> */}
         </div>
     );
 };

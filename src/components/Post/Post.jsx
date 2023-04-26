@@ -1,9 +1,7 @@
 import "./Post.css";
-// import postImg from "../../images/food.jpg";
 import { Card, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
-import { useEffect } from "react";
 
 
 const Post = ({ post }) => {
@@ -26,7 +24,7 @@ const Post = ({ post }) => {
                 data-aos-duration="2000" className="post mt-4 mb-5 mx-3 shadow">
                 {
                     post.img && <img
-                        className="postImg w-100 rounded mb-2" src={post.img} alt="" />
+                        className="postImg w-100 rounded mb-2" src={post?.img} alt="" />
                 }
 
                 <div
@@ -38,18 +36,18 @@ const Post = ({ post }) => {
                     <div className="postCats">
                         
                         <Link className='text-decoration-none' to='/allBlogs' state={post?.category}>
-                            <span onClick={() => handleCategoryClick(post?.category)} className="postCat mt-3 me-2">{post.category}</span></Link>
+                            <span onClick={() => handleCategoryClick(post?.category)} className="postCat mt-3 me-2">{post?.category}</span></Link>
 
                     </div>
-                    <span className="postTitle mt-2">{post.name}</span>
-                    <span className="postDate mt-1">{new Date(post.createdAt).toDateString()}</span>
+                    <span className="postTitle mt-2">{post?.name}</span>
+                    <span className="postDate mt-1">{new Date(post?.createdAt).toDateString()}</span>
                     {/* <span className="postDate mt-1">1 hour ago</span> */}
                     <p dangerouslySetInnerHTML={{ __html: content, }} className="postDesc mt-3 w-100 px-3" >
 
                     </p>
 
                 </div>
-                <Link className='text-decoration-none' to={`/single/${post._id}`}>
+                <Link className='text-decoration-none' to={`/single/${post?._id}`}>
                     <div data-aos="fade-up"
                 data-aos-easing="ease-out-cubic"
                 data-aos-duration="1000"  
@@ -60,9 +58,9 @@ const Post = ({ post }) => {
                 </Link>
 
                 <Card.Footer className="cartFooter d-flex align-items-center justify-content-between w-100 border-bottom">
-                    <Link className='text-decoration-none' to={`/single/${post._id}`}><p className="reactedCount mb-0">{post?.like_count} likes</p></Link>
-                    <Link className='text-decoration-none' to={`/single/${post._id}`}><p className="reactedCount mb-0">{post?.dislike_count} dislikes</p></Link>
-                    <Link className='text-decoration-none' to={`/single/${post._id}`}><p className="reactedCount mb-0">{post?.comments.length} comments</p></Link>
+                    <Link className='text-decoration-none' to={`/single/${post?._id}`}><p className="reactedCount mb-0">{post?.like_count?.length} likes</p></Link>
+                    <Link className='text-decoration-none' to={`/single/${post._id}`}><p className="reactedCount mb-0">{post?.dislike_count?.length} dislikes</p></Link>
+                    <Link className='text-decoration-none' to={`/single/${post?._id}`}><p className="reactedCount mb-0">{post?.comments?.length} comments</p></Link>
                 </Card.Footer>
             </Card>
         </Col>

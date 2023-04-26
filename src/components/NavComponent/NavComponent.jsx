@@ -3,58 +3,41 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link, NavLink } from "react-router-dom";
 import "./NavComponent.css";
-import { Button, Dropdown, Form, InputGroup, Modal } from "react-bootstrap";
-import { useState } from "react";
+import {  Dropdown } from "react-bootstrap";
 import useFirebase from "../../hooks/useFirebase";
 import useFetch from "../../hooks/useFetch";
-import { useRef } from "react";
-import axios from "axios";
+
 
 function NavComponent() {
-    const [blogData, setBlogData] = useState(null);
-    const [show, setShow] = useState(false);
     const { logOut, user } = useFirebase();
-    // const [searchOption, setSearchOption] = useState();
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    const { data, getData, setDataLoading, patchData, postData, error, loading } = useFetch();
-    const searchRef = useRef();
+    const { data, getData } = useFetch();
+    
     if (user?.email) {
         getData(`https://blogs-server-ms.onrender.com/api/v1/users?email=${user?.email}`);
     }
-    // console.log(data[0]);
-    // const searchHandler = (query) => {
-    //     if (query) {
-    //         // console.log(query)
-    //         setSearchOption(query);
-    //     }
-    //     if (query === "") {
-    //         setSearchOption(false);
-    //     }
+    // const handleSearch = async () => {
+    //     const searchValue = searchRef.current.value;
+    //     console.log(searchValue);
+
+    //     // navigate('/allBlogs');
+    //     await axios
+    //         .get(`https://blogs-server-ms.onrender.com/api/v1/blogs`)
+    //         .then((res) => {
+    //             const resData = res.data;
+    //             //    console.log(resData)
+
+    //             const filteredData = resData?.filter((singleResData) => {
+    //                 //console.log(data.name.toLowerCase());
+    //                 return singleResData?.name?.toLowerCase().includes(searchValue?.toLowerCase());
+    //             });
+    //             // setBlogData(filteredData);
+    //             // console.log(blogData);
+    //             return filteredData;
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //         });
     // };
-    const handleSearch = async () => {
-        const searchValue = searchRef.current.value;
-        console.log(searchValue);
-
-        // navigate('/allBlogs');
-        await axios
-            .get(`https://blogs-server-ms.onrender.com/api/v1/blogs`)
-            .then((res) => {
-                const resData = res.data;
-                //    console.log(resData)
-
-                const filteredData = resData?.filter((singleResData) => {
-                    //console.log(data.name.toLowerCase());
-                    return singleResData?.name?.toLowerCase().includes(searchValue?.toLowerCase());
-                });
-                // setBlogData(filteredData);
-                // console.log(blogData);
-                return filteredData;
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
     return (
         <Navbar
             className="top sticky-top d-flex align-items-center justify-content-center"
@@ -115,8 +98,7 @@ function NavComponent() {
                                         <li>WRITE</li>
                                     </NavLink>
                                 )
-                                // :
-                                // <Navigate to={'/home'} />
+                                
                             }
                             {!user.auth && (
                                 <NavLink
@@ -131,8 +113,6 @@ function NavComponent() {
                                     <li>REGISTER</li>
                                 </NavLink>
                             )}
-
-                            {/* <Nav.Link as={Link} to="/logout" onClick={() => logOut()} className="topListItem"><li>LOGOUT</li></Nav.Link> */}
                         </Nav>
                     </div>
 
@@ -153,10 +133,6 @@ function NavComponent() {
                                         style={{ fontSize: "30px" }}
                                     ></i>
                                 )}
-                                {/* <img className='topImg me-2'
-                                        src={img}
-                                        alt=""
-                                    /> */}
 
                                 <p className="mb-0">{data[0]?.name}</p>
                                 <Dropdown className="dropDown">
@@ -184,40 +160,6 @@ function NavComponent() {
                                 <button className="navLoginBtn  border-0">Login</button>
                             </NavLink>
                         )}
-
-                        <i
-                            onClick={handleShow}
-                            className="topSearchIcon fa-solid fa-magnifying-glass"
-                        ></i>
-
-                        <Modal
-                            className="d-flex align-items-start"
-                            show={show}
-                            onHide={handleClose}
-                            dialogClassName="modal-90w"
-                        >
-                            <InputGroup className="p-3">
-                                <Form.Control
-                                    ref={searchRef}
-                                    placeholder="Search by Name or Category"
-                                    type="text"
-                                    aria-label="Search"
-                                />
-                                <Link
-                                    className="text-decoration-none"
-                                    to="/allBlogs"
-                                    blogState={blogData}
-                                >
-                                    <Button onClick={handleSearch} className="searchButton">
-                                        Search
-                                    </Button>
-                                </Link>
-                                {/* 
-                                <Button onClick={handleSearch} className='searchButton'>
-                                    Search
-                                </Button> */}
-                            </InputGroup>
-                        </Modal>
                     </div>
                 </Navbar.Collapse>
             </Container>

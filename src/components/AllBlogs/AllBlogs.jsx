@@ -28,9 +28,9 @@ const AllBlogs = () => {
     // }
 
     const override = css`
-    display: block;
-    margin: 0 auto;
-    border-color: red;
+        display: block;
+        margin: 0 auto;
+        border-color: red;
     `;
 
     if (loading) {
@@ -73,9 +73,7 @@ const AllBlogs = () => {
                                 />
                             )}
 
-                            <div
-                                className="postInfo d-flex flex-column align-items-center"
-                            >
+                            <div className="postInfo d-flex flex-column align-items-center">
                                 <div className="postCats">
                                     <span className="postCat mt-3 me-2">{post?.category}</span>
                                 </div>
@@ -86,8 +84,7 @@ const AllBlogs = () => {
                                 <p
                                     dangerouslySetInnerHTML={{ __html: post?.post }}
                                     className="postDesc mt-3 w-100 px-3"
-                                >
-                                </p>
+                                ></p>
                             </div>
                             <Link className="text-decoration-none" to={`/single/${post?._id}`}>
                                 <div className="d-flex align-items-center justify-content-end ">
@@ -100,7 +97,9 @@ const AllBlogs = () => {
 
                             <Card.Footer className="cartFooter d-flex align-items-center justify-content-between w-100 border-bottom">
                                 <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                                    <p className="reactedCount mb-0">{post?.like_count?.length} likes</p>
+                                    <p className="reactedCount mb-0">
+                                        {post?.like_count?.length} likes
+                                    </p>
                                 </Link>
                                 <Link className="text-decoration-none" to={`/single/${post?._id}`}>
                                     <p className="reactedCount mb-0">
@@ -133,9 +132,7 @@ const AllBlogs = () => {
                                 />
                             )}
 
-                            <div
-                                className="postInfo d-flex flex-column align-items-center"
-                            >
+                            <div className="postInfo d-flex flex-column align-items-center">
                                 <div className="postCats">
                                     <span className="postCat mt-3 me-2">{post?.category}</span>
                                 </div>
@@ -146,8 +143,7 @@ const AllBlogs = () => {
                                 <p
                                     dangerouslySetInnerHTML={{ __html: post?.post }}
                                     className="postDesc mt-3 w-100 px-3"
-                                >
-                                </p>
+                                ></p>
                             </div>
                             <Link className="text-decoration-none" to={`/single/${post?._id}`}>
                                 <div className="d-flex align-items-center justify-content-end ">
@@ -160,7 +156,9 @@ const AllBlogs = () => {
 
                             <Card.Footer className="cartFooter d-flex align-items-center justify-content-between w-100 border-bottom">
                                 <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                                    <p className="reactedCount mb-0">{post?.like_count?.length} likes</p>
+                                    <p className="reactedCount mb-0">
+                                        {post?.like_count?.length} likes
+                                    </p>
                                 </Link>
                                 <Link className="text-decoration-none" to={`/single/${post?._id}`}>
                                     <p className="reactedCount mb-0">
@@ -179,59 +177,143 @@ const AllBlogs = () => {
             </Row>
         );
     }
+    if (searchOption) {
+        console.log(searchOption);
+        const filteredData = data?.filter((singleData) => {
+            // console.log(singleData.name.toLowerCase());
+            return singleData.name.toLowerCase().includes(searchOption.toLowerCase());
+        });
+        console.log(filteredData);
+        content = (
+            <Row className="mx-4">
+                {filteredData?.map((post) => {
+                    // console.log(post);
+                    return (
+                        <Col xs={12} md={6} lg={4}>
+                            <Card className="post mt-4 mb-5 mx-3 shadow">
+                                {post.img && (
+                                    <img
+                                        className="postImg w-100 rounded mb-2"
+                                        src={post?.img}
+                                        alt=""
+                                    />
+                                )}
 
-    content = (
-        <Row className="mx-4">
-            {data.map((post) => (
-                <Col xs={12} md={6} lg={4}>
-                    <Card className="post mt-4 mb-5 mx-3 shadow">
-                        {post.img && (
-                            <img className="postImg w-100 rounded mb-2" src={post?.img} alt="" />
-                        )}
+                                <div className="postInfo d-flex flex-column align-items-center">
+                                    <div className="postCats">
+                                        <span className="postCat mt-3 me-2">{post?.category}</span>
+                                    </div>
+                                    <span className="postTitle mt-2">{post?.name}</span>
+                                    <span className="postDate mt-1">
+                                        {new Date(post?.createdAt).toDateString()}
+                                    </span>
+                                    <p
+                                        dangerouslySetInnerHTML={{ __html: post?.post }}
+                                        className="postDesc mt-3 w-100 px-3"
+                                    ></p>
+                                </div>
+                                <Link className="text-decoration-none" to={`/single/${post?._id}`}>
+                                    <div className="d-flex align-items-center justify-content-end ">
+                                        <button className="btn-read-blog mb-3 me-3 mt-0">
+                                            <span>Read Blog</span>
+                                            <i className="fa-solid fa-arrow-right"></i>
+                                        </button>
+                                    </div>
+                                </Link>
 
-                        <div
-                            className="postInfo d-flex flex-column align-items-center"
-                        >
-                            <div className="postCats">
-                                <span className="postCat mt-3 me-2">{post?.category}</span>
+                                <Card.Footer className="cartFooter d-flex align-items-center justify-content-between w-100 border-bottom">
+                                    <Link
+                                        className="text-decoration-none"
+                                        to={`/single/${post?._id}`}
+                                    >
+                                        <p className="reactedCount mb-0">
+                                            {post?.like_count?.length} likes
+                                        </p>
+                                    </Link>
+                                    <Link
+                                        className="text-decoration-none"
+                                        to={`/single/${post?._id}`}
+                                    >
+                                        <p className="reactedCount mb-0">
+                                            {post?.dislike_count?.length} dislikes
+                                        </p>
+                                    </Link>
+                                    <Link
+                                        className="text-decoration-none"
+                                        to={`/single/${post?._id}`}
+                                    >
+                                        <p className="reactedCount mb-0">
+                                            {post?.comments?.length} comments
+                                        </p>
+                                    </Link>
+                                </Card.Footer>
+                            </Card>
+                        </Col>
+                    );
+                })}
+            </Row>
+        );
+    }
+
+    if (!blogData && !category && !searchOption) {
+        content = (
+            <Row className="mx-4">
+                {data.map((post) => (
+                    <Col xs={12} md={6} lg={4}>
+                        <Card className="post mt-4 mb-5 mx-3 shadow">
+                            {post.img && (
+                                <img
+                                    className="postImg w-100 rounded mb-2"
+                                    src={post?.img}
+                                    alt=""
+                                />
+                            )}
+
+                            <div className="postInfo d-flex flex-column align-items-center">
+                                <div className="postCats">
+                                    <span className="postCat mt-3 me-2">{post?.category}</span>
+                                </div>
+                                <span className="postTitle mt-2">{post?.name}</span>
+                                <span className="postDate mt-1">
+                                    {new Date(post?.createdAt).toDateString()}
+                                </span>
+                                <p
+                                    dangerouslySetInnerHTML={{ __html: post?.post }}
+                                    className="postDesc mt-3 w-100 px-3"
+                                ></p>
                             </div>
-                            <span className="postTitle mt-2">{post?.name}</span>
-                            <span className="postDate mt-1">
-                                {new Date(post?.createdAt).toDateString()}
-                            </span>
-                            <p
-                                dangerouslySetInnerHTML={{ __html: post?.post }}
-                                className="postDesc mt-3 w-100 px-3"
-                            >
-                            </p>
-                        </div>
-                        <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                            <div className="d-flex align-items-center justify-content-end ">
-                                <button className="btn-read-blog mb-3 me-3 mt-0">
-                                    <span>Read Blog</span>
-                                    <i className="fa-solid fa-arrow-right"></i>
-                                </button>
-                            </div>
-                        </Link>
+                            <Link className="text-decoration-none" to={`/single/${post?._id}`}>
+                                <div className="d-flex align-items-center justify-content-end ">
+                                    <button className="btn-read-blog mb-3 me-3 mt-0">
+                                        <span>Read Blog</span>
+                                        <i className="fa-solid fa-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </Link>
 
-                        <Card.Footer className="cartFooter d-flex align-items-center justify-content-between w-100 border-bottom">
-                            <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                                <p className="reactedCount mb-0">{post?.like_count?.length} likes</p>
-                            </Link>
-                            <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                                <p className="reactedCount mb-0">{post?.dislike_count?.length} dislikes</p>
-                            </Link>
-                            <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                                <p className="reactedCount mb-0">
-                                    {post?.comments.length} comments
-                                </p>
-                            </Link>
-                        </Card.Footer>
-                    </Card>
-                </Col>
-            ))}
-        </Row>
-    );
+                            <Card.Footer className="cartFooter d-flex align-items-center justify-content-between w-100 border-bottom">
+                                <Link className="text-decoration-none" to={`/single/${post?._id}`}>
+                                    <p className="reactedCount mb-0">
+                                        {post?.like_count?.length} likes
+                                    </p>
+                                </Link>
+                                <Link className="text-decoration-none" to={`/single/${post?._id}`}>
+                                    <p className="reactedCount mb-0">
+                                        {post?.dislike_count?.length} dislikes
+                                    </p>
+                                </Link>
+                                <Link className="text-decoration-none" to={`/single/${post?._id}`}>
+                                    <p className="reactedCount mb-0">
+                                        {post?.comments.length} comments
+                                    </p>
+                                </Link>
+                            </Card.Footer>
+                        </Card>
+                    </Col>
+                ))}
+            </Row>
+        );
+    }
 
     return (
         <div className="posts">
@@ -239,17 +321,14 @@ const AllBlogs = () => {
                 <InputGroup className="w-50 mx-auto my-5 d-flex align-items-center justify-content-center">
                     <Form.Control
                         onChange={(e) => {
-                            console.log(e.target.value)
-                            searchHandler(e.target.value)
+                            console.log(e.target.value);
+                            searchHandler(e.target.value);
                         }}
-                        // ref={searchRef}
                         placeholder="Search by Name"
                         type="text"
                         aria-label="Search"
                     />
-                    <Button className="searchButton">
-                        Search
-                    </Button>
+                    <Button className="searchButton">Search</Button>
                 </InputGroup>
             </div>
             {content}

@@ -10,6 +10,7 @@ import Error from "../Error/Error";
 
 const AllBlogs = () => {
     const [searchOption, setSearchOption] = useState();
+    const [categoryFilter, setCategoryFilter] = useState([]) || {};
     const { data, getData, error, loading, patchData, deleteData, success } = useFetch();
     const location = useLocation();
     const category = location?.state;
@@ -24,16 +25,36 @@ const AllBlogs = () => {
         }
     }, []);
     // console.log(data);
-    // const handleCategoryClick = (postCat) => {
-    //     navigate('/allBlogs');
-    //     getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?category=${postCat}`);
-    // }
 
     const override = css`
         display: block;
         margin: 0 auto;
         border-color: red;
     `;
+
+    const handleCategoryClick = (postCat) => {
+        const categoryFilteredData = data?.filter((post) => {
+            return post?.category[0] === postCat[0];
+        });
+        setCategoryFilter(categoryFilteredData);
+        if (categoryFilteredData) {
+            return (content = (
+                <Row className="mx-4">
+                    {categoryFilteredData?.map((post) => {
+                        // console.log(post);
+                        return (
+                            <BlogCard
+                                post={post}
+                                key={post._id}
+                                handleCategoryClick={handleCategoryClick}
+                            />
+                        );
+                    })}
+                </Row>
+            ));
+        }
+    };
+    console.log(categoryFilter);
 
     if (loading) {
         return (
@@ -65,7 +86,11 @@ const AllBlogs = () => {
         content = (
             <Row className="mx-4">
                 {blogData.map((post) => (
-                    <BlogCard post={post} key={post._id} />
+                    <BlogCard
+                        post={post}
+                        key={post._id}
+                        handleCategoryClick={handleCategoryClick}
+                    />
                 ))}
             </Row>
         );
@@ -74,7 +99,11 @@ const AllBlogs = () => {
         content = (
             <Row className="mx-4">
                 {data.map((post) => (
-                    <BlogCard post={post} key={post._id} />
+                    <BlogCard
+                        post={post}
+                        key={post._id}
+                        handleCategoryClick={handleCategoryClick}
+                    />
                 ))}
             </Row>
         );
@@ -86,7 +115,6 @@ const AllBlogs = () => {
             return singleData.name.toLowerCase().includes(searchOption.toLowerCase());
         });
         console.log(filteredData);
-       
 
         filteredData?.length === 0
             ? (content = <Error />)
@@ -94,7 +122,13 @@ const AllBlogs = () => {
                   <Row className="mx-4">
                       {filteredData?.map((post) => {
                           // console.log(post);
-                          return <BlogCard post={post} key={post._id} />;
+                          return (
+                              <BlogCard
+                                  post={post}
+                                  key={post._id}
+                                  handleCategoryClick={handleCategoryClick}
+                              />
+                          );
                       })}
                   </Row>
               ));
@@ -104,7 +138,11 @@ const AllBlogs = () => {
         content = (
             <Row className="mx-4">
                 {data.map((post) => (
-                    <BlogCard post={post} key={post._id} />
+                    <BlogCard
+                        post={post}
+                        key={post._id}
+                        handleCategoryClick={handleCategoryClick}
+                    />
                 ))}
             </Row>
         );

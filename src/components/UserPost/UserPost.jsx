@@ -35,8 +35,10 @@ const UserPost = ({ userPost }) => {
                 </div>
                 <h1 className='userPostTitle text-center m-2 fs-2 fw-bolder'>{userPost?.name}
                     <div className="userPostEdit float-end">
-                        <i className="userPostIcon fa-regular fa-pen-to-square me-3"></i>
-                        <i
+                        <Link className="text-decoration-none" to={`/update/${userPost?._id}`}>
+                            <i className="singlePostIcon fa-regular fa-pen-to-square me-3"></i>
+                        </Link>                       
+                         <i
                             onClick={handleBlogDelete}
                             className="userPostIcon fa-regular fa-trash-can me-2"
                         ></i>
@@ -57,8 +59,8 @@ const UserPost = ({ userPost }) => {
                 </Link>
             </div>
             <Card.Footer className="cartFooter d-flex align-items-center justify-content-between w-100 border-bottom">
-                <Link className='text-decoration-none' to={`/single/${userPost?._id}`}><p className="reactedCount mb-0">{userPost?.like_count} likes</p></Link>
-                <Link className='text-decoration-none' to={`/single/${userPost?._id}`}><p className="reactedCount mb-0">{userPost?.dislike_count} dislikes</p></Link>
+                <Link className='text-decoration-none' to={`/single/${userPost?._id}`}><p className="reactedCount mb-0">{userPost?.like_count?.length} likes</p></Link>
+                <Link className='text-decoration-none' to={`/single/${userPost?._id}`}><p className="reactedCount mb-0">{userPost?.dislike_count?.length} dislikes</p></Link>
                 <Link className='text-decoration-none' to={`/single/${userPost?._id}`}><p className="reactedCount mb-0">{userPost?.comments?.length} comments</p></Link>
             </Card.Footer>
         </Card>

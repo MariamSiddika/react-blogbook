@@ -3,15 +3,21 @@ import './AdminPosts.css';
 import { useState } from 'react';
 import { Accordion, Button, Form } from 'react-bootstrap';
 import useFetch from '../../hooks/useFetch';
-import useFirebase from '../../hooks/useFirebase';
 import { useEffect } from 'react';
 import swal from 'sweetalert';
 import { Link } from 'react-router-dom';
 
 const AdminPosts = () => {
     const [filter, setFilter] = useState(false);
+
+    //search by date handle state
+    const [disable, setDisable] = useState(true);
+    const [toDate, setToDate] = useState([]);
+    const [fromDate, setFromDate] = useState([]);
+    const [toDateFormat, setToDateFormat] = useState("");
+    const [fromDateFormat, setFromDateFormat] = useState("");
+    //
     const { data, getData, error, loading, patchData, deleteData, success } = useFetch();
-    const { user } = useFirebase();
     useEffect(() => { getData("https://blogs-server-ms.onrender.com/api/v1/blogs") }, []);
     // console.log(data);
     const handleBlogDelete = (postId) => {
@@ -32,6 +38,42 @@ const AdminPosts = () => {
             }
         });
     };
+
+    //handle search by date
+    const handleToDate = (e) => {
+        const getodatevalue = e.target.value;
+        const setdateformat = getodatevalue.split('-');
+        const settoyear = setdateformat[0];
+        const settomonth = setdateformat[1];
+        const settodate = setdateformat[2];
+        const settodateformat = settoyear + "" + settomonth + "" + settodate;
+        setToDate(getodatevalue);
+        setToDateFormat(settodateformat);
+        setDisable(false);
+        console.log(settodateformat);
+    }
+    const handleFromDate = (e) => {
+        const gefromdatevalue = e.target.value;
+        const setfromformat = gefromdatevalue.split('-');
+        const setfromyear = setfromformat[0];
+        const setfrommonth = setfromformat[1];
+        const setfromdate = setfromformat[2];
+        const setfromdateformat = setfromyear + "" + setfrommonth + "" + setfromdate;
+        setFromDate(gefromdatevalue);
+        setFromDateFormat(setfromdateformat);       
+        console.log(setfromdateformat);
+    }
+
+    const handleFilterSubmit = (e) => {
+        e.preventDefault();
+        // alert("todate"+ toDate + "from date" + fromDate);
+        if(toDateFormat > fromDateFormat){
+            alert("Please select valid date")
+        } else{
+            alert('set api url');
+        }
+    }
+
     return (
         <div className='container mt-5'>
             <h2 className='manageBlogTitle shadow mb-5 ps-4 py-2'>Manage Blogs</h2>
@@ -46,14 +88,11 @@ const AdminPosts = () => {
                     <Accordion.Item eventKey="0">
                         <Accordion.Header> <button className='filterByDate px-3 py-2 rounded'><i className="fa-regular fa-calendar-days me-3"></i>Filter by Date</button></Accordion.Header>
                         <Accordion.Body>
-                            <Form>
-                                <Form.Group className="mb-2" controlId="exampleForm.ControlTextarea1">
-
-                                </Form.Group>
+                            <Form onSubmit={handleFilterSubmit}>
                                 <div className="d-flex justify-content-end align-items-center">
-                                    <input className='me-3' type="date" id="starting date" name="startingDate" />
+                                    <input className='me-3' placeholder='dd-mm-yyyy' type="date" name="toDate" onChange={(e) => handleToDate(e)} />
                                     <p className='mb-0'>to</p>
-                                    <input className='mx-3' type="date" id="ending date" name="startingDate" />
+                                    <input className='mx-3' placeholder='dd-mm-yyyy' type="date" name="fromDate" onChange={(e) => handleFromDate(e)} disabled={disable} />
                                     <Button className="homeCommentBtn me-2 mb-2" type="submit" value="Submit">
                                         Filter
                                     </Button>
@@ -127,8 +166,8 @@ const AdminPosts = () => {
                                         className=""
                                     // onClick={() => deleteHandler(_id)}
                                     >
-                                         <Link className='text-decoration-none' to={`/single/${post._id}`}><i className="postAction postActionOpen fa-regular fa-folder-open me-4"></i></Link>
-                                        
+                                        <Link className='text-decoration-none' to={`/single/${post._id}`}><i className="postAction postActionOpen fa-regular fa-folder-open me-4"></i></Link>
+
                                         <i onClick={() => handleBlogDelete(post?._id)} className="postAction postActionDelete fa-solid fa-trash-can"></i>
                                     </div>
                                 </div>

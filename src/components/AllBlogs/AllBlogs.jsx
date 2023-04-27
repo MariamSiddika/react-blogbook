@@ -1,8 +1,8 @@
 import React from "react";
 import useFetch from "../../hooks/useFetch";
 import { useState, useEffect } from "react";
-import { Button, Card, Col, Form, InputGroup, Row } from "react-bootstrap";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Form, InputGroup, Row } from "react-bootstrap";
+import {  useLocation } from "react-router-dom";
 import { css } from "@emotion/react";
 import { ClockLoader } from "react-spinners";
 import BlogCard from "./BlogCard";
@@ -103,19 +103,19 @@ const AllBlogs = () => {
         filteredData?.length === 0
             ? (content = <Error />)
             : (content = (
-                  <Row className="mx-4">
-                      {filteredData?.map((post) => {
-                          // console.log(post);
-                          return (
-                              <BlogCard
-                                  post={post}
-                                  key={post._id}
-                                  handleCategoryClick={handleCategoryClick}
-                              />
-                          );
-                      })}
-                  </Row>
-              ));
+                <Row className="mx-4">
+                    {filteredData?.map((post) => {
+                        // console.log(post);
+                        return (
+                            <BlogCard
+                                post={post}
+                                key={post._id}
+                                handleCategoryClick={handleCategoryClick}
+                            />
+                        );
+                    })}
+                </Row>
+            ));
     }
 
     if (!blogData && !category && !searchOption) {
@@ -154,15 +154,15 @@ const AllBlogs = () => {
             <div className="">
                 <InputGroup className="w-50 mx-auto my-5 d-flex align-items-center justify-content-center">
                     <Form.Control
+                        style={{border: "2px solid teal"}}
                         onChange={(e) => {
                             console.log(e.target.value);
                             searchHandler(e.target.value);
                         }}
-                        placeholder="Search by Name"
+                        placeholder="Search by Blog Name"
                         type="text"
                         aria-label="Search"
                     />
-                    <Button className="searchButton">Search</Button>
                 </InputGroup>
             </div>
             <div>{content}</div>

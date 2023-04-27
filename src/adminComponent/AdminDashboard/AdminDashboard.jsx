@@ -4,10 +4,16 @@ import "./AdminDashboard.css";
 import { css } from "@emotion/react";
 import useFirebase from "../../hooks/useFirebase";
 import { ClockLoader } from "react-spinners";
+import useFetch from "../../hooks/useFetch";
+import { useEffect } from "react";
 
 const AdminDashboard = () => {
     const { dataLoading } = useFirebase();
+    const { data, getData, error, loading, patchData, deleteData, success } = useFetch();
 
+    useEffect(() => {  
+            getData(`https://blogs-server-ms.onrender.com/api/v1/blogs`);
+    }, []);
     const override = css`
         display: block;
         margin: 0 auto;

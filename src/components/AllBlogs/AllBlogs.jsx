@@ -32,27 +32,13 @@ const AllBlogs = () => {
         border-color: red;
     `;
 
+    let content;
+
     const handleCategoryClick = (postCat) => {
         const categoryFilteredData = data?.filter((post) => {
             return post?.category[0] === postCat[0];
         });
         setCategoryFilter(categoryFilteredData);
-        if (categoryFilteredData) {
-            return (content = (
-                <Row className="mx-4">
-                    {categoryFilteredData?.map((post) => {
-                        // console.log(post);
-                        return (
-                            <BlogCard
-                                post={post}
-                                key={post._id}
-                                handleCategoryClick={handleCategoryClick}
-                            />
-                        );
-                    })}
-                </Row>
-            ));
-        }
     };
     console.log(categoryFilter);
 
@@ -69,7 +55,7 @@ const AllBlogs = () => {
             </div>
         );
     }
-    //Search handlee
+
     const searchHandler = (query) => {
         if (query) {
             // console.log(query)
@@ -79,8 +65,6 @@ const AllBlogs = () => {
             setSearchOption(false);
         }
     };
-
-    let content;
 
     if (blogData) {
         content = (
@@ -146,6 +130,23 @@ const AllBlogs = () => {
                 ))}
             </Row>
         );
+    }
+    if (categoryFilter.length > 0) {
+        content = (
+            <Row className="mx-4">
+                {categoryFilter?.map((post) => {
+                    // console.log(post);
+                    return (
+                        <BlogCard
+                            post={post}
+                            key={post._id}
+                            handleCategoryClick={handleCategoryClick}
+                        />
+                    );
+                })}
+            </Row>
+        );
+        console.log(content);
     }
 
     return (

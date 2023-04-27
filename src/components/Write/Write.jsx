@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './Write.css';
-import postImg from '../../images/primary-blog-bg.jpg';
 import JoditEditor from 'jodit-react';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
@@ -12,11 +11,11 @@ import Swal from 'sweetalert2';
 const Write = () => {
     // const editor = useRef(null);
     const [content, setContent] = useState('');
-    const { data, setDataLoading, postData, error, loading } = useFetch();
+    const { setDataLoading, postData } = useFetch();
     const titleRef = useRef();
     const categoryRef = useRef();
     const [imageUpload, setImageUpload] = useState("") || {};
-    const { user, updateName } = useFirebase();
+    const { user } = useFirebase();
 
     const handleImage = async (e) => {
         setDataLoading(true);

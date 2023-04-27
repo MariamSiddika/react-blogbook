@@ -12,7 +12,6 @@ import axios from "axios";
 
 const SinglePost = () => {
     const [userDetail, setUserDetail] = useState(null);
-
     const [showCommentBox, setshowCommentBox] = useState(true);
     const { data, getData, error, loading, patchData, deleteData, success } = useFetch();
     const { postId } = useParams();
@@ -62,55 +61,61 @@ const SinglePost = () => {
     const likeHandler = (postId, email) => {
         const like = [...like_count];
         const disLike = [...dislike_count];
-        if (!like.includes(email)) {
-            like.push(email);
+        if (!like?.includes(email)) {
+            like?.push(email);
             patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 like_count: like,
             });
+            // window.location.reload();
         }
-        if (like.includes(email)) {
-            const newLike = like.filter((likeItem) => likeItem !== email);
+        if (like?.includes(email)) {
+            const newLike = like?.filter((likeItem) => likeItem !== email);
             patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 like_count: newLike,
+
             });
+            // window.location.reload();
         }
 
-        if (disLike.includes(email)) {
-            const newDisLike = disLike.filter((disLikeItem) => disLikeItem !== email);
+        if (disLike?.includes(email)) {
+            const newDisLike = disLike?.filter((disLikeItem) => disLikeItem !== email);
             patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 dislike_count: newDisLike,
             });
+            // window.location.reload();
         }
-        console.log(like);
-        console.log(disLike);
+
+        //console.log(like);
+        // console.log(disLike);
     };
 
     const disLikeHandler = (postId, email) => {
         const like = [...like_count];
         const disLike = [...dislike_count];
-        if (!disLike.includes(email)) {
-            disLike.push(email);
+        if (!disLike?.includes(email)) {
+            disLike?.push(email);
             patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 dislike_count: disLike,
             });
+            // window.location.reload();
         }
-        if (disLike.includes(email)) {
-            const newDisLike = disLike.filter((disLikeItem) => disLikeItem !== email);
+        if (disLike?.includes(email)) {
+            const newDisLike = disLike?.filter((disLikeItem) => disLikeItem !== email);
             patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 dislike_count: newDisLike,
             });
+            // window.location.reload();
         }
-        if (like.includes(email)) {
-            const newLike = like.filter((likeItem) => likeItem !== email);
+        if (like?.includes(email)) {
+            const newLike = like?.filter((likeItem) => likeItem !== email);
             patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 like_count: newLike,
             });
+            //window.location.reload();
         }
-        console.log(like);
-        console.log(disLike);
+        // console.log(like);
+        // console.log(disLike);
     };
-
-    const handleBlogEdit = () => {};
     const handleBlogDelete = () => {
         swal({
             title: "Are you sure?",
@@ -162,10 +167,14 @@ const SinglePost = () => {
                 {name}
                 {user?.email === email && (
                     <div className="singlePostEdit float-end">
-                        <i
-                            onClick={handleBlogEdit}
-                            className="singlePostIcon fa-regular fa-pen-to-square me-3"
-                        ></i>
+                        <Link className='text-decoration-none' to={`/update/${_id}`}>
+                            <i
+
+                                className="singlePostIcon fa-regular fa-pen-to-square me-3"
+                            ></i>
+                        </Link>
+
+
                         <i
                             onClick={handleBlogDelete}
                             className="singlePostIcon fa-regular fa-trash-can me-2"
@@ -199,10 +208,10 @@ const SinglePost = () => {
                     <i
                         onClick={() => likeHandler(_id, user?.email)}
                         className={
-                            "cartIcon reactedIcon cartIconOne fa-solid fa-heart position-absolute"
-                            //     isLiked && !isdisLiked
-                            //         ? "cartIcon reactedIcon cartIconOne fa-solid fa-heart position-absolute"
-                            //         : "cartIcon cartIconOne fa-regular fa-heart position-absolute"
+                            // "cartIcon reactedIcon cartIconOne fa-solid fa-heart position-absolute"
+                            like_count?.includes(user?.email)
+                                ? "cartIcon reactedIcon cartIconOne fa-solid fa-heart position-absolute"
+                                : "cartIcon cartIconOne fa-regular fa-heart position-absolute"
                         }
                     ></i>
                 )}
@@ -214,11 +223,11 @@ const SinglePost = () => {
                     <i
                         onClick={() => disLikeHandler(_id, user?.email)}
                         className={
-                            "cartIcon cartIconTwo fa-regular fa-thumbs-down position-absolute"
+                            // "cartIcon cartIconTwo fa-regular fa-thumbs-down position-absolute"
 
-                            //     isdisLiked && !isLiked
-                            //         ? "cartIcon reactedIcon cartIconTwo fa-solid fa-thumbs-down position-absolute"
-                            //         : "cartIcon cartIconTwo fa-regular fa-thumbs-down position-absolute"
+                            dislike_count?.includes(user?.email)
+                                ? "cartIcon reactedIcon cartIconTwo fa-solid fa-thumbs-down position-absolute"
+                                : "cartIcon cartIconTwo fa-regular fa-thumbs-down position-absolute"
                         }
                     ></i>
                 )}

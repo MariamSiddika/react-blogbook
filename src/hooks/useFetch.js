@@ -42,15 +42,15 @@ const useFetch = () => {
             .patch(url, data)
             .then((res) => {
                 console.log(res);
-                if (res.data.status === "Successful") {
-                    setSuccess(true);
+                // if (res.data.status === "Successful") {
+                //     setSuccess(true);
 
-                    Swal.fire(
-                        'Good job!',
-                        'You clicked the button!',
-                        'success'
-                      )
-                }
+                //     Swal.fire(
+                //         'Good job!',
+                //         'You clicked the button!',
+                //         'success'
+                //       )
+                // }
             })
             .catch((err) => {
                 console.log(err);

@@ -1,11 +1,8 @@
 // import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
-<<<<<<< HEAD
 import  axios  from "axios";
-=======
 import Swal from "sweetalert2";
->>>>>>> 3888e728539e7ca4a2fd9e12ba1360462cbb0803
 
 const useFetch = () => {
     const [data, setData] = useState([]);

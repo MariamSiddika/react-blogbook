@@ -62,72 +62,53 @@ const SinglePost = () => {
     // let disLikePost;
 
     const likeHandler = async (postId, email) => {
-        let likePost;
-        let disLikePost;
         const like = [...like_count];
         const disLike = [...dislike_count];
         if (!like?.includes(email)) {
             like?.push(email);
-            // likePost = like;
-            patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
+            await patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 like_count: like,
             });
-            // window.location.reload();
-        }
-        if (like?.includes(email)) {
+        } else {
             const newLike = like?.filter((likeItem) => likeItem !== email);
-            // likePost = newLike;
-            patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
+            await patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 like_count: newLike,
             });
-            // window.location.reload();
         }
 
         if (disLike?.includes(email)) {
             const newDisLike = disLike?.filter((disLikeItem) => disLikeItem !== email);
-            // disLikePost = newDisLike;
-            patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
+            await patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 dislike_count: newDisLike,
             });
-            // window.location.reload();
         }
-
-        await patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
-            dislike_count: disLikePost,
-            like_count: likePost,
-        });
-
-        //console.log(like);
-        // console.log(disLike);
+        window.location.reload();
     };
 
-    const disLikeHandler = (postId, email) => {
+    const disLikeHandler = async (postId, email) => {
         const like = [...like_count];
         const disLike = [...dislike_count];
         if (!disLike?.includes(email)) {
             disLike?.push(email);
-            patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
+            await patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 dislike_count: disLike,
             });
-            // window.location.reload();
-        }
-        if (disLike?.includes(email)) {
+        } else {
             const newDisLike = disLike?.filter((disLikeItem) => disLikeItem !== email);
-            patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
+            await patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 dislike_count: newDisLike,
             });
-            // window.location.reload();
         }
+
         if (like?.includes(email)) {
             const newLike = like?.filter((likeItem) => likeItem !== email);
-            patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
+            await patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 like_count: newLike,
             });
-            //window.location.reload();
         }
-        // console.log(like);
-        // console.log(disLike);
+        window.location.reload();
     };
+
     const handleBlogDelete = () => {
         swal({
             title: "Are you sure?",

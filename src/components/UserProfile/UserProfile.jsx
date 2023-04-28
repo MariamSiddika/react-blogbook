@@ -13,7 +13,6 @@ const UserProfile = () => {
     const [userDetail, setUserDetail] = useState([]);
     const { userId } = useParams();
 
-   
     // console.log(user?.email);
     // console.log(data);
 
@@ -28,7 +27,6 @@ const UserProfile = () => {
                 console.log(err);
             });
     }
-
 
     if (user?.email) {
         getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?email=${userDetail?.email}`);
@@ -56,7 +54,7 @@ const UserProfile = () => {
                     </div>
                 </div>
             </div>
-            <h1 className="recentBlog mt-5 ps-5 shadow mb-3">Your Blogs</h1>
+            <h1 className="recentBlog mt-5 ps-5 shadow mb-3">{userDetail?.name}'s Blogs</h1>
             <div className="container pt-5 px-5">
                 {data?.length > 0 && !data?.message ? (
                     data?.map((userPost) => (

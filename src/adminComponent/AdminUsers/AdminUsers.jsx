@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./AdminUsers.css";
 import useFetch from "../../hooks/useFetch";
+import { useEffect } from "react";
+import swal from "sweetalert";
 import { Link } from "react-router-dom";
 import { Form, InputGroup } from "react-bootstrap";
 import Error from "../../components/Error/Error";
@@ -8,56 +10,75 @@ import UserTableRow from "./UserTableRow";
 
 const AdminUsers = () => {
     const [searchOption, setSearchOption] = useState();
-    const [sortedData, setSortedData] = useState([]);
+    const [sortOrder, setSortOrder] = useState("asc");
     const { data, getData, error, loading, patchData, deleteData, success } = useFetch();
     useEffect(() => {
         getData("https://blogs-server-ms.onrender.com/api/v1/users?role=user");
     }, []);
 
-    useEffect(() => {
-        // sort data alphabetically based on name
-        const sortedData = [...data].sort((a, b) => a.name.localeCompare(b.name));
-        setSortedData(sortedData);
-    }, [data]);
-
     let content;
     const searchUserHandler = (query) => {
         if (query) {
             setSearchOption(query);
-        } else {
+        }
+        if (query === "") {
             setSearchOption(false);
         }
     };
     const handleUserDelete = (userId) => {
-        if (window.confirm("Are you sure you want to delete this user?")) {
-            deleteData(`https://blogs-server-ms.onrender.com/api/v1/users?_id=${userId}`);
-        }
+        swal({
+            title: "Are you sure?",
+            text: "If you proceed, this user will be permanently removed!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                deleteData(`https://blogs-server-ms.onrender.com/api/v1/users?_id=${userId}`);
+                swal("Poof! The user has been removed!", {
+                    icon: "success",
+                });
+            } else {
+                swal("The user is safe!");
+            }
+        });
+    };
+
+    const handleSort = () => {
+        const sortedData = data.sort((a, b) => {
+            if (sortOrder === "asc") {
+                return a.name.localeCompare(b.name);
+            } else {
+                return b.name.localeCompare(a.name);
+            }
+        });
+        setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+        setSearchOption(false);
     };
 
     if (searchOption) {
-        const filteredData = sortedData.filter((singleData) => {
-            return singleData.name.toLowerCase().includes(searchOption.toLowerCase()) || singleData.email.toLowerCase().includes(searchOption.toLowerCase());
+        const filteredData = data?.filter((singleData) => {
+            return (
+                singleData.name.toLowerCase().includes(searchOption.toLowerCase()) ||
+                singleData.email.toLowerCase().includes(searchOption.toLowerCase())
+            );
         });
-        content =
-            filteredData.length === 0 ? (
-                <div className="">
-                    <Error />
-                </div>
-            ) : (
-                <UserTableRow
-                    data={filteredData}
-                    handleUserDelete={handleUserDelete}
-                ></UserTableRow>
-            );
-    } else {
-        content =
-            sortedData.length === 0 ? (
-                <div className="">
-                    <Error />
-                </div>
-            ) : (
-                <UserTableRow data={sortedData} handleUserDelete={handleUserDelete}></UserTableRow>
-            );
+
+        filteredData?.length === 0
+            ? (content = (
+                  <div className="">
+                      <Error />
+                  </div>
+              ))
+            : (content = (
+                  <UserTableRow
+                      data={filteredData}
+                      handleUserDelete={handleUserDelete}
+                  ></UserTableRow>
+              ));
+    }
+    if (!searchOption) {
+        content = <UserTableRow data={data} handleUserDelete={handleUserDelete}></UserTableRow>;
     }
     return (
         <div className="container mt-5">
@@ -74,11 +95,13 @@ const AdminUsers = () => {
                         aria-label="Search"
                     />
                 </InputGroup>
-                <button
-                    className="px-3 py-1 sortBtn"
-                    onClick={() => setSortedData([...sortedData].reverse())}
-                >
-                    <i className="fa-solid fa-arrow-up-wide-short me-2"></i>Sort
+                <button className="px-3 py-1 sortBtn" onClick={handleSort}>
+                    <i
+                        className={`fa-solid fa-arrow-${
+                            sortOrder === "asc" ? "up" : "down"
+                        }-wide-short me-2`}
+                    ></i>
+                    Sort
                 </button>
             </div>
 

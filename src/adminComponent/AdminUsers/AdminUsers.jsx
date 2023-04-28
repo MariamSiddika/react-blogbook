@@ -1,71 +1,72 @@
-import React, { useState } from 'react';
-import './AdminUsers.css';
-import useFetch from '../../hooks/useFetch';
-import { useEffect } from 'react';
-import swal from 'sweetalert';
-import { Link } from 'react-router-dom';
-import { Form, InputGroup } from 'react-bootstrap';
-import Error from '../../components/Error/Error';
-import UserTableRow from './UserTableRow';
+import React, { useState, useEffect } from "react";
+import "./AdminUsers.css";
+import useFetch from "../../hooks/useFetch";
+import { Link } from "react-router-dom";
+import { Form, InputGroup } from "react-bootstrap";
+import Error from "../../components/Error/Error";
+import UserTableRow from "./UserTableRow";
 
 const AdminUsers = () => {
     const [searchOption, setSearchOption] = useState();
+    const [sortedData, setSortedData] = useState([]);
     const { data, getData, error, loading, patchData, deleteData, success } = useFetch();
-    useEffect(() => { getData("https://blogs-server-ms.onrender.com/api/v1/users?role=user") }, []);
+    useEffect(() => {
+        getData("https://blogs-server-ms.onrender.com/api/v1/users?role=user");
+    }, []);
+
+    useEffect(() => {
+        // sort data alphabetically based on name
+        const sortedData = [...data].sort((a, b) => a.name.localeCompare(b.name));
+        setSortedData(sortedData);
+    }, [data]);
+
     let content;
     const searchUserHandler = (query) => {
         if (query) {
-            // console.log(query)
             setSearchOption(query);
-        }
-        if (query === "") {
+        } else {
             setSearchOption(false);
         }
     };
     const handleUserDelete = (userId) => {
-        swal({
-            title: "Are you sure?",
-            text: "If you proceed, this user will be permanently removed!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        }).then((willDelete) => {
-            if (willDelete) {
-                deleteData(`https://blogs-server-ms.onrender.com/api/v1/users?_id=${userId}`);
-                swal("Poof! The user has been removed!", {
-                    icon: "success",
-                });
-            } else {
-                swal("The user is safe!");
-            }
-        });
+        if (window.confirm("Are you sure you want to delete this user?")) {
+            deleteData(`https://blogs-server-ms.onrender.com/api/v1/users?_id=${userId}`);
+        }
     };
 
     if (searchOption) {
-        console.log(searchOption);
-        const filteredData = data?.filter((singleData) => {
-            // console.log(singleData.name.toLowerCase());
+        const filteredData = sortedData.filter((singleData) => {
             return singleData.name.toLowerCase().includes(searchOption.toLowerCase()) || singleData.email.toLowerCase().includes(searchOption.toLowerCase());
         });
-        console.log(filteredData);
-
-        filteredData?.length === 0
-            ? (content = <div className=''><Error /></div>)
-            : (content = <UserTableRow data={filteredData} handleUserDelete={handleUserDelete}></UserTableRow>
+        content =
+            filteredData.length === 0 ? (
+                <div className="">
+                    <Error />
+                </div>
+            ) : (
+                <UserTableRow
+                    data={filteredData}
+                    handleUserDelete={handleUserDelete}
+                ></UserTableRow>
+            );
+    } else {
+        content =
+            sortedData.length === 0 ? (
+                <div className="">
+                    <Error />
+                </div>
+            ) : (
+                <UserTableRow data={sortedData} handleUserDelete={handleUserDelete}></UserTableRow>
             );
     }
-    if(!searchOption){
-        content = <UserTableRow data={data} handleUserDelete={handleUserDelete}></UserTableRow>
-    }
     return (
-        <div className='container mt-5'>
-            <h2 className='mb-5 manageBloggersTitle shadow ps-4 py-2'>Manage Bloggers</h2>
+        <div className="container mt-5">
+            <h2 className="mb-5 manageBloggersTitle shadow ps-4 py-2">Manage Bloggers</h2>
             <div className="d-flex align-items-center justify-content-end mb-3">
                 <InputGroup className="w-50 mx-auto my-5 d-flex align-items-center justify-content-center">
                     <Form.Control
                         style={{ border: "2px solid teal" }}
                         onChange={(e) => {
-                            // console.log(e.target.value);
                             searchUserHandler(e.target.value);
                         }}
                         placeholder="Search by User Name"
@@ -73,14 +74,19 @@ const AdminUsers = () => {
                         aria-label="Search"
                     />
                 </InputGroup>
-                <button className="px-3 py-1 sortBtn">
+                <button
+                    className="px-3 py-1 sortBtn"
+                    onClick={() => setSortedData([...sortedData].reverse())}
+                >
                     <i className="fa-solid fa-arrow-up-wide-short me-2"></i>Sort
                 </button>
             </div>
 
-
-            <div className='table-responsive'>
-                <table style={{ tableLayout: 'fixed' }} className="userTable table table-light table-striped table-hover">
+            <div className="table-responsive">
+                <table
+                    style={{ tableLayout: "fixed" }}
+                    className="userTable table table-light table-striped table-hover"
+                >
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -90,9 +96,7 @@ const AdminUsers = () => {
                             <th scope="col">ACTION</th>
                         </tr>
                     </thead>
-                    {
-                        content
-                    }
+                    {content}
                 </table>
             </div>
         </div>

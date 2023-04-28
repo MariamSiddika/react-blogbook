@@ -101,7 +101,6 @@ const AdminPosts = () => {
                 <button onClick={() => setFilter(!filter)} className="px-3 py-1 me-4 filterBtn">
                     <i className="fa-solid fa-sliders me-2"></i>Filter
                 </button>
-                
             </div>
             {filter && (
                 <Accordion className="w-50 ms-auto mt-3">
@@ -130,6 +129,7 @@ const AdminPosts = () => {
                                         name="fromDate"
                                         onChange={(e) => handleToDate(e)}
                                         disabled={disable}
+                                        min={fromDate}
                                     />
                                     <Button
                                         className="homeCommentBtn me-2 mb-2"

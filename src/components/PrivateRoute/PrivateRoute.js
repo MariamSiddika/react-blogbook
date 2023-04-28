@@ -6,7 +6,7 @@ import useFirebase from "../../hooks/useFirebase";
 
 const PrivateRoute = ({ children }) => {
     const { user, dataLoading } = useFirebase();
-    console.log(user);
+    // console.log(user);
 
     const location = useLocation();
     const override = css`

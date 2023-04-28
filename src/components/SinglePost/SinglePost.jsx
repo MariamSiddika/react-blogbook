@@ -58,11 +58,17 @@ const SinglePost = () => {
         updatedAt,
     } = data[0] || {};
 
-    const likeHandler = (postId, email) => {
+    // let likePost;
+    // let disLikePost;
+
+    const likeHandler = async (postId, email) => {
+        let likePost;
+        let disLikePost;
         const like = [...like_count];
         const disLike = [...dislike_count];
         if (!like?.includes(email)) {
             like?.push(email);
+            // likePost = like;
             patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 like_count: like,
             });
@@ -70,20 +76,26 @@ const SinglePost = () => {
         }
         if (like?.includes(email)) {
             const newLike = like?.filter((likeItem) => likeItem !== email);
+            // likePost = newLike;
             patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 like_count: newLike,
-
             });
             // window.location.reload();
         }
 
         if (disLike?.includes(email)) {
             const newDisLike = disLike?.filter((disLikeItem) => disLikeItem !== email);
+            // disLikePost = newDisLike;
             patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
                 dislike_count: newDisLike,
             });
             // window.location.reload();
         }
+
+        await patchData(`https://blogs-server-ms.onrender.com/api/v1/blogs?_id=${postId}`, {
+            dislike_count: disLikePost,
+            like_count: likePost,
+        });
 
         //console.log(like);
         // console.log(disLike);
@@ -167,13 +179,9 @@ const SinglePost = () => {
                 {name}
                 {user?.email === email && (
                     <div className="singlePostEdit float-end">
-                        <Link className='text-decoration-none' to={`/update/${_id}`}>
-                            <i
-
-                                className="singlePostIcon fa-regular fa-pen-to-square me-3"
-                            ></i>
+                        <Link className="text-decoration-none" to={`/update/${_id}`}>
+                            <i className="singlePostIcon fa-regular fa-pen-to-square me-3"></i>
                         </Link>
-
 
                         <i
                             onClick={handleBlogDelete}

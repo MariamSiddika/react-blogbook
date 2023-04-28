@@ -41,23 +41,24 @@ function App() {
     if (isLoading) {
         return (
             <div className="w-100 h-100 my-auto d-flex justify-content-center align-items-center mt-5">
-            <ClockLoader
-                color="#E12454"
-                size={"300"}
-                loading={true}
-                css={override}
-                display={"block"}
-            />
+                <ClockLoader
+                    color="#E12454"
+                    size={"300"}
+                    loading={true}
+                    css={override}
+                    display={"block"}
+                />
             </div>
         );
     }
 
-    
+
     return (
         <div>
             <NavComponent></NavComponent>
             <Routes>
                 <Route path="/" element={<Home></Home>}></Route>
+                <Route path="/home" element={<Home></Home>}></Route>
                 <Route path="/about" element={<AboutPage></AboutPage>}></Route>
                 <Route path="/contact" element={<Contact></Contact>}></Route>
                 <Route
@@ -68,16 +69,44 @@ function App() {
                         </PrivateRoute>
                     }
                 ></Route>
-                <Route path="/settings" element={<Settings></Settings>}></Route>
+                <Route
+                    path="/settings" element={
+                        <PrivateRoute>
+                            <Settings />
+                        </PrivateRoute>
+                    }
+                ></Route>
                 <Route path="/login" element={<Login></Login>}></Route>
                 <Route path="/register" element={<Register></Register>}></Route>
-                <Route path="/profile/:userId" element={<UserProfile></UserProfile>}></Route>
+                <Route
+                    path="/profile/:userId"
+                    element={
+                        <PrivateRoute>
+                            <UserProfile />
+                        </PrivateRoute>
+                    }
+                ></Route>
                 <Route path="/allBlogs" element={<AllBlogs></AllBlogs>}></Route>
-                <Route path="/admin" element={<AdminDashboard></AdminDashboard>}></Route>
+                <Route
+                    path="/admin"
+                    element={
+                        <PrivateRoute>
+                            <AdminDashboard />
+                        </PrivateRoute>
+                    }
+                ></Route>
+                {/* <Route path="/admin" element={<AdminDashboard></AdminDashboard>}></Route> */}
                 <Route path="/admin/blogs" element={<AdminPosts></AdminPosts>}></Route>
                 <Route path="/admin/users" element={<AdminUsers></AdminUsers>}></Route>
                 <Route path="/single/:postId" element={<Single></Single>}></Route>
-                <Route path="/update/:postId" element={<BlogEdit></BlogEdit>}></Route>
+                <Route
+                    path="/update/:postId"
+                    element={
+                        <PrivateRoute>
+                            <BlogEdit />
+                        </PrivateRoute>
+                    }
+                ></Route>
                 <Route path="/*" element={<Error></Error>}></Route>
             </Routes>
             <Footer></Footer>

@@ -1,13 +1,16 @@
 import React from "react";
 import useFetch from "../../hooks/useFetch";
 import { useState, useEffect } from "react";
-import { Button, Card, Col, Form, InputGroup, Row } from "react-bootstrap";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Form, InputGroup, Row } from "react-bootstrap";
+import {  useLocation } from "react-router-dom";
 import { css } from "@emotion/react";
 import { ClockLoader } from "react-spinners";
+import BlogCard from "./BlogCard";
+import Error from "../Error/Error";
 
 const AllBlogs = () => {
     const [searchOption, setSearchOption] = useState();
+    const [categoryFilter, setCategoryFilter] = useState([]) || {};
     const { data, getData, error, loading, patchData, deleteData, success } = useFetch();
     const location = useLocation();
     const category = location?.state;
@@ -22,16 +25,22 @@ const AllBlogs = () => {
         }
     }, []);
     // console.log(data);
-    // const handleCategoryClick = (postCat) => {
-    //     navigate('/allBlogs');
-    //     getData(`https://blogs-server-ms.onrender.com/api/v1/blogs?category=${postCat}`);
-    // }
 
     const override = css`
-    display: block;
-    margin: 0 auto;
-    border-color: red;
+        display: block;
+        margin: 0 auto;
+        border-color: red;
     `;
+
+    let content;
+
+    const handleCategoryClick = (postCat) => {
+        const categoryFilteredData = data?.filter((post) => {
+            return post?.category[0] === postCat[0];
+        });
+        setCategoryFilter(categoryFilteredData);
+    };
+    console.log(categoryFilter);
 
     if (loading) {
         return (
@@ -46,7 +55,7 @@ const AllBlogs = () => {
             </div>
         );
     }
-    //Search handlee
+
     const searchHandler = (query) => {
         if (query) {
             // console.log(query)
@@ -57,64 +66,15 @@ const AllBlogs = () => {
         }
     };
 
-    let content;
-
     if (blogData) {
         content = (
             <Row className="mx-4">
                 {blogData.map((post) => (
-                    <Col xs={12} md={6} lg={4}>
-                        <Card className="post mt-4 mb-5 mx-3 shadow">
-                            {post.img && (
-                                <img
-                                    className="postImg w-100 rounded mb-2"
-                                    src={post?.img}
-                                    alt=""
-                                />
-                            )}
-
-                            <div
-                                className="postInfo d-flex flex-column align-items-center"
-                            >
-                                <div className="postCats">
-                                    <span className="postCat mt-3 me-2">{post?.category}</span>
-                                </div>
-                                <span className="postTitle mt-2">{post?.name}</span>
-                                <span className="postDate mt-1">
-                                    {new Date(post?.createdAt).toDateString()}
-                                </span>
-                                <p
-                                    dangerouslySetInnerHTML={{ __html: post?.post }}
-                                    className="postDesc mt-3 w-100 px-3"
-                                >
-                                </p>
-                            </div>
-                            <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                                <div className="d-flex align-items-center justify-content-end ">
-                                    <button className="btn-read-blog mb-3 me-3 mt-0">
-                                        <span>Read Blog</span>
-                                        <i className="fa-solid fa-arrow-right"></i>
-                                    </button>
-                                </div>
-                            </Link>
-
-                            <Card.Footer className="cartFooter d-flex align-items-center justify-content-between w-100 border-bottom">
-                                <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                                    <p className="reactedCount mb-0">{post?.like_count?.length} likes</p>
-                                </Link>
-                                <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                                    <p className="reactedCount mb-0">
-                                        {post?.dislike_count?.length} dislikes
-                                    </p>
-                                </Link>
-                                <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                                    <p className="reactedCount mb-0">
-                                        {post?.comments?.length} comments
-                                    </p>
-                                </Link>
-                            </Card.Footer>
-                        </Card>
-                    </Col>
+                    <BlogCard
+                        post={post}
+                        key={post._id}
+                        handleCategoryClick={handleCategoryClick}
+                    />
                 ))}
             </Row>
         );
@@ -123,136 +83,89 @@ const AllBlogs = () => {
         content = (
             <Row className="mx-4">
                 {data.map((post) => (
-                    <Col xs={12} md={6} lg={4}>
-                        <Card className="post mt-4 mb-5 mx-3 shadow">
-                            {post.img && (
-                                <img
-                                    className="postImg w-100 rounded mb-2"
-                                    src={post?.img}
-                                    alt=""
-                                />
-                            )}
-
-                            <div
-                                className="postInfo d-flex flex-column align-items-center"
-                            >
-                                <div className="postCats">
-                                    <span className="postCat mt-3 me-2">{post?.category}</span>
-                                </div>
-                                <span className="postTitle mt-2">{post?.name}</span>
-                                <span className="postDate mt-1">
-                                    {new Date(post?.createdAt).toDateString()}
-                                </span>
-                                <p
-                                    dangerouslySetInnerHTML={{ __html: post?.post }}
-                                    className="postDesc mt-3 w-100 px-3"
-                                >
-                                </p>
-                            </div>
-                            <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                                <div className="d-flex align-items-center justify-content-end ">
-                                    <button className="btn-read-blog mb-3 me-3 mt-0">
-                                        <span>Read Blog</span>
-                                        <i className="fa-solid fa-arrow-right"></i>
-                                    </button>
-                                </div>
-                            </Link>
-
-                            <Card.Footer className="cartFooter d-flex align-items-center justify-content-between w-100 border-bottom">
-                                <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                                    <p className="reactedCount mb-0">{post?.like_count?.length} likes</p>
-                                </Link>
-                                <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                                    <p className="reactedCount mb-0">
-                                        {post?.dislike_count?.length} dislikes
-                                    </p>
-                                </Link>
-                                <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                                    <p className="reactedCount mb-0">
-                                        {post?.comments?.length} comments
-                                    </p>
-                                </Link>
-                            </Card.Footer>
-                        </Card>
-                    </Col>
+                    <BlogCard
+                        post={post}
+                        key={post._id}
+                        handleCategoryClick={handleCategoryClick}
+                    />
                 ))}
             </Row>
         );
     }
+    if (searchOption) {
+        console.log(searchOption);
+        const filteredData = data?.filter((singleData) => {
+            // console.log(singleData.name.toLowerCase());
+            return singleData.name.toLowerCase().includes(searchOption.toLowerCase());
+        });
+        console.log(filteredData);
 
-    content = (
-        <Row className="mx-4">
-            {data.map((post) => (
-                <Col xs={12} md={6} lg={4}>
-                    <Card className="post mt-4 mb-5 mx-3 shadow">
-                        {post.img && (
-                            <img className="postImg w-100 rounded mb-2" src={post?.img} alt="" />
-                        )}
+        filteredData?.length === 0
+            ? (content = <Error />)
+            : (content = (
+                <Row className="mx-4">
+                    {filteredData?.map((post) => {
+                        // console.log(post);
+                        return (
+                            <BlogCard
+                                post={post}
+                                key={post._id}
+                                handleCategoryClick={handleCategoryClick}
+                            />
+                        );
+                    })}
+                </Row>
+            ));
+    }
 
-                        <div
-                            className="postInfo d-flex flex-column align-items-center"
-                        >
-                            <div className="postCats">
-                                <span className="postCat mt-3 me-2">{post?.category}</span>
-                            </div>
-                            <span className="postTitle mt-2">{post?.name}</span>
-                            <span className="postDate mt-1">
-                                {new Date(post?.createdAt).toDateString()}
-                            </span>
-                            <p
-                                dangerouslySetInnerHTML={{ __html: post?.post }}
-                                className="postDesc mt-3 w-100 px-3"
-                            >
-                            </p>
-                        </div>
-                        <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                            <div className="d-flex align-items-center justify-content-end ">
-                                <button className="btn-read-blog mb-3 me-3 mt-0">
-                                    <span>Read Blog</span>
-                                    <i className="fa-solid fa-arrow-right"></i>
-                                </button>
-                            </div>
-                        </Link>
-
-                        <Card.Footer className="cartFooter d-flex align-items-center justify-content-between w-100 border-bottom">
-                            <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                                <p className="reactedCount mb-0">{post?.like_count?.length} likes</p>
-                            </Link>
-                            <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                                <p className="reactedCount mb-0">{post?.dislike_count?.length} dislikes</p>
-                            </Link>
-                            <Link className="text-decoration-none" to={`/single/${post?._id}`}>
-                                <p className="reactedCount mb-0">
-                                    {post?.comments.length} comments
-                                </p>
-                            </Link>
-                        </Card.Footer>
-                    </Card>
-                </Col>
-            ))}
-        </Row>
-    );
+    if (!blogData && !category && !searchOption) {
+        content = (
+            <Row className="mx-4">
+                {data.map((post) => (
+                    <BlogCard
+                        post={post}
+                        key={post._id}
+                        handleCategoryClick={handleCategoryClick}
+                    />
+                ))}
+            </Row>
+        );
+    }
+    if (categoryFilter.length > 0) {
+        content = (
+            <Row className="mx-4">
+                {categoryFilter?.map((post) => {
+                    // console.log(post);
+                    return (
+                        <BlogCard
+                            post={post}
+                            key={post._id}
+                            handleCategoryClick={handleCategoryClick}
+                        />
+                    );
+                })}
+            </Row>
+        );
+        console.log(content);
+    }
 
     return (
         <div className="posts">
             <div className="">
                 <InputGroup className="w-50 mx-auto my-5 d-flex align-items-center justify-content-center">
                     <Form.Control
+                        style={{border: "2px solid teal"}}
                         onChange={(e) => {
-                            console.log(e.target.value)
-                            searchHandler(e.target.value)
+                            console.log(e.target.value);
+                            searchHandler(e.target.value);
                         }}
-                        // ref={searchRef}
-                        placeholder="Search by Name"
+                        placeholder="Search by Blog Name"
                         type="text"
                         aria-label="Search"
                     />
-                    <Button className="searchButton">
-                        Search
-                    </Button>
                 </InputGroup>
             </div>
-            {content}
+            <div>{content}</div>
         </div>
     );
 };

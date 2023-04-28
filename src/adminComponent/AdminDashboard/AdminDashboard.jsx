@@ -1,12 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./AdminDashboard.css";
 import { css } from "@emotion/react";
 import useFirebase from "../../hooks/useFirebase";
 import { ClockLoader } from "react-spinners";
+import useFetch from "../../hooks/useFetch";
+import { useEffect } from "react";
+import axios from "axios";
 
 const AdminDashboard = () => {
     const { dataLoading } = useFirebase();
+    const { data, getData, error, loading, patchData, deleteData, success } = useFetch();
+    const [userData, setUserData] = useState();
+
+    useEffect(() => {
+        getData(`https://blogs-server-ms.onrender.com/api/v1/blogs`);
+    }, []);
+
+    useEffect(() => {
+        axios
+            .get(`https://blogs-server-ms.onrender.com/api/v1/users`)
+            .then((res) => {
+                const resData = res.data;
+                setUserData(resData);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
+
+    console.log(userData);
 
     const override = css`
         display: block;
@@ -37,7 +60,7 @@ const AdminDashboard = () => {
                                 <h5 className="card-title text-center">Total Blogs</h5>
                                 <div className="d-flex align-items-center justify-content-center">
                                     <div className="">
-                                        <h1 className="blogNum text-center">145</h1>
+                                        <h1 className="blogNum text-center">{data?.length}</h1>
                                         <span className="text-success small pt-1 fw-bold">
                                             12%
                                         </span>{" "}
@@ -60,7 +83,7 @@ const AdminDashboard = () => {
                                 <h5 className="card-title text-center">All Bloggers</h5>
                                 <div className="d-flex align-items-center justify-content-center">
                                     <div className="">
-                                        <h1 className="userNum text-center">86</h1>
+                                        <h1 className="userNum text-center">{userData?.length}</h1>
                                         <span className="text-success small pt-1 fw-bold">
                                             8%
                                         </span>{" "}

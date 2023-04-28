@@ -16,6 +16,8 @@ const AdminPosts = () => {
     const [disable, setDisable] = useState(true);
     const [toDate, setToDate] = useState([]);
     const [fromDate, setFromDate] = useState([]);
+    const [categoryFilter, setCategoryFilter] = useState([]);
+
     const [toDateFormat, setToDateFormat] = useState("");
     const [fromDateFormat, setFromDateFormat] = useState("");
     const [blogsData, setBlogsData] = useState([]);
@@ -44,6 +46,18 @@ const AdminPosts = () => {
         });
     };
 
+    // filter data by category
+
+    const handleCategoryClick = (postCat) => {
+        console.log(postCat);
+        const categoryFilteredData = data?.filter((post) => {
+            console.log(post?.category[0]);
+            return post?.category[0] === postCat;
+        });
+        setCategoryFilter(categoryFilteredData);
+    };
+    console.log(categoryFilter);
+
     //handle search by date
     const handleToDate = (e) => {
         setToDate(e.target.value);
@@ -71,7 +85,7 @@ const AdminPosts = () => {
             });
     };
 
-    console.log(blogsData);
+    // console.log(blogsData);
     let content;
 
     if (dataLoading) {
@@ -89,10 +103,17 @@ const AdminPosts = () => {
             <TableRow key={post._id} post={post} handleBlogDelete={handleBlogDelete} />
         ));
     }
-    console.log(data);
+    // console.log(data);
     if (data?.length === 0) {
         content = <h2 className="text-center">No Blogs Found</h2>;
     }
+
+    if (categoryFilter.length > 0) {
+        content = categoryFilter?.map((post) => (
+            <TableRow key={post._id} post={post} handleBlogDelete={handleBlogDelete} />
+        ));
+    }
+    
 
     return (
         <div className="container mt-5">
@@ -151,20 +172,42 @@ const AdminPosts = () => {
                         </Accordion.Header>
                         <Accordion.Body>
                             <ul className="filterCatList">
-                                <li className="filterCatListItem d-inline-block w-50 mt-2">
+                                <li
+                                    className="filterCatListItem d-inline-block w-50 mt-2"
+                                    onClick={() => handleCategoryClick("Life")}
+                                >
                                     Lifestyle
                                 </li>
-                                <li className="filterCatListItem d-inline-block w-50 mt-2">
+                                <li
+                                    className="filterCatListItem d-inline-block w-50 mt-2"
+                                    onClick={() => handleCategoryClick("Photography")}
+                                >
                                     Photography
                                 </li>
-                                <li className="filterCatListItem d-inline-block w-50 mt-2">
+                                <li
+                                    className="filterCatListItem d-inline-block w-50 mt-2"
+                                    onClick={() => handleCategoryClick("Sports")}
+                                >
                                     Sports
                                 </li>
-                                <li className="filterCatListItem d-inline-block w-50 mt-2">
+                                <li
+                                    className="filterCatListItem d-inline-block w-50 mt-2"
+                                    onClick={() => handleCategoryClick("Movie")}
+                                >
                                     Movie
                                 </li>
-                                <li className="filterCatListItem d-inline-block w-50 mt-2">Tech</li>
-                                <li className="filterCatListItem d-inline-block w-50 mt-2">Food</li>
+                                <li
+                                    className="filterCatListItem d-inline-block w-50 mt-2"
+                                    onClick={() => handleCategoryClick("Tech")}
+                                >
+                                    Tech
+                                </li>
+                                <li
+                                    className="filterCatListItem d-inline-block w-50 mt-2"
+                                    onClick={() => handleCategoryClick("Food")}
+                                >
+                                    Food
+                                </li>
                             </ul>
                         </Accordion.Body>
                     </Accordion.Item>

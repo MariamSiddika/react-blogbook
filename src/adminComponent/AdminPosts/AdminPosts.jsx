@@ -101,9 +101,7 @@ const AdminPosts = () => {
                 <button onClick={() => setFilter(!filter)} className="px-3 py-1 me-4 filterBtn">
                     <i className="fa-solid fa-sliders me-2"></i>Filter
                 </button>
-                <button className="px-3 py-1 sortBtn">
-                    <i className="fa-solid fa-arrow-up-wide-short me-2"></i>Sort
-                </button>
+                
             </div>
             {filter && (
                 <Accordion className="w-50 ms-auto mt-3">

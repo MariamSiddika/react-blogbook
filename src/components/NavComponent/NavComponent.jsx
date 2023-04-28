@@ -9,7 +9,7 @@ import useFetch from "../../hooks/useFetch";
 
 
 function NavComponent() {
-    const { logOut, user } = useFirebase();
+    const { logOut, user, userDetail } = useFirebase();
     const { data, getData } = useFetch();
     
     if (user?.email) {
@@ -93,9 +93,25 @@ function NavComponent() {
                                                 borderBottom: isActive ? "2px solid goldenRod" : "",
                                             };
                                         }}
-                                        className="topListItem"
+                                        className="topListItem me-2"
                                     >
                                         <li>WRITE</li>
+                                    </NavLink>
+                                )
+                                
+                            }
+                            {
+                                userDetail?.role === "admin" && (
+                                    <NavLink
+                                        to="/admin"
+                                        style={({ isActive }) => {
+                                            return {
+                                                borderBottom: isActive ? "2px solid goldenRod" : "",
+                                            };
+                                        }}
+                                        className="topListItem ms-2"
+                                    >
+                                        <li>ADMIN</li>
                                     </NavLink>
                                 )
                                 

@@ -30,6 +30,7 @@ const useFirebase = (location) => {
     const [userData, setUserData] = useState([]);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(true);
+    const [userDetail, setUserDetail] = useState();
     const navigate = useNavigate();
 
     const signUpWithEmailAndPassword = (email, password, location) => {
@@ -51,7 +52,7 @@ const useFirebase = (location) => {
                     .then((res) => {
                         console.log(res);
                         // const resData = res?.data[0];
-                        
+
                         if (res?.data[0]?.role === "admin") {
                             // setLoading(false);
                             return navigate("/admin");
@@ -168,6 +169,15 @@ const useFirebase = (location) => {
                 setUser(user);
                 setLoading(false);
                 // console.log(user);
+                axios
+                    .get(`https://blogs-server-ms.onrender.com/api/v1/users?email=${user?.email}`)
+                    .then((res) => {
+                        const resData = res.data[0];
+                        setUserDetail(resData);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
             } else {
                 setUser({});
                 setLoading(false);
@@ -176,7 +186,7 @@ const useFirebase = (location) => {
         return () => unsubscribe;
     }, [auth]);
 
-    // console.log(user);
+    // console.log(userDetail);
 
     return {
         signUpWithEmailAndPassword,
@@ -192,6 +202,7 @@ const useFirebase = (location) => {
         dataLoading: loading,
         setLoading,
         error,
+        userDetail,
         setError,
     };
 };

@@ -52,7 +52,6 @@ function App() {
         );
     }
 
-
     return (
         <div>
             <NavComponent></NavComponent>
@@ -70,7 +69,8 @@ function App() {
                     }
                 ></Route>
                 <Route
-                    path="/settings" element={
+                    path="/settings"
+                    element={
                         <PrivateRoute>
                             <Settings />
                         </PrivateRoute>

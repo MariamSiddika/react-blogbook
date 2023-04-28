@@ -37,7 +37,7 @@ const Write = () => {
         height: 350,
         placeholder: "Tell your story...",
     }
-    
+
     const animatedComponents = makeAnimated();
     const options = [
         { label: 'Life', value: 'Life' },
@@ -53,12 +53,14 @@ const Write = () => {
         const category = categoryRef?.current?.props?.value?.value;
         // console.log(category)
         let post = content;
-        
+
         // console.log(post);
         const img = imageUpload;
-        const blogData = { name, post, author: user?.displayName,
-            email: user?.email, img, category };
-            console.log(blogData);
+        const blogData = {
+            name, post, author: user?.displayName,
+            email: user?.email, img, category
+        };
+        console.log(blogData);
         const blogUpload = await postData(
             "https://blogs-server-ms.onrender.com/api/v1/blogs",
             blogData
@@ -76,16 +78,21 @@ const Write = () => {
 
     return (
         <div className='write pt-5 d-flex flex-column justify-content-center align-items-center'>
-           
+
             {/* <img className='writeImg' src={imageUpload? imageUpload : postImg} alt="" /> */}
-           { imageUpload &&
-            <img className='writeImg' src={ imageUpload } alt="" />}
+            {imageUpload &&
+                <img className='writeImg' src={imageUpload} alt="" />}
             <form className='writeForm'>
 
                 <div className="writeFormGroup d-flex align-items-center">
-                    <label htmlFor="fileInput">
-                        <i className="writeIcon d-flex align-items-center justify-content-center fa-solid fa-plus"></i>
+
+                    <label htmlFor="fileInput" class="" data-toggle="tooltip" data-placement="left" title="Add image for this blog">
+                    <i className="writeIcon d-flex align-items-center justify-content-center fa-solid fa-plus"></i>
                     </label>
+
+                    {/* <label htmlFor="fileInput">
+                        <i className="writeIcon d-flex align-items-center justify-content-center fa-solid fa-plus"></i>
+                    </label> */}
                     <input
                         onChange={handleImage}
                         accept="image/*"

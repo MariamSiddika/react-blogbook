@@ -11,7 +11,7 @@ const BlogCard = ({ post, handleCategoryClick }) => {
 
                 <div className="postInfo d-flex flex-column align-items-center">
                     <div className="postCats">
-                        <span
+                        <span data-toggle="tooltip" data-placement="top" title="Click to see more in this category" 
                             onClick={() => handleCategoryClick(post?.category)}
                             className="postCat mt-3 me-2"
                         >

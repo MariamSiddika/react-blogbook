@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import swal from "sweetalert";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import TableRow from "./TableRow";
 
 const AdminPosts = () => {
     const [filter, setFilter] = useState(false);
@@ -19,7 +20,7 @@ const AdminPosts = () => {
     const [fromDateFormat, setFromDateFormat] = useState("");
     const [blogsData, setBlogsData] = useState([]);
     //
-    const { data, getData, error, loading, patchData, deleteData, success } = useFetch();
+    const { data, getData, error, dataLoading, patchData, deleteData, success } = useFetch();
     useEffect(() => {
         getData("https://blogs-server-ms.onrender.com/api/v1/blogs");
     }, []);
@@ -45,10 +46,10 @@ const AdminPosts = () => {
 
     //handle search by date
     const handleToDate = (e) => {
-        setToDate(e.target.value)
+        setToDate(e.target.value);
     };
     const handleFromDate = (e) => {
-        setFromDate(e.target.value)
+        setFromDate(e.target.value);
         setDisable(false);
     };
 
@@ -57,17 +58,41 @@ const AdminPosts = () => {
         // alert("todate"+ toDate + "from date" + fromDate);
 
         axios
-            .get(`http://localhost:5000/api/v1/blogs?toDate=${toDate}&fromDate=${fromDate}`)
+            .get(
+                `https://blogs-server-ms.onrender.com/api/v1/blogs?toDate=${toDate}&fromDate=${fromDate}`
+            )
 
             .then((res) => {
-                const resData = res.data[0];
+                const resData = res.data;
                 setBlogsData(resData);
-                console.log(blogsData);
             })
             .catch((err) => {
                 console.log(err);
             });
     };
+
+    console.log(blogsData);
+    let content;
+
+    if (dataLoading) {
+        content = <h1>loading...</h1>;
+    }
+
+    if (blogsData) {
+        content = blogsData?.map((post) => (
+            <TableRow key={post._id} post={post} handleBlogDelete={handleBlogDelete} />
+        ));
+    }
+
+    if (blogsData.length === 0 && data) {
+        content = data?.map((post) => (
+            <TableRow key={post._id} post={post} handleBlogDelete={handleBlogDelete} />
+        ));
+    }
+    console.log(data);
+    if (data?.length === 0) {
+        content = <h2 className="text-center">No Blogs Found</h2>;
+    }
 
     return (
         <div className="container mt-5">
@@ -161,67 +186,7 @@ const AdminPosts = () => {
                     </tr>
                 </thead>
 
-                <tbody className="w-100">
-                    {data.map((post) => (
-                        <tr className="border-1">
-                            <td className="p-3 ">
-                                <p className=" text-center ">{post?._id}</p>
-                            </td>
-                            <td className="p-3 text-center">
-                                <p className="text-center">{post?.author}</p>
-                            </td>
-                            <td className="p-3 text-center">
-                                <div className="d-flex align-items-center justify-content-center">
-                                    <div className="">
-                                        <img
-                                            style={{ width: "100px", height: "80px" }}
-                                            className="rounded"
-                                            src={post?.img}
-                                            alt="product-img"
-                                        />
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td className="p-3 text-center">
-                                <p className="text-center">{post?.name} </p>
-                            </td>
-                            <td className="p-3 text-center">
-                                <p>{post?.category}</p>
-                            </td>
-                            <td className="p-3 text-center">
-                                <p>{new Date(post?.createdAt).toDateString()}</p>
-                            </td>
-
-                            <td className="adminPostText 3 text-center">
-                                <p
-                                    dangerouslySetInnerHTML={{ __html: post?.post }}
-                                    className="mt-4"
-                                ></p>
-                            </td>
-                            <td className="py-3 px-3 text-center">
-                                <div className="d-flex align-ite px-ms-center justify-content-center">
-                                    <div
-                                        className=""
-                                        // onClick={() => deleteHandler(_id)}
-                                    >
-                                        <Link
-                                            className="text-decoration-none"
-                                            to={`/single/${post._id}`}
-                                        >
-                                            <i className="postAction postActionOpen fa-regular fa-folder-open me-4"></i>
-                                        </Link>
-
-                                        <i
-                                            onClick={() => handleBlogDelete(post?._id)}
-                                            className="postAction postActionDelete fa-solid fa-trash-can"
-                                        ></i>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
+                <tbody className="w-100">{content}</tbody>
             </table>
         </div>
     );

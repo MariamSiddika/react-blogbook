@@ -28,20 +28,21 @@ const Post = ({ post }) => {
                 }
 
                 <div
-                data-aos="fade-up"
-                data-aos-easing="ease-out-cubic"
-                data-aos-duration="1000" 
-                    
+                    data-aos="fade-up"
+                    data-aos-easing="ease-out-cubic"
+                    data-aos-duration="1000"
+
                     className="postInfo d-flex flex-column align-items-center">
                     <div className="postCats">
-                        
+
                         <Link className='text-decoration-none' to='/allBlogs' state={post?.category}>
-                            <span onClick={() => handleCategoryClick(post?.category)} className="postCat mt-3 me-2">{post?.category}</span></Link>
+                            <span data-toggle="tooltip" data-placement="top" title="Click to see more in this category" onClick={() => handleCategoryClick(post?.category)} className="postCat mt-3 me-2">{post?.category}</span>
+                            
+                        </Link>
 
                     </div>
                     <span className="postTitle mt-2">{post?.name}</span>
                     <span className="postDate mt-1">{new Date(post?.createdAt).toDateString()}</span>
-                    {/* <span className="postDate mt-1">1 hour ago</span> */}
                     <p dangerouslySetInnerHTML={{ __html: content, }} className="postDesc mt-3 w-100 px-3" >
 
                     </p>
@@ -49,9 +50,9 @@ const Post = ({ post }) => {
                 </div>
                 <Link className='text-decoration-none' to={`/single/${post?._id}`}>
                     <div data-aos="fade-up"
-                data-aos-easing="ease-out-cubic"
-                data-aos-duration="1000"  
-                className="d-flex align-items-center justify-content-end ">
+                        data-aos-easing="ease-out-cubic"
+                        data-aos-duration="1000"
+                        className="d-flex align-items-center justify-content-end ">
                         <button className="btn-read-blog mb-3 me-3 mt-0"><span>Read Blog</span>
                             <i className="fa-solid fa-arrow-right"></i></button>
                     </div>

@@ -19,7 +19,7 @@ const AdminDashboard = () => {
 
     useEffect(() => {
         axios
-            .get(`https://blogs-server-ms.onrender.com/api/v1/users`)
+            .get(`https://blogs-server-ms.onrender.com/api/v1/users?role=user`)
             .then((res) => {
                 const resData = res.data;
                 setUserData(resData);
@@ -66,10 +66,10 @@ const AdminDashboard = () => {
                                     <div className="d-flex align-items-center justify-content-center">
                                         <div className="">
                                             <h1 className="blogNum text-center">{data?.length}</h1>
-                                            <span className="text-success small pt-1 fw-bold">
+                                            {/* <span className="text-success small pt-1 fw-bold">
                                                 12%
                                             </span>{" "}
-                                            <span className="text-muted small pt-2 ps-1">increase</span>
+                                            <span className="text-muted small pt-2 ps-1">increase</span> */}
                                         </div>
                                         <div className="icon">
                                             <i className="fa-solid fa-house"></i>
@@ -89,10 +89,10 @@ const AdminDashboard = () => {
                                     <div className="d-flex align-items-center justify-content-center">
                                         <div className="">
                                             <h1 className="userNum text-center">{userData?.length}</h1>
-                                            <span className="text-success small pt-1 fw-bold">
+                                            {/* <span className="text-success small pt-1 fw-bold">
                                                 8%
                                             </span>{" "}
-                                            <span className="text-muted small pt-2 ps-1">increase</span>
+                                            <span className="text-muted small pt-2 ps-1">increase</span> */}
                                         </div>
                                         <div className="icon">
                                             <i className="fa-solid fa-users"></i>

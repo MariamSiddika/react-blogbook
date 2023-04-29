@@ -267,7 +267,7 @@ const SinglePost = () => {
                                                             ? user?.displayName : "Anonymous"} */}
                                                         {comment?.name
                                                             ? comment?.name
-                                                            : "Anonymous"}
+                                                            : comment?.email}
                                                     </span>
                                                     <span className="date text-black-50">
                                                         {new Date(
